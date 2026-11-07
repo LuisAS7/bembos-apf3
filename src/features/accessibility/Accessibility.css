@@ -1,0 +1,33 @@
+/* Token overrides per color-vision mode. Swap error/success/action instead of using filter:
+   so position:fixed ancestors (base-navigation, mobile-action-bar) and the <dialog> top layer stay unaffected. */
+html[data-color-vision='protanopia'], html[data-color-vision='deuteranopia'] { --color-error: #c2410c; --color-success: #0f4c5c; }
+html[data-color-vision='tritanopia'] { --color-action: #ff7a45; --color-action-hover: #e8631f; --color-error: #b3261e; --color-success: #15803d; }
+
+.accessibility-form { display: grid; gap: var(--space-5); }
+.accessibility-fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: .75rem; }
+.accessibility-fieldset legend { font-weight: 700; font-size: 1.0625rem; margin-block-end: .25rem; }
+.accessibility-hint { margin: 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+.accessibility-option { display: flex; gap: .75rem; align-items: flex-start; min-height: var(--target-size); padding: .85rem 1rem; border: 2px solid var(--color-border); border-radius: .65rem; cursor: pointer; }
+.accessibility-option input { accent-color: var(--color-brand); width: 1.125rem; height: 1.125rem; margin: .2rem 0 0; flex-shrink: 0; }
+.accessibility-option > div { flex: 1; display: grid; gap: .3rem; }
+.accessibility-option strong { font-weight: 700; }
+.accessibility-option small { display: block; color: var(--color-text-muted); }
+.accessibility-option--selected { border-color: var(--color-brand); background: #f4f2ff; }
+.accessibility-option .accessibility-check { flex-shrink: 0; color: var(--color-brand); margin-block-start: .2rem; }
+.accessibility-swatches { display: flex; gap: .4rem; margin-block-start: .2rem; }
+.accessibility-swatch { width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 1px solid var(--color-border); }
+
+.accessibility-switch { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--target-size); padding: .85rem 1rem; border: 2px solid var(--color-border); border-radius: .65rem; cursor: pointer; }
+.accessibility-switch > span { font-weight: 700; }
+.accessibility-switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.accessibility-switch-track { position: relative; flex-shrink: 0; width: 2.75rem; height: 1.5rem; border-radius: 1rem; background: var(--color-decoration); border: 2px solid var(--color-border); transition: background-color .15s ease; }
+.accessibility-switch-track::before { content: ''; position: absolute; inset-block: 1px; inset-inline-start: 1px; width: 1.05rem; height: 1.05rem; border-radius: 50%; background: white; box-shadow: 0 1px 2px rgb(0 0 0 / 25%); transition: transform .15s ease; }
+.accessibility-switch input:checked + .accessibility-switch-track { background: var(--color-brand); border-color: var(--color-brand); }
+.accessibility-switch input:checked + .accessibility-switch-track::before { transform: translateX(1.2rem); }
+.accessibility-switch input:focus-visible + .accessibility-switch-track { outline: 3px solid var(--color-brand); outline-offset: 2px; box-shadow: 0 0 0 4px var(--color-surface); }
+
+@media (forced-colors: active) {
+  .accessibility-option--selected { border: 2px solid Highlight; outline: 2px solid Highlight; outline-offset: 2px; }
+  .accessibility-swatch { border: 1px solid CanvasText; }
+  .accessibility-switch-track { border: 1px solid CanvasText; }
+}

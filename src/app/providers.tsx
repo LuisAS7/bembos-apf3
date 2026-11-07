@@ -64,6 +64,7 @@ export function AppProviders({ children }: PropsWithChildren) {
     root.dataset.textSize = state.preferences.textSize
     root.dataset.reduceMotion = String(state.preferences.reduceMotion)
     root.dataset.underlineLinks = String(state.preferences.underlineLinks)
+    root.dataset.colorVision = state.preferences.colorVision ?? 'none'
   }, [state.preferences])
   const value = useMemo(() => ({ state, dispatch, confirmOrder }), [state, dispatch, confirmOrder])
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
