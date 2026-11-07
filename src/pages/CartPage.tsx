@@ -59,7 +59,7 @@ export function CartPage() {
             {issues.length > 0 && <div className="cart-restrictions" id={`issues-${item.itemId}`}><h3>Requiere actualización</h3><ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul><p>Edita el producto, elige otro local o elimínalo para continuar.</p></div>}
             <div className="cart-item-footer"><div className="cart-item-count">
               <QuantitySelector id={`cart-quantity-${item.itemId}`} value={String(item.quantity)} productName={`${itemLabel(item)}, ítem ${index + 1}`}
-                disabled={issues.length > 0} onChange={(value) => changeQuantity(item.itemId, Number(value))} />
+                totalCents={totalCents} disabled={issues.length > 0} onChange={(value) => changeQuantity(item.itemId, Number(value))} />
               {issues.length > 0 && <p className="control-help">Edita las restricciones antes de ajustar la cantidad.</p>}
             </div>
             <p className="cart-item-price">{unitPriceCents === null ? 'Importe pendiente de actualización.' : <>Por unidad: {formatPrice(unitPriceCents)} · Importe: <strong>{formatPrice(totalCents!)}</strong>{issues.length > 0 && ' (informativo; no disponible para continuar)'}</>}</p>

@@ -1,4 +1,4 @@
-import { useId, useState } from 'react'
+import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { ChevronDown, MapPin, Check } from 'lucide-react'
 import { AccessibleButton } from '../../components/ui/AccessibleButton.tsx'
@@ -15,7 +15,7 @@ export function LocalSelector() {
   const [selectedId, setSelectedId] = useState(state.order.locationId)
   const [open, setOpen] = useState(false)
   const [plan, setPlan] = useState<LocationPlan | null>(null)
-  const modalId = useId()
+  const modalId = 'dialogo-local'
   function makePlan(id: string) {
     const preview = state.configurationPreview
     const product = preview ? getConfigurableProduct(preview.productId) : undefined
@@ -38,7 +38,7 @@ export function LocalSelector() {
     else commit(candidate)
   }
   return <>
-    <button className="header-location" type="button" aria-haspopup="dialog" aria-expanded={open} aria-controls={modalId}
+    <button className="header-location" type="button" aria-haspopup="dialog" aria-expanded={open}
       onClick={() => { setSelectedId(state.order.locationId); setPlan(null); setOpen(true) }}>
       <MapPin size={22} aria-hidden="true" /><span><small>Tu local</small>{getLocation(state.order.locationId)?.name ?? 'Seleccionar local'}</span><ChevronDown size={18} aria-hidden="true" />
     </button>

@@ -43,8 +43,9 @@
   .cart-item-footer { gap: .65rem; grid-template-columns: minmax(0,1fr) auto; }
   .cart-item-count { grid-column: 1 / -1; }
   .cart-item-count .quantity-label { font-size: .8125rem; margin-block-end: .25rem; }
-  .cart-item-count .quantity-controls { grid-template-columns: var(--target-size) minmax(2rem,3rem) var(--target-size); gap: .25rem; }
-  .cart-item-count .quantity-controls .button { padding: .5rem; }
+  .cart-item-count .quantity-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; }
+  .cart-item-count .quantity-controls .button { padding: .5rem; flex: 0 0 auto; }
+  .cart-item-count .quantity-controls output { flex: 1 1 2rem; min-width: 2rem; max-width: 3rem; }
   .cart-item-count .control-help { font-size: .75rem; }
   .cart-actions { gap: 1rem; }
   .cart-action-bar .cart-subtotal { padding: 0; border: 0; font-size: .8125rem; }

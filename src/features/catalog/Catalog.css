@@ -64,3 +64,7 @@
   .category-options { scrollbar-width: none; }
   .category-options::-webkit-scrollbar { display: none; }
 }
+
+@media (forced-colors: active) {
+  .category-option--selected { border: 2px solid Highlight; outline: 2px solid Highlight; outline-offset: 2px; }
+}

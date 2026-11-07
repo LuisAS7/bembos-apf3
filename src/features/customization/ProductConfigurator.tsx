@@ -118,7 +118,7 @@ export function ProductConfigurator({ product, item }: { product: Product; item?
             <div className="step-actions">{current > 0 && <AccessibleButton className="button--secondary" onClick={() => goBack(current - 1)}><ArrowLeft size={18} aria-hidden="true" />Volver</AccessibleButton>}
               {stage.kind !== 'summary' && <AccessibleButton type="submit">Continuar<ArrowRight size={18} aria-hidden="true" /></AccessibleButton>}</div>
             <div className="configuration-action-bar mobile-action-bar" data-page-action-bar="" data-final={stage.kind === 'summary'} ref={actionBar}>
-              <div className="action-quantity"><QuantitySelector productName={product.name} id={`quantity-${product.id}`} value={quantity} error={result.issues.find((issue) => issue.field === 'quantity')?.message} onChange={(value) => { setQuantity(value); setReview('') }} /></div>
+              <div className="action-quantity"><QuantitySelector productName={product.name} id={`quantity-${product.id}`} value={quantity} totalCents={result.totalCents} error={result.issues.find((issue) => issue.field === 'quantity')?.message} onChange={(value) => { setQuantity(value); setReview('') }} /></div>
               <p className="action-total">Total<strong>{result.totalCents === null ? 'Por actualizar' : formatPrice(result.totalCents)}</strong></p>
               <AccessibleButton type="submit" className="configuration-submit" disabled={!inspected.canSubmit} aria-describedby="configuration-action-help">{item ? 'Guardar cambios' : 'Agregar al pedido'}</AccessibleButton>
               <p id="configuration-action-help" className="action-help">{actionHelp}</p>
