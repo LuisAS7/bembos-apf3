@@ -380,6 +380,16 @@
                       "reason":  "The browser access host is unavailable"
                   }
               ],
-    "realBrowserZoom200":  "not_executed",
-    "initialFocusRegression":  "code corrected; DOM verification pending"
+    "realBrowserZoom200":  "user_reported_pass_on_prototype_before_phase2; not repeated by agent",
+    "initialFocusRegression":  "code corrected; DOM verification pending",
+    "userUpdate":  {
+                       "dateLima":  "2026-11-07",
+                       "zoom200":  "Usuario informa revision manual sin problemas",
+                       "scope":  "Version anterior al catalogo de Fase 2",
+                       "agentExecuted":  false,
+                       "screenshotsProvided":  false,
+                       "axeDeferredByUser":  true,
+                       "phase2Authorized":  true,
+                       "otherValidationPending":  true
+                   }
 }

@@ -1,0 +1,110 @@
+> bembos-project@0.0.0 test
+> node --test tests/foundation.test.mjs tests/catalog.test.mjs tests/menu-markup.test.mjs
+
+TAP version 13
+# Subtest: catalog has 12 unique products and four per category, with local images and explicit provenance
+ok 1 - catalog has 12 unique products and four per category, with local images and explicit provenance
+  ---
+  duration_ms: 3.1947
+  type: 'test'
+  ...
+# Subtest: APF2 names and prices remain Cheese S/16.90 and Royal S/21.90
+ok 2 - APF2 names and prices remain Cheese S/16.90 and Royal S/21.90
+  ---
+  duration_ms: 1.1527
+  type: 'test'
+  ...
+# Subtest: APF2 photograph bytes match the embedded original; no remote image requests are required
+ok 3 - APF2 photograph bytes match the embedded original; no remote image requests are required
+  ---
+  duration_ms: 2.8414
+  type: 'test'
+  ...
+# Subtest: search ignores case, accents and outer spaces and crosses the three categories
+ok 4 - search ignores case, accents and outer spaces and crosses the three categories
+  ---
+  duration_ms: 4.051
+  type: 'test'
+  ...
+# Subtest: category combines with search, no matches returns empty, and clearing restores the category
+ok 5 - category combines with search, no matches returns empty, and clearing restores the category
+  ---
+  duration_ms: 0.9429
+  type: 'test'
+  ...
+# Subtest: availability changes by location and unknown references are unavailable
+ok 6 - availability changes by location and unknown references are unavailable
+  ---
+  duration_ms: 0.5824
+  type: 'test'
+  ...
+# Subtest: empty-order location selection does not mutate data or erase snapshot metadata
+ok 7 - empty-order location selection does not mutate data or erase snapshot metadata
+  ---
+  duration_ms: 0.7241
+  type: 'test'
+  ...
+# Subtest: location selection protects existing cart snapshots and invalid/unavailable storage
+ok 8 - location selection protects existing cart snapshots and invalid/unavailable storage
+  ---
+  duration_ms: 0.6445
+  type: 'test'
+  ...
+# Subtest: critical catalog color-token pairs meet the specified contrast thresholds
+ok 9 - critical catalog color-token pairs meet the specified contrast thresholds
+  ---
+  duration_ms: 1.5632
+  type: 'test'
+  ...
+# Subtest: missing, malformed and future-version snapshots are distinct and not overwritten
+ok 10 - missing, malformed and future-version snapshots are distinct and not overwritten
+  ---
+  duration_ms: 1.7497
+  type: 'test'
+  ...
+# Subtest: order snapshot keeps independent configuration and strips unrelated properties
+ok 11 - order snapshot keeps independent configuration and strips unrelated properties
+  ---
+  duration_ms: 2.7401
+  type: 'test'
+  ...
+# Subtest: only the sanitized receipt is stored in sessionStorage; null clears that key
+ok 12 - only the sanitized receipt is stored in sessionStorage; null clears that key
+  ---
+  duration_ms: 0.8511
+  type: 'test'
+  ...
+# Subtest: preferences persist independently and reject invalid enum values
+ok 13 - preferences persist independently and reject invalid enum values
+  ---
+  duration_ms: 0.4186
+  type: 'test'
+  ...
+# Subtest: blocked storage getters and quota failures do not throw
+ok 14 - blocked storage getters and quota failures do not throw
+  ---
+  duration_ms: 0.9117
+  type: 'test'
+  ...
+# Subtest: reducer keeps preferences and draft isolated and does not mutate previous state
+ok 15 - reducer keeps preferences and draft isolated and does not mutate previous state
+  ---
+  duration_ms: 0.4702
+  type: 'test'
+  ...
+# Subtest: rendered menu exposes labeled native controls, products and unavailable state
+ok 16 - rendered menu exposes labeled native controls, products and unavailable state
+  ---
+  duration_ms: 1029.9716
+  type: 'test'
+  ...
+# 1:08:45 a. m. [vite] (client) [optimizer] bundling dependencies...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4185.4482

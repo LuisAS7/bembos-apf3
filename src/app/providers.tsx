@@ -3,17 +3,21 @@ import type { PropsWithChildren } from 'react'
 import { AppContext } from '../state/AppContext.ts'
 import { appReducer, createInitialState } from '../state/appState.ts'
 import type { AppAction } from '../state/appState.ts'
-import { readLastConfirmation, readPreferences, saveLastConfirmation, saveOrder, savePreferences } from '../storage/browserStorage.ts'
+import { getLocation } from '../data/locations.ts'
+import { readLastConfirmation, readOrder, readPreferences, saveLastConfirmation, saveOrder, savePreferences } from '../storage/browserStorage.ts'
 
 function initialize() {
   const state = createInitialState()
   const preferences = readPreferences()
   const confirmation = readLastConfirmation()
+  const order = readOrder()
   if (preferences.status === 'ok') state.preferences = preferences.value
   if (confirmation.status === 'ok') state.lastConfirmation = confirmation.value
-  if ([preferences.status, confirmation.status].includes('unavailable')) {
+  // Restore only the selected location. Cart hydration stays in phase 4.
+  if (order.status === 'ok' && getLocation(order.value.locationId)) state.order.locationId = order.value.locationId
+  if ([preferences.status, confirmation.status, order.status].includes('unavailable')) {
     state.storageNotice = 'El almacenamiento del navegador no está disponible. Los cambios se conservarán solo mientras esta página esté abierta.'
-  } else if ([preferences.status, confirmation.status].includes('invalid')) {
+  } else if ([preferences.status, confirmation.status, order.status].includes('invalid')) {
     state.storageNotice = 'No pudimos recuperar algunos datos guardados. Puedes seguir navegando.'
   }
   // Order hydration/revalidation and its announcement will be connected in phase 4.

@@ -1,0 +1,13 @@
+﻿{
+    "dateLima":  "2026-11-07T01:08:39.6114515-05:00",
+    "baseCommit":  "6e6fa863477df96528fa866e3a7a177654645f7d",
+    "node":  "v22.19.0",
+    "npm":  "10.9.3",
+    "browserStatus":  "blocked",
+    "browserAttempt":  "createBrowserTab iab http://127.0.0.1:5173/menu",
+    "browserError":  "The browser access host is unavailable",
+    "axeStatus":  "deferred by explicit user instruction; not executed",
+    "zoomStatus":  "User reports prior prototype reviewed at 200 percent without issues; new Phase 2 menu not rechecked",
+    "currentLockBlob":  "706f8f7d39deec4f2d0284ed00a7f4005cc44e2a",
+    "baseLockBlob":  "706f8f7d39deec4f2d0284ed00a7f4005cc44e2a"
+}

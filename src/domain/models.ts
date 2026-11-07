@@ -36,13 +36,16 @@ export interface Product {
   name: string
   description: string
   category: Category
-  image: { src: string; alt: string }
+  image: { src: string; alt: string; crop?: 'apf2-cheese' | 'apf2-royal' }
   basePriceCents: Cents
   variants: ProductVariant[]
   // Ordered groups vary per product. Variants are priced separately.
   optionGroups: OptionGroup[]
   source: DataSource
 }
+
+// Phase 2 displays products without loading a configurator.
+export type CatalogProduct = Omit<Product, 'variants' | 'optionGroups'>
 
 export interface Location {
   id: string

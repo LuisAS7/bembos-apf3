@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+  <rect width="600" height="300" fill="#fff7e6"/>
+  <ellipse cx="300" cy="254" rx="250" ry="12" fill="#e8dfcc"/>
+  <defs><g id="burger"><path d="M0 90C5 8 245 8 250 90Z" fill="#dc8f32"/><path d="M14 79C41 28 210 28 237 79Z" fill="#efb854"/><g fill="#fff7e6"><ellipse cx="73" cy="56" rx="8" ry="3"/><ellipse cx="122" cy="42" rx="8" ry="3"/><ellipse cx="182" cy="60" rx="8" ry="3"/></g><path d="M1 98L33 92 65 105 97 93 128 106 160 92 201 105 249 96V120H1Z" fill="#4e7b35"/><rect x="6" y="120" width="238" height="17" rx="8" fill="#bf4938"/><path d="M9 137H243L206 153 171 145 122 158 75 144 29 152Z" fill="#ffb500"/><rect x="0" y="156" width="250" height="30" rx="15" fill="#633b26"/><path d="M5 193H245Q238 216 211 217H39Q12 215 5 193Z" fill="#dc8f32"/></g></defs>
+  <use href="#burger" x="42" y="30"/>
+  <use href="#burger" x="309" y="30"/>
+</svg>

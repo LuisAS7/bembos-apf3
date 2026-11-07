@@ -40,3 +40,7 @@ Catálogo, búsqueda, selector de local, configuradores, matriz de disponibilida
 - `RouteEffects` compara la ruta canónica de pantalla: `/` y `/menu` corresponden al menú. La redirección de carga no se interpreta como navegación de usuario. Las transiciones posteriores entre pantallas mantienen el foco a `main` y el desplazamiento al inicio.
 - `npm test` ejecuta los seis tests existentes con el runner nativo de Node. Entorno usado: Node 22.19.0 / npm 10.9.3.
 - La revisión de código del foco no acredita la interacción DOM. El registro de [evidencias de cierre](../evidencias/fase1/README.md) distingue comprobaciones ejecutadas y bloqueadas.
+
+## Autorización posterior para Fase 2
+
+El usuario comunicó una revisión manual del zoom al 200 % sin problemas y autorizó iniciar Fase 2 con axe aplazado. Se registra como reporte del usuario, no como prueba ejecutada por el agente. El resto de pendientes se conserva; los controles nuevos del catálogo necesitan su propia validación. Véase la actualización en evidencias de Fase 1.

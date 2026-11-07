@@ -4,6 +4,12 @@ Fecha: 7 de noviembre de 2026, America/Lima. Base Git: `01d9d34abe752d720db1021a
 
 **Estado: ajustes técnicos implementados y checks aprobados; aceptación visual y de interacción pendiente por bloqueo del control del navegador. No se acredita el cierre completo de Fase 1 ni conformidad WCAG global.**
 
+## Actualización aportada por el usuario al autorizar Fase 2
+
+El 7 de noviembre de 2026 el usuario informó: «revisé manualmente el zoom al 200 % y no encontré problemas». Se registra como revisión manual aportada por el usuario sobre el prototipo anterior a la Fase 2; el agente no la repitió ni recibió capturas, medidas de viewport o identificación del navegador de esa revisión. No acredita todavía el nuevo catálogo de Fase 2.
+
+El usuario autorizó continuar Fase 2, pospuso axe y estableció que ese pendiente no bloquea su inicio. Se conservan los demás pendientes de validación. Esta actualización no declara conformidad WCAG global.
+
 ## Ejecuciones reales
 
 | Comprobación | Resultado | Evidencia |
@@ -40,8 +46,8 @@ Por ello no se generaron capturas de pantalla, resultados axe, trazas de teclado
 | Foco inicial | Cargar `/`, Tab; cargar `/menu`, Tab: ambos deben llegar al skip link | Corrección aplicada; validación DOM pendiente |
 | Skip link | Enter mueve el foco a `main`; siguiente Tab llega a la acción del contenido | No repetida tras el ajuste |
 | Teclado | Tab/Shift+Tab/Enter en todas las rutas, edición y 404; Atrás/Adelante y títulos/foco | No repetida tras el ajuste |
-| Zoom real 200 % | Chrome muestra 200 % en su menú; revisar las pantallas, navegación, texto y acciones; restaurar a 100 % | No ejecutada; no sustituida por reducir viewport |
-| axe | Ejecución real por pantalla, con versión, violaciones e incompletos | No ejecutada |
+| Zoom real 200 % | Revisión del prototipo previo a Fase 2 | Usuario informa revisión manual sin problemas; no repetida por el agente |
+| axe | Ejecución real por pantalla, con versión, violaciones e incompletos | Pendiente y aplazada por el usuario; no bloquea el inicio de Fase 2 |
 | Consola | Errores, warnings y excepciones durante carga y navegación | No capturada |
 
 Espacio en botones y Escape en diálogos no tienen un caso operativo en estos shells: los controles disponibles son enlaces y no hay modales. No se añadieron controles para simular esas pruebas. NVDA y pruebas con usuarios siguen pendientes del plan académico.

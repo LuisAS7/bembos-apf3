@@ -1,0 +1,17 @@
+{
+  "buildLangEs": true,
+  "baseTitle": true,
+  "lightScheme": true,
+  "automaticDarkMode": false,
+  "svgXmlWellFormed": true,
+  "builtAssets": {
+    "apf2-menu.jpg": true,
+    "clasica-demo.svg": true,
+    "bbq-demo.svg": true,
+    "combo-demo.svg": true,
+    "promocion-demo.svg": true
+  },
+  "lockUnchanged": true,
+  "actualBaseTitle": "Bembos | Prototipo académico de pedidos",
+  "textReadEncoding": "utf-8 (explicit)"
+}

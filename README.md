@@ -2,7 +2,7 @@
 
 Prototipo académico del curso Interacción Hombre Máquina. El alcance y el trabajo por fases se rigen por [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md).
 
-La Fase 1 contiene navegación, pantallas base, estilos responsive, semántica, foco y contratos de estado/almacenamiento. Todavía no permite realizar pedidos ni pagos. No se ha iniciado la Fase 2.
+La Fase 1 contiene navegación, pantallas base, estilos responsive, semántica, foco y contratos de estado/almacenamiento. La Fase 2 incorpora un catálogo académico de 12 productos, categorías, búsqueda y selector de local. Todavía no permite configurar productos ni realizar pedidos o pagos. La Fase 3 requiere aprobación independiente.
 
 ## Entorno y comandos
 
@@ -27,19 +27,25 @@ El build ejecuta TypeScript y Vite y regenera `dist/`, excluido por Git junto co
 | Ruta | Pantalla |
 | --- | --- |
 | `/` | Redirección inicial al menú |
-| `/menu` | Menú |
-| `/productos/demo/personalizar` | Personalización |
+| `/menu` | Catálogo, búsqueda, categorías y local |
+| `/productos/cheese/personalizar` | Shell de personalización, aún sin configurador |
 | `/pedido` | Pedido |
 | `/pedido/demo/editar` | Edición; comparte personalización |
 | `/pagar` | Pago |
 | `/confirmacion/demo` | Confirmación vacía |
 | Otras rutas | Página no encontrada |
 
-Los enlaces entre shells sirven para revisar navegación. Los identificadores `demo` son marcadores de ruta, no productos o pedidos reales.
+Los enlaces «Ver producto» del catálogo abren el shell de personalización existente; no agregan nada al pedido. Los identificadores `demo` de edición y confirmación son marcadores de ruta, no pedidos reales.
 
 ## Organización
 
-`src/app` contiene routing y providers; `components` los elementos compartidos; `pages` las pantallas; `domain` los tipos; `state` el Context/reducer; `storage` los adaptadores seguros; `styles` los tokens y reglas globales. `features`, `data` e imágenes quedan reservados para fases posteriores.
+`src/app` contiene routing y providers; `components` los elementos compartidos; `pages` las pantallas; `domain` los tipos; `state` el Context/reducer; `storage` los adaptadores seguros; `styles` los tokens y reglas globales. `data` contiene catálogo y locales; `features/catalog` y `features/locations` contienen los controles de Fase 2. Los recursos gráficos son locales.
+
+## Catálogo y locales
+
+Cuatro hamburguesas, cuatro combos y cuatro promociones. Cheese y Royal conservan nombre, descripción y precio del APF2; los otros diez registros se identifican como mock académico. Los precios y el stock simulado no representan información comercial vigente.
+
+La búsqueda combina texto y categoría sin distinguir mayúsculas o acentos. El selector nativo requiere pulsar «Aplicar local»; cambia la disponibilidad simulada de productos y el local del Header. La aplicación conserva pedidos guardados y bloquea ese cambio si todavía requieren revisión. La disponibilidad de opciones y el diálogo de impacto se reservan para sus fases.
 
 ## Accesibilidad y persistencia
 
@@ -49,10 +55,10 @@ La política de navegación trata `/` y `/menu` como la misma pantalla y conserv
 
 El contrato de `localStorage` reserva pedido y preferencias. `sessionStorage` reserva `bembos.apf3.lastConfirmation` con un comprobante reducido. No se persisten datos de contacto, dirección, tarjeta ni códigos Yape. La conexión del carrito y de la confirmación al flujo pertenece a fases posteriores.
 
-Detalles: [trazabilidad de Fase 1](docs/trazabilidad/fase1-fundacion.md). Evidencia y limitaciones: [validaciones de Fase 1](docs/evidencias/fase1/README.md).
+Detalles: [trazabilidad de Fase 1](docs/trazabilidad/fase1-fundacion.md) y [Fase 2](docs/trazabilidad/fase2-menu.md). Evidencia y limitaciones: [Fase 1](docs/evidencias/fase1/README.md) y [Fase 2](docs/evidencias/fase2/README.md).
 
 ## Validación y despliegue pendientes
 
-Los tests de Node verifican almacenamiento y reducer. No sustituyen la revisión visual, teclado, zoom real al 200 %, axe ni consola del navegador. El estado real de cada comprobación está en las evidencias; no se declara conformidad WCAG global.
+Los tests verifican almacenamiento, reducer, búsqueda, procedencia, disponibilidad de productos, protección del cambio de local, contraste de tokens y markup inicial del menú. No sustituyen la revisión visual ni los eventos del navegador. El usuario informó una revisión manual del zoom al 200 % sin problemas en la versión previa a Fase 2; axe está aplazado por su autorización. Los demás pendientes permanecen en las evidencias. No se declara conformidad WCAG global.
 
 No se ha publicado el prototipo. La preparación de Vercel y las rutas SPA de producción pertenecen a Fase 10.

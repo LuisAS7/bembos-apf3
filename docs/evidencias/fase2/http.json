@@ -1,0 +1,38 @@
+﻿[
+    {
+        "path":  "/menu",
+        "status":  200,
+        "contentType":  "text/html",
+        "method":  "HTTP GET only; does not execute React or browser events"
+    },
+    {
+        "path":  "/images/products/apf2-menu.jpg",
+        "status":  200,
+        "contentType":  "image/jpeg",
+        "method":  "HTTP GET only; does not execute React or browser events"
+    },
+    {
+        "path":  "/images/products/clasica-demo.svg",
+        "status":  200,
+        "contentType":  "image/svg+xml",
+        "method":  "HTTP GET only; does not execute React or browser events"
+    },
+    {
+        "path":  "/images/products/bbq-demo.svg",
+        "status":  200,
+        "contentType":  "image/svg+xml",
+        "method":  "HTTP GET only; does not execute React or browser events"
+    },
+    {
+        "path":  "/images/products/combo-demo.svg",
+        "status":  200,
+        "contentType":  "image/svg+xml",
+        "method":  "HTTP GET only; does not execute React or browser events"
+    },
+    {
+        "path":  "/images/products/promocion-demo.svg",
+        "status":  200,
+        "contentType":  "image/svg+xml",
+        "method":  "HTTP GET only; does not execute React or browser events"
+    }
+]
