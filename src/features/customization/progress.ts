@@ -22,7 +22,8 @@ export function inspectProgress(stages: ConfigurationStage[], progress: Configur
   const completed = stages.map((stage) => progress.reviewed[stage.id] === signature(stage, configuration, quantity, locationId) && !issuesForStage(stage, result).length)
   const requested = Math.min(progress.current, stages.length - 1)
   const earlierPending = completed.findIndex((done, index) => index < requested && !done)
-  return { completed, current: earlierPending >= 0 ? earlierPending : requested }
+  const current = earlierPending >= 0 ? earlierPending : requested
+  return { completed, current, canSubmit: current === stages.length - 1 && completed.slice(0, -1).every(Boolean) && !result.issues.length }
 }
 export function advanceProgress(stages: ConfigurationStage[], progress: ConfigurationProgress, configuration: ProductConfiguration, quantity: string, locationId: string, result: ConfigurationResult) {
   const inspected = inspectProgress(stages, progress, configuration, quantity, locationId, result)
@@ -31,5 +32,5 @@ export function advanceProgress(stages: ConfigurationStage[], progress: Configur
   if (issues.length) return { progress, issues, ready: false }
   const reviewed = { ...progress.reviewed, [stage.id]: signature(stage, configuration, quantity, locationId) }
   return { progress: { current: Math.min(inspected.current + 1, stages.length - 1), reviewed }, issues,
-    ready: inspected.current === stages.length - 1 && inspected.completed.slice(0, -1).every(Boolean) && !result.issues.length }
+    ready: inspected.canSubmit }
 }

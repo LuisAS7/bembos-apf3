@@ -1,4 +1,4 @@
-.notification-toaster { pointer-events: none; height: calc(100svh - var(--header-height, 96px) - var(--bottom-nav-space) - 1rem); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+.notification-toaster { pointer-events: none; height: calc(100svh - var(--header-height, 96px) - var(--page-action-space, var(--bottom-nav-space)) - 1rem); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
 .notification-toaster [data-sonner-toast] { pointer-events: auto; }
 .brand-toast { display: flex; align-items: flex-start; gap: .75rem; padding: 1rem .75rem 1rem 1rem; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); border-inline-start: 4px solid var(--color-success); border-radius: var(--radius-sm); box-shadow: 0 4px 20px rgb(0 0 0 / 7%); }
 .brand-toast > svg { margin-block-start: .4rem; flex-shrink: 0; color: var(--color-success); }

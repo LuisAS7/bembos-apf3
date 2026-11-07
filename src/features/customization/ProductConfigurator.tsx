@@ -6,6 +6,7 @@ import { AccessibleButton } from '../../components/ui/AccessibleButton.tsx'
 import { ProductImage } from '../../components/ui/ProductImage.tsx'
 import { optionAvailability, productAvailability, variantAvailability } from '../../data/availability.ts'
 import type { CartItem, OptionGroup as GroupDefinition, Product } from '../../domain/models.ts'
+import { useMobileActionBar } from '../../hooks/useMobileActionBar.ts'
 import { useAppState } from '../../hooks/useAppState.ts'
 import { formatPrice } from '../catalog/filterProducts.ts'
 import { AvailabilityDialog } from './AvailabilityDialog.tsx'
@@ -33,10 +34,15 @@ export function ProductConfigurator({ product, item }: { product: Product; item?
   const locationId = state.order.locationId
   const result = evaluateConfiguration(product, configuration, Number(quantity), locationId)
   const stock = productAvailability(product, locationId)
+  const actionBar = useMobileActionBar(stock.available)
   const stages = configurationStages(product)
   const inspected = inspectProgress(stages, progress, configuration, quantity, locationId, result)
   const current = inspected.current
   const stage = stages[current]
+  const pendingStages = inspected.completed.slice(0, -1).filter((done) => !done).length
+  const actionHelp = !result.issues.length
+    ? inspected.canSubmit ? 'Revisa el total antes de confirmar tu selección.' : pendingStages ? `${pendingStages} etapas por revisar. Usa Continuar para avanzar.` : 'Usa Continuar hasta Cantidad y resumen para completar la revisión.'
+    : 'Hay opciones que requieren actualización. Revisa las restricciones indicadas.'
   const group = product.optionGroups.find((entry) => entry.id === stage.groupId)
   const stageIssues = issuesForStage(stage, result)
   const variantGroup: GroupDefinition = {
@@ -77,15 +83,16 @@ export function ProductConfigurator({ product, item }: { product: Product; item?
   return <>
     <Link className="text-link back-link" to={item ? '/pedido' : '/menu'}><ArrowLeft size={18} aria-hidden="true" />{item ? 'Cancelar edición y volver al pedido' : 'Volver al menú'}</Link>
     <div className="page-heading"><p className="eyebrow">{item ? 'Actualiza tu pedido' : 'A tu gusto'}</p><h1>{item ? `Editar ${product.name}` : product.name}</h1></div>
+    <p className="sr-only" role="status" aria-atomic="true">{result.totalCents === null ? 'Total pendiente de actualización.' : `Total para ${quantity}: ${formatPrice(result.totalCents)}.`}</p>
     <div className="customization-layout">
       <aside className="configured-product" aria-labelledby="product-summary-heading">
         <ProductImage image={product.image} />
         <div className="configured-product-body"><h2 id="product-summary-heading">{product.name}</h2><p>{product.description}</p>
-          <div className="configured-total" role="status" aria-atomic="true">{result.totalCents !== null
+          <div className="configured-total">{result.totalCents !== null
             ? <><span>Por unidad: {formatPrice(result.unitPriceCents!)}</span><p>Total para {quantity}: <strong>{formatPrice(result.totalCents)}</strong></p></>
             : <p>Corrige las restricciones para obtener un total válido.</p>}</div>
-          <dl className="configured-choices">{product.variants.length > 0 && <div><dt>{product.variantLabel}</dt><dd>{product.variants.find((variant) => variant.id === configuration.variantId)?.label ?? 'Por elegir'}</dd></div>}
-            {product.optionGroups.map((entry) => <div key={entry.id}><dt>{entry.label}</dt><dd>{(configuration.selections[entry.id] ?? []).map((id) => entry.options.find((option) => option.id === id)?.label ?? 'Revisar opción').join(', ') || 'Sin selección'}</dd></div>)}</dl>
+          <details className="configured-choice-details"><summary>Ver selección</summary><dl className="configured-choices">{product.variants.length > 0 && <div><dt>{product.variantLabel}</dt><dd>{product.variants.find((variant) => variant.id === configuration.variantId)?.label ?? 'Por elegir'}</dd></div>}
+            {product.optionGroups.map((entry) => <div key={entry.id}><dt>{entry.label}</dt><dd>{(configuration.selections[entry.id] ?? []).map((id) => entry.options.find((option) => option.id === id)?.label ?? 'Revisar opción').join(', ') || 'Sin selección'}</dd></div>)}</dl></details>
         </div>
       </aside>
       <div className="customization-options">
@@ -103,14 +110,19 @@ export function ProductConfigurator({ product, item }: { product: Product; item?
               onChange={(ids) => { setConfiguration((previous) => ({ ...previous, selections: { ...previous.selections, [group.id]: ids } })); setReview('') }}
               onViewLocations={(id, label) => setAvailabilityTarget({ kind: 'option', groupId: group.id, id, label })} />}
             {stage.kind === 'summary' && <>
-              <QuantitySelector productName={product.name} id={stage.fieldId} value={quantity} error={stageIssues.find((issue) => issue.field === 'quantity')?.message} onChange={(value) => { setQuantity(value); setReview('') }} />
               <dl className="selection-review">{product.variants.length > 0 && <div><dt>{product.variantLabel ?? 'Variante'}</dt><dd>{product.variants.find((variant) => variant.id === configuration.variantId)?.label ?? 'Requiere actualización'}</dd></div>}
                 {product.optionGroups.map((entry) => <div key={entry.id}><dt>{entry.label}</dt><dd>{(configuration.selections[entry.id] ?? []).map((id) => entry.options.find((option) => option.id === id)?.label ?? 'Opción anterior').join(', ') || 'Sin opciones seleccionadas'}</dd></div>)}</dl>
               {result.issues.length > 0 && <section id="configuration-errors" tabIndex={-1} className="configuration-errors"><h3><CircleAlert size={20} aria-hidden="true" /> Revisa tu selección</h3><ul>{result.issues.map((issue, index) => <li key={index}>{issue.message}</li>)}</ul></section>}
             </>}
             <p role="alert">{review}</p>
             <div className="step-actions">{current > 0 && <AccessibleButton className="button--secondary" onClick={() => goBack(current - 1)}><ArrowLeft size={18} aria-hidden="true" />Volver</AccessibleButton>}
-              <AccessibleButton type="submit">{stage.kind === 'summary' ? item ? 'Guardar cambios' : 'Agregar al pedido' : 'Continuar'}<ArrowRight size={18} aria-hidden="true" /></AccessibleButton></div>
+              {stage.kind !== 'summary' && <AccessibleButton type="submit">Continuar<ArrowRight size={18} aria-hidden="true" /></AccessibleButton>}</div>
+            <div className="configuration-action-bar mobile-action-bar" data-page-action-bar="" data-final={stage.kind === 'summary'} ref={actionBar}>
+              <div className="action-quantity"><QuantitySelector productName={product.name} id={`quantity-${product.id}`} value={quantity} error={result.issues.find((issue) => issue.field === 'quantity')?.message} onChange={(value) => { setQuantity(value); setReview('') }} /></div>
+              <p className="action-total">Total<strong>{result.totalCents === null ? 'Por actualizar' : formatPrice(result.totalCents)}</strong></p>
+              <AccessibleButton type="submit" className="configuration-submit" disabled={!inspected.canSubmit} aria-describedby="configuration-action-help">{item ? 'Guardar cambios' : 'Agregar al pedido'}</AccessibleButton>
+              <p id="configuration-action-help" className="action-help">{actionHelp}</p>
+            </div>
           </form>}
       </div>
     </div>

@@ -25,7 +25,8 @@ test('configuration markup varies by product and starts with one active stage wi
       assert.equal((html.match(/aria-current="step"/g) ?? []).length, 1, product.id)
       assert.ok(!html.includes('data-state="completed"'))
       assert.ok(html.includes(expectedGroups ? 'Continuar' : 'Agregar al pedido'))
-      assert.equal(html.includes('>Agregar al pedido<'), expectedGroups === 0)
+      assert.ok(html.includes('>Agregar al pedido<'))
+      assert.equal(/<button[^>]*class="button configuration-submit"[^>]*disabled/.test(html), expectedGroups > 0, 'final action stays disabled until the real stages are reviewed')
       assert.ok(!html.includes('Guardar cambios'))
       assert.equal((html.match(/<form /g) ?? []).length, 1, 'no nested location form')
     }

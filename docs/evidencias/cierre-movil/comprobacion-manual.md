@@ -1,0 +1,12 @@
+# Comprobación manual en teléfono — pendiente
+
+No ejecutada por el agente: se conserva el bloqueo de navegador. Repetir en vertical/horizontal, con texto ampliado; si se dispone, revisar a 360/390/430 px y zoom real al 200 %. No introducir datos bancarios reales.
+
+1. **Categorías y búsqueda:** deslizar las siete categorías, probar ambas flechas y, con teclado, Tab/flechas nativas. La enfocada debe verse completa, con indicador de selección y sin scroll horizontal de toda la página. Buscar productos de otra categoría; abrir uno y leer la descripción completa.
+2. **Personalización nueva y edición:** avanzar/volver, revisar opciones y cambio de local; salsas nuevas vacías y guardadas conservadas al editar. La barra muestra cantidad/total; no permite agregar antes de validar etapas. Al final cambia a «Guardar cambios» en edición y mantiene el mismo ítem.
+3. **Cantidades, eliminación y Deshacer:** probar 1/99, abrir/cerrar «Ver detalles», leer nombre completo y restricciones con el detalle cerrado. Eliminar primero/último/único ítem y restaurar con Deshacer; comprobar foco, cantidad, posición y precio.
+4. **Checkout, retroceso y revisión:** Delivery/Recojo, errores y retorno del segundo paso. La revisión incluye productos/opciones/cantidades, local, dirección u horario, entrega/total y estado de pago antes de confirmar. Editar entrega/pago/pedido conserva datos válidos e invalida la aprobación cuando corresponde; no hay «Volver» genérico en revisión.
+5. **Pago y confirmación:** usar datos de prueba, escribir/borrar/pegar MM/AA, comprobar errores, aprobación y doble pulsación. Verificar número/QR/total/local, detalle del comprobante cerrado y miniaturas. Recargar el último comprobante y confirmar que un pedido nuevo no lo modifica.
+6. **Barras y avisos:** comprobar safe area, última opción, último producto, errores y controles enfocados; nada debe quedar bajo una barra. La navegación del header no debe superponerse a las acciones inferiores. Probar texto ampliado/rotación y el scroll interno si la barra crece. Los avisos superiores no desplazan contenido; varios Deshacer permanecen alcanzables y no bloquean con una zona invisible el resto de la pantalla.
+
+Completar después consola, axe y NVDA cuando se retomen expresamente; esta lista no acredita conformidad WCAG ni autoriza publicación.

@@ -8,6 +8,8 @@ La segunda iteración amplía a 20 productos y siete categorías, renueva config
 
 Corrección puntual posterior a `672f78e`: avisos flotantes sin reserva de espacio, cantidades mediante botones, fotografías de opciones, ajustes de tarjeta/checkout y miniaturas históricas del comprobante. [Reporte y cobertura pendiente](docs/trazabilidad/correccion-visual-2.md).
 
+Últimos ajustes móviles sobre `78a386f`: carrusel nativo, descripciones precisadas, barra de personalización y carrito con reserva de espacio, detalles plegables y revisión antes de confirmar. [Cambios y pendientes](docs/trazabilidad/cierre-diseno-movil.md) · [Checklist en teléfono](docs/evidencias/cierre-movil/comprobacion-manual.md). Validación visual pendiente; sin publicación.
+
 La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos; la Fase 4 conecta el carrito multiproducto. La Fase 5 añade entrega y resumen; la Fase 6 incorpora pagos simulados y la Fase 7 confirma el pedido de demostración y guarda su último comprobante reducido. Auditoría y pulido posteriores requieren su aprobación.
 
 ## Entorno y comandos

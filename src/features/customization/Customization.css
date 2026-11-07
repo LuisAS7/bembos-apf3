@@ -73,3 +73,23 @@
 
 .option-photo-credit { padding: 0 1rem .5rem; font-size: .75rem; color: var(--color-text-muted); }
 .option-photo-credit a { display: inline-flex; align-items: center; min-height: var(--target-size); }
+
+.configured-choice-details summary { min-height: var(--target-size); padding-block: .65rem; cursor: pointer; font-size: .875rem; font-weight: 700; }
+.configured-choice-details .configured-choices { margin-block-start: .5rem; }
+.configuration-action-bar { display: grid; gap: 1rem; }
+.action-total strong { display: block; color: var(--color-brand); font-size: 1.35rem; }
+.action-help { font-size: .8125rem; color: var(--color-text-muted); }
+@media (min-width: 48rem) { .configuration-action-bar[data-final='false'] { display: none; } }
+@media (max-width: 47.99rem) {
+  .configured-product { grid-template-columns: 4.5rem minmax(0,1fr); gap: .5rem; padding: .75rem; }
+  .configured-product .product-image { width: 4.5rem; height: 4.5rem; }
+  .configured-product-body { padding: 0; gap: .4rem; }
+  .configured-product .configured-total { display: none; }
+  .configuration-form { padding: 1rem; }
+  .configuration-action-bar .quantity-label { font-size: .8125rem; margin-block-end: .25rem; }
+  .configuration-action-bar .quantity-controls { grid-template-columns: var(--target-size) minmax(2rem,3rem) var(--target-size); gap: .25rem; }
+  .configuration-action-bar .quantity-controls .button { padding: .5rem; }
+  .configuration-action-bar .quantity-field > .control-help { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .configuration-submit, .configuration-action-bar .action-help { grid-column: 1 / -1; }
+  .configuration-action-bar { gap: .5rem 1rem; }
+}

@@ -130,11 +130,11 @@ function CheckoutForm() {
           <AccessibleButton className="button--secondary" onClick={() => { dispatch({ type: 'payment/reset' }); goTo(1) }}>Editar pago</AccessibleButton>
         </section>
         <p>Revisa los productos y el total antes de confirmar.</p>
-        {state.payment.attemptId && <ConfirmOrderButton attemptId={state.payment.attemptId} />}
       </div>}
       {backStep !== null && <AccessibleButton className="button--secondary checkout-back" disabled={state.payment.status === 'processing'} onClick={() => goTo(backStep)}>Volver</AccessibleButton>}
       </section>
       <OrderSummary order={state.order} method={draft.deliveryMethod} />
+      {step === 2 && state.payment.attemptId && <div className="checkout-final-action"><ConfirmOrderButton attemptId={state.payment.attemptId} /></div>}
     </div>
   </>
 }

@@ -33,3 +33,4 @@ dist-ssr
 
 !docs/evidencias/iteracion2/*.log
 !docs/evidencias/correccion-visual/*.log
+!docs/evidencias/cierre-movil/*.log

@@ -9,7 +9,7 @@ export function QuantitySelector({ id, value, error, onChange, disabled = false,
     onChange(String(next))
   }
   return <div id={id} className="quantity-field" role="group" tabIndex={-1} aria-labelledby={`${id}-label`} aria-describedby={`${id}-help${error ? ` ${id}-error` : ''}`}>
-    <p id={`${id}-label`} className="quantity-label">Cantidad</p>
+    <p id={`${id}-label`} className="quantity-label">Cantidad <span className="quantity-limits">(1–{MAX_QUANTITY})</span></p>
     <div className="quantity-controls">
       <AccessibleButton className="button--secondary" aria-label={`Disminuir cantidad de ${productName}`} disabled={disabled || number <= 1} onClick={() => change(-1)}><Minus size={20} aria-hidden="true" /></AccessibleButton>
       <output aria-label={`Cantidad de ${productName}`} aria-live="polite" aria-atomic="true">{value}</output>

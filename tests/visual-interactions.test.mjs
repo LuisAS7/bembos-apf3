@@ -22,7 +22,7 @@ function advance(product, progress, configuration, quantity = '1', location = 's
 test('browsing starts per category but every nonempty search crosses all three, with case/accent normalization', () => {
   assert.equal(menuProducts(products, '', 'hamburguesas').length, 4)
   assert.ok(menuProducts(products, '', 'combos').every((product) => product.category === 'combos'))
-  assert.deepEqual(menuProducts(products, ' CHÉESE ', 'promociones').map((product) => product.category), ['hamburguesas', 'combos', 'promociones'])
+  assert.deepEqual(menuProducts(products, ' CHÉESE ', 'promociones').map((product) => product.category), ['hamburguesas', 'combos', 'combos', 'promociones'])
   assert.equal(menuProducts(products, 'not-found', 'hamburguesas').length, 0)
   assert.equal(menuProducts(products, ' ', 'promociones').length, 4)
 })

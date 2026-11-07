@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { AccessibleButton } from '../components/ui/AccessibleButton.tsx'
 import { Pencil, Trash2 } from 'lucide-react'
+import { useMobileActionBar } from '../hooks/useMobileActionBar.ts'
 import { useAppState } from '../hooks/useAppState.ts'
 import { inspectOrder, itemLabel } from '../features/cart/cart.ts'
 import { formatPrice } from '../features/catalog/filterProducts.ts'
@@ -16,6 +17,7 @@ export function CartPage() {
   const { state, dispatch } = useAppState()
   const pendingFocus = useRef<string | null>(null)
   const summary = inspectOrder(state.order)
+  const actionBar = useMobileActionBar(summary.items.length > 0)
   useLayoutEffect(() => {
     if (!pendingFocus.current) return
     document.getElementById(pendingFocus.current)?.focus({ preventScroll: true })
@@ -45,13 +47,15 @@ export function CartPage() {
           : <ol className="cart-items">{summary.items.map(({ item, product, issues, unitPriceCents, totalCents }, index) => <li key={item.itemId} className="cart-item">
             {product && <ProductImage image={product.image} />}
             <h2 id={`cart-item-${item.itemId}`} tabIndex={-1}>{index + 1}. {itemLabel(item)}</h2>
+            <details className="cart-item-details"><summary>Ver detalles<span className="sr-only"> de {itemLabel(item)}, ítem {index + 1}</span></summary>
+              {!item.configuration.variantId && !Object.values(item.configuration.selections).some((ids) => ids.length) && <p className="control-help">{product?.description ?? 'Sin opciones de configuración disponibles.'}</p>}
             <dl className="cart-configuration">
               {item.configuration.variantId && <div><dt>{product?.variantLabel ?? 'Variante'}</dt><dd>{product?.variants.find((entry) => entry.id === item.configuration.variantId)?.label ?? `Variante anterior: ${item.configuration.variantId}`}</dd></div>}
               {Object.entries(item.configuration.selections).filter(([, ids]) => ids.length > 0).map(([groupId, ids]) => {
                 const group = product?.optionGroups.find((entry) => entry.id === groupId)
                 return <div key={groupId}><dt>{group?.label ?? `Grupo anterior: ${groupId}`}</dt><dd>{ids.length ? ids.map((id) => group?.options.find((entry) => entry.id === id)?.label ?? `Opción anterior: ${id}`).join(', ') : 'Sin opciones seleccionadas'}</dd></div>
               })}
-            </dl>
+            </dl></details>
             {issues.length > 0 && <div className="cart-restrictions" id={`issues-${item.itemId}`}><h3>Requiere actualización</h3><ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul><p>Edita el producto, elige otro local o elimínalo para continuar.</p></div>}
             <div className="cart-item-footer"><div className="cart-item-count">
               <QuantitySelector id={`cart-quantity-${item.itemId}`} value={String(item.quantity)} productName={`${itemLabel(item)}, ítem ${index + 1}`}
@@ -69,11 +73,12 @@ export function CartPage() {
       <aside className="summary-shell" aria-labelledby="summary-heading">
         <h2 id="summary-heading">Resumen del pedido</h2>
         <p>{summary.items.length} {summary.items.length === 1 ? 'ítem' : 'ítems'} · {state.order.items.reduce((sum, item) => sum + item.quantity, 0)} unidades</p>
+        <div className={summary.items.length ? 'cart-action-bar mobile-action-bar' : 'cart-inline-summary'} data-page-action-bar={summary.items.length ? '' : undefined} ref={actionBar}>
         <p className="cart-subtotal">Subtotal{!summary.canContinue && ' informativo'}<strong>{summary.totalCents === null ? 'Requiere actualización' : formatPrice(summary.totalCents)}</strong></p>
-        <p>No incluye el costo de entrega.</p>
+        <p className="cart-fee-note">No incluye el costo de entrega.</p>
         {summary.canContinue ? <Link className="button" to="/pagar" aria-describedby="checkout-help">Continuar al pago</Link>
           : <AccessibleButton disabled aria-describedby="checkout-help">Continuar al pago</AccessibleButton>}
-        <p id="checkout-help">{!summary.items.length ? 'Agrega al menos un producto.' : !summary.canContinue ? 'Actualiza o elimina todos los ítems incompatibles para continuar.' : 'Elige cómo recibir tu pedido y revisa el total antes del pago.'}</p>
+        <p id="checkout-help">{!summary.items.length ? 'Agrega al menos un producto.' : !summary.canContinue ? 'Actualiza o elimina todos los ítems incompatibles para continuar.' : 'Elige cómo recibir tu pedido y revisa el total antes del pago.'}</p></div>
       </aside>
     </div>
 
