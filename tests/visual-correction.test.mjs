@@ -46,7 +46,9 @@ test('shared quantity control is noneditable, announces the value and enforces b
       assert.ok(updates.every((next) => Number(next) >= 1 && Number(next) <= 99))
       if (value === '2') assert.deepEqual(updates, ['1', '3'])
       const html = renderToStaticMarkup(createElement(QuantitySelector, props))
-      assert.match(html, /<output[^>]*aria-live="polite"[^>]*>/)
+      assert.ok(!/<output[^>]*aria-live=/.test(html), 'the bare-number output must not itself be a live region (it would double-announce an unlabelled number)')
+      const unitWord = Number(value) === 1 ? 'unidad' : 'unidades'
+      assert.match(html, new RegExp(`<p class="sr-only" aria-live="polite" aria-atomic="true">Cheese: ${value} ${unitWord}\\. Total por actualizar\\.</p>`))
       assert.ok(!html.includes('<input') && !html.includes('contenteditable'))
     }
     const disabled = descendants(QuantitySelector({ id: 'locked', value: '2', disabled: true, onChange() {} })).filter((node) => node.props?.['aria-label']?.includes('cantidad'))

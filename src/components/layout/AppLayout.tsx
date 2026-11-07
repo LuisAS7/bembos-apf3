@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { RouteEffects } from '../accessibility/RouteEffects.tsx'
 import { useAppState } from '../../hooks/useAppState.ts'
 import { Header } from './Header.tsx'
+import { Footer } from './Footer.tsx'
 import { Toaster } from '../ui/Toaster.tsx'
 
 export function AppLayout() {
@@ -17,6 +18,7 @@ export function AppLayout() {
       {state.recoveryNotice && <p className="storage-notice">{state.recoveryNotice}</p>}
       <Outlet />
     </main>
+    <Footer />
     <Toaster />
   </div>
 }

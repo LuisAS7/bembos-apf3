@@ -1,4 +1,4 @@
-.customization-layout { display: grid; gap: 1.5rem; align-items: start; }
+.customization-layout { display: grid; grid-template-columns: minmax(0,1fr); gap: 1.5rem; align-items: start; }
 .customization-layout > * { min-width: 0; }
 .back-link { gap: .5rem; margin-block-end: .75rem; }
 .configured-product { overflow: hidden; border: 1px solid var(--color-decoration); border-radius: var(--radius-md); background: white; }
@@ -21,7 +21,7 @@
 .config-steps [data-state='current'] button { color: var(--color-brand); font-weight: 800; text-decoration: underline; text-underline-offset: .2em; }
 .config-steps [data-state='current'] .step-number { background: var(--color-brand); border: 3px double white; outline: 2px solid var(--color-brand); color: white; }
 .config-steps [data-state='completed'] .step-number { color: var(--color-success); border-color: var(--color-success); background: white; }
-.configuration-form { display: grid; gap: 1.25rem; background: white; border: 1px solid var(--color-decoration); border-radius: var(--radius-md); padding: 1.25rem; }
+.configuration-form { display: grid; grid-template-columns: minmax(0,1fr); gap: 1.25rem; background: white; border: 1px solid var(--color-decoration); border-radius: var(--radius-md); padding: 1.25rem; }
 .stage-heading h2 { font-size: 1.5rem; }
 .config-group { min-width: 0; margin: 0; padding: 0; border: 0; }
 .config-group legend { font-weight: 700; font-size: 1rem; }
@@ -92,4 +92,10 @@
   .configuration-action-bar .quantity-field > .control-help { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .configuration-submit, .configuration-action-bar .action-help { grid-column: 1 / -1; }
   .configuration-action-bar { gap: .5rem 1rem; }
+}
+
+@media (forced-colors: active) {
+  .config-option--selected { border: 2px solid Highlight; outline: 2px solid Highlight; outline-offset: 2px; }
+  .config-steps [data-state='current'] .step-number { border-color: Highlight; outline-color: Highlight; }
+  .config-steps [data-state='completed'] .step-number { border-color: CanvasText; }
 }
