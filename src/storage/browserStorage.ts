@@ -26,7 +26,8 @@ const localReceiptImage = (value: unknown): boolean => record(value) && typeof v
 
 function isPreferences(value: unknown): value is DisplayPreferences {
   return record(value) && typeof value.textSize === 'string' && ['default', 'large', 'extra-large'].includes(value.textSize) &&
-    typeof value.reduceMotion === 'boolean' && typeof value.underlineLinks === 'boolean'
+    typeof value.reduceMotion === 'boolean' && typeof value.underlineLinks === 'boolean' &&
+    (value.colorVision === undefined || (typeof value.colorVision === 'string' && ['none', 'protanopia', 'deuteranopia', 'tritanopia'].includes(value.colorVision)))
 }
 
 function isOrder(value: unknown): value is OrderDraft {
@@ -114,7 +115,8 @@ function safeOrder(value: OrderDraft): OrderDraft {
 }
 
 function safePreferences(value: DisplayPreferences): DisplayPreferences {
-  return { textSize: value.textSize, reduceMotion: value.reduceMotion, underlineLinks: value.underlineLinks }
+  return { textSize: value.textSize, reduceMotion: value.reduceMotion, underlineLinks: value.underlineLinks,
+    ...(value.colorVision !== undefined ? { colorVision: value.colorVision } : {}) }
 }
 
 function safeConfirmation(value: ConfirmationReceipt): ConfirmationReceipt {

@@ -106,6 +106,8 @@ export interface DisplayPreferences {
   textSize: 'default' | 'large' | 'extra-large'
   reduceMotion: boolean
   underlineLinks: boolean
+  // Optional: absent/undefined means 'none'. Kept optional so older stored snapshots stay valid.
+  colorVision?: 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia'
 }
 
 // Safe session receipt: no contact, address, card data or Yape operation/code.

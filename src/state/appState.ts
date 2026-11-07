@@ -52,7 +52,7 @@ export function createInitialState(): AppState {
     checkout: emptyCheckout(),
     payment: emptyPayment(), paymentRevision: 0,
     configurationPreview: null,
-    preferences: { textSize: 'default', reduceMotion: false, underlineLinks: false },
+    preferences: { textSize: 'default', reduceMotion: false, underlineLinks: false, colorVision: 'none' },
     lastConfirmation: null, storageNotice: '', recoveryNotice: '', toasts: [], notificationSequence: 0, cartAnnouncement: '',
   }
 }
