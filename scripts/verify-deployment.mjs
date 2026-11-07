@@ -11,7 +11,7 @@ const assets = [...index.matchAll(/(?:src|href)="(\/[^"?#]+)"/g)].map((match) =>
 const paths = ['/', '/menu', '/pedido', '/pagar', '/productos/cheese/personalizar', '/productos/menu-taypa-demo/personalizar', '/pedido/ausente/editar', '/confirmacion/ausente']
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex')
 async function files(directory) {
-  const entries = await readdir(directory, { withFileTypes: true })
+  const entries = (await readdir(directory, { withFileTypes: true })).filter((entry) => !entry.name.startsWith('.'))
   return (await Promise.all(entries.map((entry) => entry.isDirectory() ? files(join(directory, entry.name)) : [join(directory, entry.name)]))).flat()
 }
 const images = (await files(join(dist, 'images'))).map((file) => `/${relative(dist, file).replaceAll('\\', '/')}`)
