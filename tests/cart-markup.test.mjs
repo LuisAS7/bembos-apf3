@@ -84,7 +84,7 @@ test('Toast exposes native Undo and dismiss controls without autofocus or automa
   } finally { await server.close() }
 })
 
-test('direct checkout shell blocks empty and incompatible carts and has no payment form', async () => {
+test('direct checkout blocks empty and incompatible carts and exposes no payment controls', async () => {
   const server = await createServer({ server: { middlewareMode: true, hmr: false, watch: null } })
   try {
     const { CheckoutPage } = await server.ssrLoadModule('/src/pages/CheckoutPage.tsx')
@@ -95,8 +95,8 @@ test('direct checkout shell blocks empty and incompatible carts and has no payme
     assert.ok(render(state).includes('Revisa tu pedido'))
     state.order.items = [item()]
     const valid = render(state)
-    assert.ok(valid.includes('La entrega y el pago estarán disponibles pronto'))
-    assert.ok(!valid.includes('<form'))
+    assert.ok(valid.includes('Datos de entrega'))
+    assert.ok(!valid.includes('cardNumber'))
     assert.ok(!valid.includes('/confirmacion/'))
     state.order.locationId = 'demo-centro'
     assert.ok(render(state).includes('Revisa tu pedido'))

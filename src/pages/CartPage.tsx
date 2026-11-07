@@ -77,11 +77,11 @@ export function CartPage() {
         <p>No incluye entrega. No se realizan pedidos ni pagos reales.</p>
         {summary.canContinue ? <Link className="button" to="/pagar" aria-describedby="checkout-help">Continuar al pago</Link>
           : <AccessibleButton disabled aria-describedby="checkout-help">Continuar al pago</AccessibleButton>}
-        <p id="checkout-help">{!summary.items.length ? 'Agrega al menos un producto.' : !summary.canContinue ? 'Actualiza o elimina todos los ítems incompatibles para continuar.' : 'La pantalla de entrega y pago sigue pendiente de Fase 5.'}</p>
+        <p id="checkout-help">{!summary.items.length ? 'Agrega al menos un producto.' : !summary.canContinue ? 'Actualiza o elimina todos los ítems incompatibles para continuar.' : 'Elige cómo recibir tu pedido y revisa el total. El pago todavía no está habilitado.'}</p>
       </aside>
     </div>
     <AccessibleModal open={clearing} title="Limpiar pedido" onClose={() => setClearing(false)}>
-      <p>Se eliminarán todos los productos, sus configuraciones y la copia del pedido guardada en este navegador. Esta acción no se puede deshacer.</p>
+      <p>Se eliminarán todos los productos, sus configuraciones, los datos temporales de entrega y la copia del pedido guardada en este navegador. Esta acción no se puede deshacer.</p>
       <p>Se conservarán tus preferencias de visualización y el local actual mientras esta página siga abierta. No se borran otras claves del navegador.</p>
       <div className="modal-actions"><AccessibleButton className="button--secondary" onClick={() => setClearing(false)}>Conservar pedido</AccessibleButton>
         <AccessibleButton onClick={() => { dispatch({ type: 'cart/clear' }); setClearing(false) }}>Sí, limpiar pedido</AccessibleButton></div>

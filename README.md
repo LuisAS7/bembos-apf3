@@ -2,7 +2,7 @@
 
 Prototipo académico del curso Interacción Hombre Máquina. El alcance y el trabajo por fases se rigen por [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md).
 
-La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos, revisar cantidades, precios y restricciones por local. La Fase 4 conecta el carrito multiproducto: agregar, editar, cantidades, eliminar, Deshacer, recuperación y limpieza con confirmación. Checkout, pagos y confirmación final siguen pendientes de sus fases y aprobación independiente.
+La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos, revisar cantidades, precios y restricciones por local. La Fase 4 conecta el carrito multiproducto. La Fase 5 añade Delivery, Recojo, validación y resumen de importes. Pagos y confirmación final siguen pendientes de sus fases y aprobación independiente.
 
 ## Entorno y comandos
 
@@ -33,7 +33,7 @@ El build ejecuta TypeScript y Vite y regenera `dist/`, excluido por Git junto co
 | `/productos/cheese/personalizar` | Configurador del producto; también aplica a otros IDs del catálogo |
 | `/pedido` | Pedido |
 | `/pedido/:itemId/editar` | Edición del ítem exacto del carrito; un ID ausente muestra un estado explicativo |
-| `/pagar` | Pantalla base protegida si el pedido está vacío o tiene incompatibilidades; sin checkout |
+| `/pagar` | Entrega y resumen; bloqueado con pedido vacío o incompatible, sin pagos |
 | `/confirmacion/demo` | Confirmación vacía |
 | Otras rutas | Página no encontrada |
 
@@ -63,11 +63,17 @@ Eliminar ofrece Deshacer sin caducidad automática, con botón nativo. Se conser
 
 Se recupera el pedido completo al abrir, revalidando catálogo, selecciones y disponibilidad. Los precios guardados no autorizan importes. Ítems obsoletos o agotados se conservan para revisión; precios imposibles de recalcular se muestran pendientes. Datos dañados/versiones incompatibles no se sobrescriben al montar; el aviso explica cómo iniciar un pedido nuevo. El almacenamiento bloqueado permite trabajar en memoria y muestra la limitación. La recuperación se anuncia mediante una región de estado, sin mover el foco.
 
-«Limpiar pedido» solicita confirmación y elimina solo `bembos.apf3.order` e historial temporal de Deshacer. Conserva preferencias, otras claves y el comprobante independiente de una confirmación anterior. El local actual permanece en memoria; tras recargar sin instantánea vuelve al inicial. No hay estado de checkout implementado.
+«Limpiar pedido» solicita confirmación y elimina `bembos.apf3.order`, el historial temporal de Deshacer y los datos de checkout en memoria. Conserva preferencias, otras claves y el comprobante independiente de una confirmación anterior. El local actual permanece en memoria; tras recargar sin instantánea vuelve al inicial.
+
+## Checkout
+
+Delivery solicita nombre, teléfono, dirección y referencia opcional. Recojo conserva el contacto, oculta dirección/referencia y ofrece información y horarios relativos mock del local. Tarifas de entrega mock: San Miguel S/5.00, Centro S/6.00 y Norte S/7.00; recojo S/0.00. El resumen recalcula desde el catálogo y permite editar el pedido.
+
+Los datos personales se conservan solo en Context en memoria, también al editar el pedido; recargar o limpiar los descarta. Continuar valida, conserva los valores y prepara foco al primer campo inválido. Con datos válidos informa que el pago aún no está disponible, sin confirmar nada. Cambiar de local reinicia el horario a «Lo antes posible». Detalles y validaciones pendientes en el [reporte de Fase 5](docs/trazabilidad/fase5-checkout.md).
 
 ## Accesibilidad y persistencia
 
-Se mantiene `lang="es"`, títulos por ruta, landmarks, enlaces nativos, skip link, targets principales con mínimo CSS de 44 px, `:focus-visible`, colores claros y reducción de movimiento. La tipografía usa Arial/Segoe UI del sistema. Los formularios de entrega y pago se incorporarán en sus fases.
+Se mantiene `lang="es"`, títulos por ruta, landmarks, enlaces nativos, skip link, targets principales con mínimo CSS de 44 px, `:focus-visible`, colores claros y reducción de movimiento. La tipografía usa Arial/Segoe UI del sistema. El checkout incorpora autocomplete, etiquetas, instrucciones y errores asociados; los formularios de pago siguen pendientes.
 
 La política de navegación trata `/` y `/menu` como la misma pantalla y conserva el foco inicial del documento en ambas cargas. Los cambios posteriores entre pantallas mantienen el traslado del foco a `main`. Su aceptación en navegador se registra separadamente de la revisión de código.
 

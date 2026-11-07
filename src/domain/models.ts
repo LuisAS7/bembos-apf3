@@ -92,6 +92,16 @@ export interface OrderDraft {
   items: CartItem[]
 }
 
+// In-memory only: never part of the persisted order or confirmation receipt.
+export interface CheckoutDraft {
+  deliveryMethod: DeliveryMethod
+  fullName: string
+  phone: string
+  address: string
+  reference: string
+  pickupSlot: string
+}
+
 export interface DisplayPreferences {
   textSize: 'default' | 'large' | 'extra-large'
   reduceMotion: boolean

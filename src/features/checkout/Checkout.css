@@ -1,0 +1,29 @@
+.checkout-layout { display: grid; gap: var(--space-5); align-items: start; }
+.checkout-layout > * { min-width: 0; }
+.checkout-form { display: grid; gap: var(--space-5); padding: var(--space-5); background: var(--color-surface); border-radius: var(--radius-md); }
+.delivery-methods { min-width: 0; margin: 0; padding: 0; border: 0; }
+.delivery-methods legend, .form-field label { font-weight: 700; }
+.delivery-options { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block-start: var(--space-3); }
+.delivery-choice { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); min-height: var(--target-size); min-width: var(--target-size); border: 2px solid var(--color-border); border-radius: var(--radius-sm); cursor: pointer; }
+.delivery-choice input { width: 1.125rem; height: 1.125rem; margin: 0; accent-color: var(--color-brand); flex-shrink: 0; }
+.delivery-choice--selected { border-color: var(--color-brand); }
+.form-field { display: grid; gap: var(--space-2); min-width: 0; }
+.form-field .control-help { margin: 0; }
+.form-field input, .form-field textarea, .form-field select { width: 100%; min-width: 0; min-height: var(--target-size); padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface); color: var(--color-text); font: inherit; }
+.form-field textarea { resize: vertical; }
+.form-field [aria-invalid='true'] { border-color: var(--color-error); }
+.field-error { color: var(--color-error); font-weight: 700; overflow-wrap: anywhere; }
+.pickup-details { display: grid; gap: var(--space-3); }
+.checkout-products { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; overflow-wrap: anywhere; }
+.checkout-products > li { padding-block-end: var(--space-4); border-block-end: 1px solid var(--color-border); }
+.checkout-products h3 { font-size: var(--text-base); }
+.checkout-options { margin: var(--space-2) 0 0; font-size: var(--text-sm); }
+.checkout-options dt { font-weight: 700; }
+.checkout-options dd { margin: 0 0 var(--space-1); }
+.checkout-totals { display: grid; gap: var(--space-3); margin: 0; }
+.checkout-totals > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); }
+.checkout-totals dd { margin: 0; font-weight: 700; }
+.checkout-summary p { overflow-wrap: anywhere; }
+@media (min-width: 64rem) {
+  .checkout-layout { grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 1fr); }
+}

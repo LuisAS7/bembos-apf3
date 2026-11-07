@@ -1,9 +1,11 @@
-import type { CartItem, ConfirmationReceipt, DisplayPreferences, OrderDraft, ProductConfiguration } from '../domain/models.ts'
+import type { CartItem, CheckoutDraft, ConfirmationReceipt, DisplayPreferences, OrderDraft, ProductConfiguration } from '../domain/models.ts'
+import { emptyCheckout } from '../features/checkout/checkout.ts'
 import { addItem, editItem, itemLabel, removeItem, restoreItem } from '../features/cart/cart.ts'
 import type { CartToast } from '../features/cart/cart.ts'
 
 export interface AppState {
   order: OrderDraft
+  checkout: CheckoutDraft
   preferences: DisplayPreferences
   lastConfirmation: ConfirmationReceipt | null
   storageNotice: string
@@ -14,6 +16,7 @@ export interface AppState {
 }
 export type AppAction =
   | { type: 'order/replace'; value: OrderDraft }
+  | { type: 'checkout/replace'; value: CheckoutDraft }
   | { type: 'cart/add'; item: CartItem }
   | { type: 'cart/edit'; itemId: string; configuration: ProductConfiguration; quantity: number }
   | { type: 'cart/quantity'; itemId: string; quantity: number }
@@ -28,6 +31,7 @@ export type AppAction =
 export function createInitialState(): AppState {
   return {
     order: { catalogVersion: 1, locationId: 'san-miguel', items: [] },
+    checkout: emptyCheckout(),
     preferences: { textSize: 'default', reduceMotion: false, underlineLinks: false },
     lastConfirmation: null, storageNotice: '', recoveryNotice: '', toasts: [], notificationSequence: 0, cartAnnouncement: '',
   }
@@ -41,7 +45,9 @@ function notify(state: AppState, order: OrderDraft, message: string, removed?: C
 
 export function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
-    case 'order/replace': return { ...state, order: action.value, recoveryNotice: '' }
+    case 'order/replace': return { ...state, order: action.value, recoveryNotice: '', checkout: action.value.locationId === state.order.locationId
+      ? state.checkout : { ...state.checkout, pickupSlot: 'asap' } }
+    case 'checkout/replace': return { ...state, checkout: { ...action.value } }
     case 'cart/add': {
       const order = addItem(state.order, action.item)
       return order === state.order ? state : notify(state, order, 'Producto agregado al pedido.')
@@ -69,7 +75,7 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         toasts: state.toasts.map((entry) => entry.id === action.toastId
         ? { id: entry.id, message: `${itemLabel(toast.removed!.item)} restaurada en el pedido. Revisa su disponibilidad en el local actual.` } : entry) }
     }
-    case 'cart/clear': return notify({ ...state, toasts: [], recoveryNotice: '' },
+    case 'cart/clear': return notify({ ...state, checkout: emptyCheckout(), toasts: [], recoveryNotice: '' },
       { ...state.order, catalogVersion: 1, items: [] }, 'Pedido limpiado. Se conservaron tus preferencias de visualización y el local actual.')
     case 'toast/dismiss': return { ...state, toasts: state.toasts.filter((toast) => toast.id !== action.toastId) }
     case 'preferences/replace': return { ...state, preferences: action.value }
