@@ -4,6 +4,8 @@ import { AppContext } from '../state/AppContext.ts'
 import { appReducer, createInitialState } from '../state/appState.ts'
 import type { AppAction } from '../state/appState.ts'
 import { recoverOrder } from '../features/cart/cart.ts'
+import { excludeConfirmedItems } from '../features/confirmation/confirmation.ts'
+import { confirmOrder as commitConfirmation } from '../features/confirmation/confirmOrder.ts'
 import { clearStoredOrder, readLastConfirmation, readOrder, readPreferences, saveLastConfirmation, saveOrder, savePreferences } from '../storage/browserStorage.ts'
 
 function initialize() {
@@ -16,6 +18,11 @@ function initialize() {
   const recovered = recoverOrder(order, state.order)
   state.order = recovered.order
   state.recoveryNotice = recovered.message
+  const unconfirmed = excludeConfirmedItems(state.order, state.lastConfirmation)
+  if (unconfirmed !== state.order) {
+    state.order = unconfirmed
+    state.recoveryNotice = 'Conservamos tu último comprobante y no restauramos los ítems ya confirmados de la copia anterior del carrito.'
+  }
   if ([preferences.status, confirmation.status, order.status].includes('unavailable')) {
     state.storageNotice = 'El almacenamiento del navegador no está disponible. Los cambios se conservarán solo mientras esta página esté abierta.'
   } else if ([preferences.status, confirmation.status, order.status].includes('invalid')) {
@@ -47,12 +54,20 @@ export function AppProviders({ children }: PropsWithChildren) {
       reduce(notice)
     }
   }, [])
+  const confirmOrder = useCallback((attemptId: string) => {
+    const outcome = commitConfirmation(currentState.current, attemptId)
+    if (outcome.action) {
+      currentState.current = outcome.state
+      reduce(outcome.action)
+    }
+    return outcome.result
+  }, [])
   useEffect(() => {
     const root = document.documentElement
     root.dataset.textSize = state.preferences.textSize
     root.dataset.reduceMotion = String(state.preferences.reduceMotion)
     root.dataset.underlineLinks = String(state.preferences.underlineLinks)
   }, [state.preferences])
-  const value = useMemo(() => ({ state, dispatch }), [state, dispatch])
+  const value = useMemo(() => ({ state, dispatch, confirmOrder }), [state, dispatch, confirmOrder])
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

@@ -109,6 +109,21 @@ export interface DisplayPreferences {
 }
 
 // Safe session receipt: no contact, address, card data or Yape operation/code.
+export interface ConfirmedItemSnapshot {
+  itemId: string
+  name: string
+  variantLabel: string | null
+  selections: Array<{ label: string; options: string[] }>
+  unitPriceCents: Cents
+  source: DataSource['kind']
+}
+export interface ConfirmationSummary {
+  locationName: string
+  subtotalCents: Cents
+  deliveryFeeCents: Cents
+  estimatedMinutes: number
+  pickupSlotLabel: string | null
+}
 export interface ConfirmationReceipt {
   orderId: string
   confirmedAt: string
@@ -116,5 +131,13 @@ export interface ConfirmationReceipt {
   deliveryMethod: DeliveryMethod
   paymentMethod: PaymentMethod
   totalCents: Cents
-  items: Array<{ productId: string; quantity: number; lineTotalCents: Cents }>
+  // Optional only for compatibility with the pre-phase-7 reduced contract.
+  paymentAttemptId?: string
+  summary?: ConfirmationSummary
+  items: Array<{ productId: string; quantity: number; lineTotalCents: Cents; snapshot?: ConfirmedItemSnapshot }>
+}
+export type CompleteConfirmationReceipt = Omit<ConfirmationReceipt, 'paymentAttemptId' | 'summary' | 'items'> & {
+  paymentAttemptId: string
+  summary: ConfirmationSummary
+  items: Array<ConfirmationReceipt['items'][number] & { snapshot: ConfirmedItemSnapshot }>
 }

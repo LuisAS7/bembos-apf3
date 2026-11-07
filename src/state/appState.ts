@@ -6,6 +6,8 @@ import { emptyPayment, paymentContextReady } from '../features/payments/payment.
 import type { PaymentSimulation } from '../features/payments/payment.ts'
 import type { PaymentMethod } from '../domain/models.ts'
 import { checkoutTotals } from '../features/checkout/checkout.ts'
+import { canConfirm } from '../features/confirmation/confirmation.ts'
+import type { CompleteConfirmationReceipt } from '../domain/models.ts'
 
 export interface AppState {
   order: OrderDraft
@@ -38,6 +40,10 @@ export type AppAction =
   | { type: 'confirmation/replace'; value: ConfirmationReceipt | null }
   | { type: 'storage/notice'; value: string }
 
+// Only the provider's storage transaction commits this internal reducer action.
+export interface ConfirmationCompleteAction { type: 'confirmation/complete'; receipt: CompleteConfirmationReceipt; cleanupFailed: boolean }
+type ReducerAction = AppAction | ConfirmationCompleteAction
+
 export function createInitialState(): AppState {
   return {
     order: { catalogVersion: 1, locationId: 'san-miguel', items: [] },
@@ -54,8 +60,14 @@ function notify(state: AppState, order: OrderDraft, message: string, removed?: C
     toasts: [...state.toasts.filter((toast) => toast.removed), { id: `notice-${sequence}`, message, removed }] }
 }
 
-function reduceAppState(state: AppState, action: AppAction): AppState {
+function reduceAppState(state: AppState, action: ReducerAction): AppState {
   switch (action.type) {
+    case 'confirmation/complete': {
+      if (!canConfirm(state) || action.receipt.paymentAttemptId !== state.payment.attemptId || action.receipt.totalCents !== state.payment.totalCents) return state
+      return { ...state, order: { ...state.order, items: [] }, checkout: emptyCheckout(), payment: emptyPayment(),
+        lastConfirmation: action.receipt, toasts: [], recoveryNotice: '', cartAnnouncement: '',
+        storageNotice: action.cleanupFailed ? 'Pedido confirmado y comprobante guardado. No pudimos borrar la copia anterior del carrito. No restauraremos esos ítems mientras este comprobante esté disponible en esta sesión.' : '' }
+    }
     case 'payment/start': {
       if (['processing', 'approved'].includes(state.payment.status) || !action.attemptId.trim() ||
         !['cash', 'card', 'yape'].includes(action.method) || action.revision !== state.paymentRevision ||
@@ -112,10 +124,10 @@ function reduceAppState(state: AppState, action: AppAction): AppState {
 
 // Every order/checkout mutation cancels an in-flight simulation or its approval.
 // A revision prevents late callbacks from approving even a change later undone.
-export function appReducer(state: AppState, action: AppAction): AppState {
+export function appReducer(state: AppState, action: ReducerAction): AppState {
   const next = reduceAppState(state, action)
   if (next.order === state.order && next.checkout === state.checkout) return next
-  const invalidated = action.type !== 'cart/clear' && ['processing', 'approved', 'invalidated'].includes(state.payment.status)
+  const invalidated = action.type !== 'cart/clear' && action.type !== 'confirmation/complete' && ['processing', 'approved', 'invalidated'].includes(state.payment.status)
   return { ...next, paymentRevision: state.paymentRevision + 1,
     payment: { ...emptyPayment(), status: invalidated ? 'invalidated' : 'idle' } }
 }

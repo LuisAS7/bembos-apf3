@@ -9,6 +9,7 @@ import { formatPrice } from '../catalog/filterProducts.ts'
 import { cardBrand, emptyPaymentDraft, validatePayment } from './payment.ts'
 import type { PaymentDraft, PaymentIssue, YapeChallenge } from './payment.ts'
 import { YapeDemo } from './YapeDemo.tsx'
+import { ConfirmOrderButton } from '../confirmation/ConfirmOrderButton.tsx'
 import './Payments.css'
 
 const methods: { id: PaymentMethod; label: string }[] = [
@@ -137,5 +138,6 @@ export function PaymentPanel() {
     </form>
     <p role="status" aria-atomic="true">{processing ? 'Procesando pago simulado. No se envían datos a servicios de pago.' : approved
       ? 'Simulación aprobada. No se ha confirmado el pedido ni realizado un pago real.' : state.payment.status === 'invalidated' ? 'La simulación anterior ya no es válida. Revisa el pedido, la entrega y el pago.' : ''}</p>
+    {approved && state.payment.attemptId && <ConfirmOrderButton attemptId={state.payment.attemptId} />}
   </section>
 }

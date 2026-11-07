@@ -38,13 +38,36 @@ function isOrder(value: unknown): value is OrderDraft {
 }
 
 function isConfirmation(value: unknown): value is ConfirmationReceipt {
-  return record(value) && text(value.orderId) && text(value.confirmedAt) &&
+  const base = record(value) && text(value.orderId) && text(value.confirmedAt) &&
     Number.isFinite(Date.parse(value.confirmedAt)) && text(value.locationId) &&
     typeof value.deliveryMethod === 'string' && ['delivery', 'pickup'].includes(value.deliveryMethod) &&
     typeof value.paymentMethod === 'string' && ['cash', 'card', 'yape'].includes(value.paymentMethod) && money(value.totalCents) &&
     Array.isArray(value.items) && value.items.length > 0 && value.items.every((item: unknown) =>
       record(item) && text(item.productId) && positive(item.quantity) && money(item.lineTotalCents),
     )
+  if (!base || !record(value)) return false
+  const items = value.items as Array<Record<string, unknown>>
+  const extended = value.summary !== undefined || value.paymentAttemptId !== undefined || items.some((item) => item.snapshot !== undefined)
+  if (!extended) return true // Earlier reduced receipts remain readable, without inventing a full summary.
+  const summary = value.summary
+  if (!/^BEM-[a-zA-Z0-9-]{1,64}$/.test(value.orderId as string) || !text(value.paymentAttemptId) || !record(summary) ||
+    !text(summary.locationName) || !money(summary.subtotalCents) || !money(summary.deliveryFeeCents) || !positive(summary.estimatedMinutes) ||
+    !(summary.pickupSlotLabel === null || text(summary.pickupSlotLabel))) return false
+  const ids = new Set<string>()
+  let subtotal = 0
+  for (const item of items) {
+    const snapshot = item.snapshot
+    if (!record(snapshot) || !text(snapshot.itemId) || ids.has(snapshot.itemId) || !text(snapshot.name) ||
+      !(snapshot.variantLabel === null || text(snapshot.variantLabel)) || !money(snapshot.unitPriceCents) ||
+      !['apf2', 'academic-mock'].includes(snapshot.source as string) || !Array.isArray(snapshot.selections) ||
+      !snapshot.selections.every((group: unknown) => record(group) && text(group.label) && Array.isArray(group.options) && group.options.every(text)) ||
+      snapshot.unitPriceCents * (item.quantity as number) !== item.lineTotalCents) return false
+    ids.add(snapshot.itemId)
+    subtotal += item.lineTotalCents as number
+  }
+  return money(subtotal) && subtotal === summary.subtotalCents &&
+    summary.subtotalCents + summary.deliveryFeeCents === value.totalCents &&
+    (value.deliveryMethod !== 'pickup' || (summary.deliveryFeeCents === 0 && text(summary.pickupSlotLabel)))
 }
 
 function read<T>(kind: StorageKind, key: string, valid: (value: unknown) => value is T): StorageRead<T> {
@@ -92,8 +115,14 @@ function safeConfirmation(value: ConfirmationReceipt): ConfirmationReceipt {
   return {
     orderId: value.orderId, confirmedAt: value.confirmedAt, locationId: value.locationId,
     deliveryMethod: value.deliveryMethod, paymentMethod: value.paymentMethod, totalCents: value.totalCents,
+    ...(value.paymentAttemptId !== undefined ? { paymentAttemptId: value.paymentAttemptId } : {}),
+    ...(value.summary ? { summary: { locationName: value.summary.locationName, subtotalCents: value.summary.subtotalCents,
+      deliveryFeeCents: value.summary.deliveryFeeCents, estimatedMinutes: value.summary.estimatedMinutes, pickupSlotLabel: value.summary.pickupSlotLabel } } : {}),
     items: value.items.map((item) => ({
       productId: item.productId, quantity: item.quantity, lineTotalCents: item.lineTotalCents,
+      ...(item.snapshot ? { snapshot: { itemId: item.snapshot.itemId, name: item.snapshot.name, source: item.snapshot.source,
+        unitPriceCents: item.snapshot.unitPriceCents, variantLabel: item.snapshot.variantLabel,
+        selections: item.snapshot.selections.map((group) => ({ label: group.label, options: [...group.options] })) } } : {}),
     })),
   }
 }

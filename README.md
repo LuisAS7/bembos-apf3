@@ -2,7 +2,7 @@
 
 Prototipo académico del curso Interacción Hombre Máquina. El alcance y el trabajo por fases se rigen por [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md).
 
-La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos, revisar cantidades, precios y restricciones por local. La Fase 4 conecta el carrito multiproducto. La Fase 5 añade entrega y resumen; la Fase 6 incorpora efectivo, tarjeta y Yape simulados. La confirmación final requiere aprobación de Fase 7.
+La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos; la Fase 4 conecta el carrito multiproducto. La Fase 5 añade entrega y resumen; la Fase 6 incorpora pagos simulados y la Fase 7 confirma el pedido de demostración y guarda su último comprobante reducido. Auditoría y pulido posteriores requieren su aprobación.
 
 ## Entorno y comandos
 
@@ -34,10 +34,10 @@ El build ejecuta TypeScript y Vite y regenera `dist/`, excluido por Git junto co
 | `/pedido` | Pedido |
 | `/pedido/:itemId/editar` | Edición del ítem exacto del carrito; un ID ausente muestra un estado explicativo |
 | `/pagar` | Entrega, resumen y pagos exclusivamente simulados; bloqueado con pedido vacío o incompatible |
-| `/confirmacion/demo` | Confirmación vacía |
+| `/confirmacion/:pedidoId` | Último comprobante de esta sesión, o explicación si no existe/no corresponde |
 | Otras rutas | Página no encontrada |
 
-Los enlaces «Ver producto» abren su configurador. «Agregar al pedido» valida y agrega un nuevo ítem con identidad independiente; «Guardar cambios» actualiza el mismo ítem y vuelve al pedido. El ID `demo` de confirmación sigue siendo un marcador de pantalla vacía.
+Los enlaces «Ver producto» abren su configurador. «Agregar al pedido» crea un ítem independiente; «Guardar cambios» actualiza ese ítem. La confirmación requiere una aprobación simulada vigente y guardar correctamente el comprobante; acceder a su ruta nunca confirma por sí solo.
 
 ## Organización
 
@@ -73,9 +73,15 @@ Los datos personales se conservan solo en Context en memoria, también al editar
 
 ## Pagos simulados
 
-Efectivo admite vuelto con monto estrictamente mayor al total. Tarjeta valida titular, Visa/Mastercard, longitud, Luhn, MM/AA y CVV ficticio. Yape genera una operación, QR y código de demostración sin iniciar transferencias. Hay procesamiento de 800 ms, rechazo explícito de prueba y aprobación simulada; no se confirma un pedido.
+Efectivo admite vuelto con monto estrictamente mayor al total. Tarjeta valida titular, Visa/Mastercard, longitud, Luhn, MM/AA y CVV ficticio. Yape genera una operación, QR y código de demostración sin iniciar transferencias. Hay procesamiento de 800 ms, rechazo explícito de prueba y aprobación simulada. Después se confirma el pedido académico mediante una acción separada.
 
 Los datos de tarjeta y códigos permanecen en el formulario, se limpian al iniciar una simulación válida/cambiar de método y se descartan al salir. El estado compartido solo conserva metadatos, nunca esos campos. Cambiar pedido o checkout invalida los intentos/aprobaciones, incluso si luego se deshace el cambio; el cierre cancela intentos pendientes. Sin persistencia de pagos ni conexiones externas. [Reporte y evidencias de Fase 6](docs/trazabilidad/fase6-pagos.md).
+
+## Confirmación
+
+«Confirmar pedido simulado» revalida carrito, disponibilidad, entrega e importe aprobado. Guarda una instantánea no sensible y solo después limpia carrito, checkout y pago. El ID ficticio se muestra como texto y es el único contenido del QR. El comprobante conserva productos/opciones/precios/local sin depender del catálogo o de pedidos posteriores.
+
+Solo se conserva `bembos.apf3.lastConfirmation` en sessionStorage. Si falla guardarlo, el pedido permanece intacto y se permite reintentar. Si falla borrar la copia local del carrito, se advierte y sus ítems confirmados no se restauran mientras este comprobante esté disponible. Repetir el mismo intento devuelve el mismo comprobante; recargar y Atrás/Adelante no ejecutan confirmaciones. No hay tracking ni historial. [Reporte y evidencias de Fase 7](docs/trazabilidad/fase7-confirmacion.md).
 
 ## Accesibilidad y persistencia
 
@@ -83,7 +89,7 @@ Se mantiene `lang="es"`, títulos por ruta, landmarks, enlaces nativos, skip lin
 
 La política de navegación trata `/` y `/menu` como la misma pantalla y conserva el foco inicial del documento en ambas cargas. Los cambios posteriores entre pantallas mantienen el traslado del foco a `main`. Su aceptación en navegador se registra separadamente de la revisión de código.
 
-El contrato de `localStorage` utiliza pedido y preferencias bajo sobres `schemaVersion: 1`; el catálogo actual usa `catalogVersion: 1`. `sessionStorage` reserva `bembos.apf3.lastConfirmation` con un comprobante reducido. No se persisten datos de contacto, dirección, tarjeta ni códigos Yape. La confirmación aún no se conecta al flujo.
+El contrato de `localStorage` utiliza pedido y preferencias bajo sobres `schemaVersion: 1`; el catálogo actual usa `catalogVersion: 1`. `sessionStorage` utiliza `bembos.apf3.lastConfirmation` con un comprobante reducido. No se persisten datos de contacto, dirección, tarjeta ni códigos Yape. Los comprobantes anteriores sin instantánea se identifican sin inventar su resumen.
 
 Detalles: trazabilidad de [Fase 1](docs/trazabilidad/fase1-fundacion.md), [Fase 2](docs/trazabilidad/fase2-menu.md), [Fase 3](docs/trazabilidad/fase3-personalizacion.md) y [Fase 4](docs/trazabilidad/fase4-carrito.md). Evidencia y limitaciones: [Fase 1](docs/evidencias/fase1/README.md), [Fase 2](docs/evidencias/fase2/README.md), [Fase 3](docs/evidencias/fase3/README.md) y [Fase 4](docs/evidencias/fase4/README.md).
 

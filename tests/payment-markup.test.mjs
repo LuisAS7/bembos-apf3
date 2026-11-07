@@ -3,6 +3,7 @@ import { test } from 'node:test'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createServer } from 'vite'
+import { MemoryRouter } from 'react-router-dom'
 import { createInitialState } from '../src/state/appState.ts'
 import { defaultConfiguration } from '../src/features/customization/configuration.ts'
 import { getConfigurableProduct } from '../src/data/customizations.ts'
@@ -16,7 +17,7 @@ test('payment markup uses native controls, fictional QR, associated labels and n
     const state = createInitialState()
     state.order.items = [{ itemId: 'a', productId: 'cheese', quantity: 1, unitPriceCents: 1690, configuration: defaultConfiguration(getConfigurableProduct('cheese')) }]
     state.checkout = { ...state.checkout, fullName: 'Persona Ficticia', phone: '987654321', address: 'Calle Ficticia 100' }
-    const render = () => renderToStaticMarkup(createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(PaymentPanel)))
+    const render = () => renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(PaymentPanel))))
     const cash = render()
     assert.ok(cash.includes('Simulación académica. No se realizará ningún pago real.'))
     assert.ok(cash.includes('Pagarás al recibir tu pedido.'))
