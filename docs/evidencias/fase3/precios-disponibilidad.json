@@ -1,0 +1,1250 @@
+{
+  "method": "Node evaluation of the pure configuration engine; not browser interaction",
+  "defaultCases": [
+    {
+      "productId": "cheese",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1690,
+      "totalCents": 1690,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1690
+        },
+        {
+          "label": "Cheese mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "cheese",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1690,
+      "totalCents": 1690,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1690
+        },
+        {
+          "label": "Cheese mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "cheese",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1690,
+      "totalCents": 1690,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1690
+        },
+        {
+          "label": "Cheese mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "royal",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2190,
+      "totalCents": 2190,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2190
+        },
+        {
+          "label": "Royal mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "royal",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2190,
+      "totalCents": 2190,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2190
+        },
+        {
+          "label": "Royal mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "royal",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "variant",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "papas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "clasica-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1490,
+      "totalCents": 1490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1490
+        },
+        {
+          "label": "Clásica Demo mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "clasica-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1490,
+      "totalCents": 1490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1490
+        },
+        {
+          "label": "Clásica Demo mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "clasica-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1490,
+      "totalCents": 1490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1490
+        },
+        {
+          "label": "Clásica Demo mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "bbq-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "variant",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "papas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "bbq-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1990,
+      "totalCents": 1990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1990
+        },
+        {
+          "label": "BBQ Demo mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "bbq-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 1990,
+      "totalCents": 1990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1990
+        },
+        {
+          "label": "BBQ Demo mediana",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-cheese-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2490,
+      "totalCents": 2490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2490
+        },
+        {
+          "label": "Cheese",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-cheese-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2490,
+      "totalCents": 2490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2490
+        },
+        {
+          "label": "Cheese",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-cheese-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2490,
+      "totalCents": 2490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2490
+        },
+        {
+          "label": "Cheese",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-royal-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2990,
+      "totalCents": 2990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2990
+        },
+        {
+          "label": "Royal",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-royal-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "principal",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "papas",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "bebida",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "combo-royal-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "principal",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "papas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "bebida",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "combo-clasica-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2290,
+      "totalCents": 2290,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2290
+        },
+        {
+          "label": "Clásica",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-clasica-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2290,
+      "totalCents": 2290,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2290
+        },
+        {
+          "label": "Clásica",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-clasica-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "principal",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "papas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "bebida",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "combo-bbq-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "principal",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "papas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "bebida",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "combo-bbq-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2790,
+      "totalCents": 2790,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2790
+        },
+        {
+          "label": "BBQ",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "combo-bbq-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2790,
+      "totalCents": 2790,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2790
+        },
+        {
+          "label": "BBQ",
+          "cents": 0
+        },
+        {
+          "label": "Papas medianas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "duo-cheese-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2990,
+      "totalCents": 2990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2990
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "duo-cheese-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 2990,
+      "totalCents": 2990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 2990
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "duo-cheese-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "duo-royal-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos San Miguel. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "duo-royal-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 3990,
+      "totalCents": 3990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 3990
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "duo-royal-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 3990,
+      "totalCents": 3990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 3990
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "para-compartir-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 4490,
+      "totalCents": 4490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 4490
+        },
+        {
+          "label": "Papas para compartir",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "para-compartir-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 4490,
+      "totalCents": 4490,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 4490
+        },
+        {
+          "label": "Papas para compartir",
+          "cents": 0
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "para-compartir-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "acompanamiento",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "salsas",
+          "message": "Producto agotado en Bembos Local Demo Norte. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "familiar-demo",
+      "locationId": "san-miguel",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 4990,
+      "totalCents": 4990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 4990
+        },
+        {
+          "label": "Para dos personas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        }
+      ]
+    },
+    {
+      "productId": "familiar-demo",
+      "locationId": "demo-centro",
+      "quantity": 1,
+      "issues": [
+        {
+          "field": "product",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "variant",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "bebida",
+          "message": "Producto agotado en Bembos Local Demo Centro. Puedes elegir otro producto o consultar otro local.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "familiar-demo",
+      "locationId": "demo-norte",
+      "quantity": 1,
+      "issues": [],
+      "unitPriceCents": 4990,
+      "totalCents": 4990,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 4990
+        },
+        {
+          "label": "Para dos personas",
+          "cents": 0
+        },
+        {
+          "label": "Bebida de cola",
+          "cents": 0
+        }
+      ]
+    }
+  ],
+  "configuredCheeseCases": [
+    {
+      "productId": "cheese",
+      "locationId": "san-miguel",
+      "quantity": 2,
+      "configuration": {
+        "variantId": "grande",
+        "selections": {
+          "papas": [
+            "grandes"
+          ],
+          "salsas": [
+            "mayonesa",
+            "ketchup"
+          ],
+          "ingredientes": [],
+          "extras": [
+            "queso"
+          ]
+        }
+      },
+      "issues": [],
+      "unitPriceCents": 2640,
+      "totalCents": 5280,
+      "lines": [
+        {
+          "label": "Precio base",
+          "cents": 1690
+        },
+        {
+          "label": "Cheese grande",
+          "cents": 300
+        },
+        {
+          "label": "Papas grandes",
+          "cents": 400
+        },
+        {
+          "label": "Mayonesa",
+          "cents": 0
+        },
+        {
+          "label": "Ketchup",
+          "cents": 0
+        },
+        {
+          "label": "Extra queso",
+          "cents": 250
+        }
+      ]
+    },
+    {
+      "productId": "cheese",
+      "locationId": "demo-centro",
+      "quantity": 2,
+      "configuration": {
+        "variantId": "grande",
+        "selections": {
+          "papas": [
+            "grandes"
+          ],
+          "salsas": [
+            "mayonesa",
+            "ketchup"
+          ],
+          "ingredientes": [],
+          "extras": [
+            "queso"
+          ]
+        }
+      },
+      "issues": [
+        {
+          "field": "variant",
+          "message": "Cheese grande agotada en este local Demo.",
+          "availability": true
+        },
+        {
+          "field": "group",
+          "groupId": "papas",
+          "message": "Papas grandes agotadas en este local Demo.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    },
+    {
+      "productId": "cheese",
+      "locationId": "demo-norte",
+      "quantity": 2,
+      "configuration": {
+        "variantId": "grande",
+        "selections": {
+          "papas": [
+            "grandes"
+          ],
+          "salsas": [
+            "mayonesa",
+            "ketchup"
+          ],
+          "ingredientes": [],
+          "extras": [
+            "queso"
+          ]
+        }
+      },
+      "issues": [
+        {
+          "field": "variant",
+          "message": "Cheese grande agotada en este local Demo.",
+          "availability": true
+        }
+      ],
+      "unitPriceCents": null,
+      "totalCents": null,
+      "lines": []
+    }
+  ]
+}

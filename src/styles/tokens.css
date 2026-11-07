@@ -28,7 +28,7 @@
   --space-8: 4rem;
   --radius-sm: 0.5rem;
   --radius-md: 0.875rem;
-  --target-size: 2.75rem;
+  --target-size: max(44px, 2.75rem);
   --content-width: 72rem;
   --bottom-nav-space: 5.5rem;
 }

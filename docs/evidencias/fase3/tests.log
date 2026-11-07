@@ -1,0 +1,215 @@
+> bembos-project@0.0.0 test
+> node --test --test-concurrency=1 tests/foundation.test.mjs tests/catalog.test.mjs tests/menu-markup.test.mjs tests/customization.test.mjs tests/customization-markup.test.mjs
+
+TAP version 13
+# Subtest: catalog has 12 unique products and four per category, with local images and explicit provenance
+ok 1 - catalog has 12 unique products and four per category, with local images and explicit provenance
+  ---
+  duration_ms: 6.9163
+  type: 'test'
+  ...
+# Subtest: APF2 names and prices remain Cheese S/16.90 and Royal S/21.90
+ok 2 - APF2 names and prices remain Cheese S/16.90 and Royal S/21.90
+  ---
+  duration_ms: 1.8775
+  type: 'test'
+  ...
+# Subtest: APF2 photograph bytes match the embedded original; no remote image requests are required
+ok 3 - APF2 photograph bytes match the embedded original; no remote image requests are required
+  ---
+  duration_ms: 4.3503
+  type: 'test'
+  ...
+# Subtest: search ignores case, accents and outer spaces and crosses the three categories
+ok 4 - search ignores case, accents and outer spaces and crosses the three categories
+  ---
+  duration_ms: 5.4215
+  type: 'test'
+  ...
+# Subtest: category combines with search, no matches returns empty, and clearing restores the category
+ok 5 - category combines with search, no matches returns empty, and clearing restores the category
+  ---
+  duration_ms: 1.495
+  type: 'test'
+  ...
+# Subtest: availability changes by location and unknown references are unavailable
+ok 6 - availability changes by location and unknown references are unavailable
+  ---
+  duration_ms: 0.6762
+  type: 'test'
+  ...
+# Subtest: empty-order location selection does not mutate data or erase snapshot metadata
+ok 7 - empty-order location selection does not mutate data or erase snapshot metadata
+  ---
+  duration_ms: 0.6553
+  type: 'test'
+  ...
+# Subtest: location selection protects existing cart snapshots and invalid/unavailable storage
+ok 8 - location selection protects existing cart snapshots and invalid/unavailable storage
+  ---
+  duration_ms: 1.5016
+  type: 'test'
+  ...
+# Subtest: critical catalog color-token pairs meet the specified contrast thresholds
+ok 9 - critical catalog color-token pairs meet the specified contrast thresholds
+  ---
+  duration_ms: 2.6882
+  type: 'test'
+  ...
+# 1:38:20 a. m. [vite] (client) [optimizer] scanning dependencies...
+# Subtest: configuration markup varies by product, explains disabled choices and exposes review-only action
+ok 10 - configuration markup varies by product, explains disabled choices and exposes review-only action
+  ---
+  duration_ms: 2820.8972
+  type: 'test'
+  ...
+# 1:38:21 a. m. [vite] (client) [optimizer] bundling dependencies...
+# Subtest: unknown product, sold-out product and edit route have explicit non-cart states
+ok 11 - unknown product, sold-out product and edit route have explicit non-cart states
+  ---
+  duration_ms: 1121.3029
+  type: 'test'
+  ...
+# 1:38:22 a. m. [vite] (client) [optimizer] bundling dependencies...
+# Subtest: dialog markup declares a native dialog and an associated title; interaction is not simulated
+ok 12 - dialog markup declares a native dialog and an associated title; interaction is not simulated
+  ---
+  duration_ms: 637.495
+  type: 'test'
+  ...
+# Subtest: every product has consistent, independent configuration data and explicit provenance
+ok 13 - every product has consistent, independent configuration data and explicit provenance
+  ---
+  duration_ms: 7.2518
+  type: 'test'
+  ...
+# Subtest: burgers, combos and promotions expose only applicable stages
+ok 14 - burgers, combos and promotions expose only applicable stages
+  ---
+  duration_ms: 5.8192
+  type: 'test'
+  ...
+# Subtest: APF2 Cheese size and potato price points are preserved
+ok 15 - APF2 Cheese size and potato price points are preserved
+  ---
+  duration_ms: 0.7429
+  type: 'test'
+  ...
+# Subtest: default configurations are valid at a location where the product is available
+ok 16 - default configurations are valid at a location where the product is available
+  ---
+  duration_ms: 4.9699
+  type: 'test'
+  ...
+# Subtest: size, side and extra are charged once each, then multiplied by quantity
+ok 17 - size, side and extra are charged once each, then multiplied by quantity
+  ---
+  duration_ms: 1.3385
+  type: 'test'
+  ...
+# Subtest: combo additions and promotion-unit additions do not multiply by internal products
+ok 18 - combo additions and promotion-unit additions do not multiply by internal products
+  ---
+  duration_ms: 0.3536
+  type: 'test'
+  ...
+# Subtest: family presentation is a separate variant and its additional is counted once
+ok 19 - family presentation is a separate variant and its additional is counted once
+  ---
+  duration_ms: 0.5179
+  type: 'test'
+  ...
+# Subtest: duplicates, foreign groups, unknown variants and unknown options invalidate the price
+ok 20 - duplicates, foreign groups, unknown variants and unknown options invalidate the price
+  ---
+  duration_ms: 0.518
+  type: 'test'
+  ...
+# Subtest: required groups, multi-select limits and malformed configurations are rejected
+ok 21 - required groups, multi-select limits and malformed configurations are rejected
+  ---
+  duration_ms: 0.6792
+  type: 'test'
+  ...
+# Subtest: invalid quantities and unsafe or fractional prices never produce a usable total
+ok 22 - invalid quantities and unsafe or fractional prices never produce a usable total
+  ---
+  duration_ms: 3.3819
+  type: 'test'
+  ...
+# Subtest: potato restriction is explained before selection and changes by local
+ok 23 - potato restriction is explained before selection and changes by local
+  ---
+  duration_ms: 0.8402
+  type: 'test'
+  ...
+# Subtest: changing local revalidates without mutating the prior configuration
+ok 24 - changing local revalidates without mutating the prior configuration
+  ---
+  duration_ms: 0.7785
+  type: 'test'
+  ...
+# Subtest: product, variant and option availability fail closed for unknown references
+ok 25 - product, variant and option availability fail closed for unknown references
+  ---
+  duration_ms: 0.3489
+  type: 'test'
+  ...
+# Subtest: the complete local matrix has explanatory reasons and restrictions reference known choices
+ok 26 - the complete local matrix has explanatory reasons and restrictions reference known choices
+  ---
+  duration_ms: 4.3661
+  type: 'test'
+  ...
+# Subtest: missing, malformed and future-version snapshots are distinct and not overwritten
+ok 27 - missing, malformed and future-version snapshots are distinct and not overwritten
+  ---
+  duration_ms: 3.7584
+  type: 'test'
+  ...
+# Subtest: order snapshot keeps independent configuration and strips unrelated properties
+ok 28 - order snapshot keeps independent configuration and strips unrelated properties
+  ---
+  duration_ms: 6.1282
+  type: 'test'
+  ...
+# Subtest: only the sanitized receipt is stored in sessionStorage; null clears that key
+ok 29 - only the sanitized receipt is stored in sessionStorage; null clears that key
+  ---
+  duration_ms: 2.8425
+  type: 'test'
+  ...
+# Subtest: preferences persist independently and reject invalid enum values
+ok 30 - preferences persist independently and reject invalid enum values
+  ---
+  duration_ms: 1.2737
+  type: 'test'
+  ...
+# Subtest: blocked storage getters and quota failures do not throw
+ok 31 - blocked storage getters and quota failures do not throw
+  ---
+  duration_ms: 4.0487
+  type: 'test'
+  ...
+# Subtest: reducer keeps preferences and draft isolated and does not mutate previous state
+ok 32 - reducer keeps preferences and draft isolated and does not mutate previous state
+  ---
+  duration_ms: 1.3389
+  type: 'test'
+  ...
+# Subtest: rendered menu exposes labeled native controls, products and unavailable state
+ok 33 - rendered menu exposes labeled native controls, products and unavailable state
+  ---
+  duration_ms: 1912.5766
+  type: 'test'
+  ...
+# 1:38:28 a. m. [vite] (client) [optimizer] bundling dependencies...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12674.8493

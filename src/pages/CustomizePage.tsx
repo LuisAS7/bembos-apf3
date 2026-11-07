@@ -1,12 +1,12 @@
-import { SlidersHorizontal } from 'lucide-react'
-import { useMatch } from 'react-router-dom'
-import { PageShell } from '../components/ui/PageShell.tsx'
+import { Link, useMatch, useParams } from 'react-router-dom'
+import { getConfigurableProduct } from '../data/customizations.ts'
+import { ProductConfigurator } from '../features/customization/ProductConfigurator.tsx'
 
 export function CustomizePage() {
   const editing = useMatch('/pedido/:itemId/editar')
-  return <PageShell title={editing ? 'Editar producto' : 'Personaliza tu pedido'}
-    description={editing ? 'Revisa las opciones de tu producto antes de guardar los cambios.' : 'Elige las opciones de tu producto antes de agregarlo al pedido.'}
-    heading="Las opciones estarán disponibles pronto" message="Aquí podrás revisar tamaños, complementos e ingredientes."
-    icon={<SlidersHorizontal size={32} />} next={{ to: '/pedido', label: 'Ver tu pedido' }}
-    aside={<aside className="summary-shell" aria-labelledby="selection-heading"><h2 id="selection-heading">Tu selección</h2><p>El producto y su configuración aparecerán aquí.</p></aside>} />
+  const { productId } = useParams()
+  if (editing) return <><h1>Editar producto</h1><p>La edición estará disponible al habilitar el carrito. No se ha modificado ningún producto.</p><Link className="text-link" to="/pedido">Volver a tu pedido</Link></>
+  const product = getConfigurableProduct(productId ?? '')
+  if (!product) return <><h1>Producto no encontrado</h1><p>Este producto no existe en el catálogo académico. Elige otro desde el menú.</p><Link className="button" to="/menu">Volver al menú</Link></>
+  return <ProductConfigurator key={product.id} product={product} />
 }

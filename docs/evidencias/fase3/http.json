@@ -1,0 +1,38 @@
+﻿[
+    {
+        "path":  "/productos/cheese/personalizar",
+        "status":  200,
+        "contentType":  "text/html",
+        "scope":  "HTTP delivery only; does not validate rendered state, focus or events"
+    },
+    {
+        "path":  "/productos/combo-cheese-demo/personalizar",
+        "status":  200,
+        "contentType":  "text/html",
+        "scope":  "HTTP delivery only; does not validate rendered state, focus or events"
+    },
+    {
+        "path":  "/productos/duo-royal-demo/personalizar",
+        "status":  200,
+        "contentType":  "text/html",
+        "scope":  "HTTP delivery only; does not validate rendered state, focus or events"
+    },
+    {
+        "path":  "/productos/familiar-demo/personalizar",
+        "status":  200,
+        "contentType":  "text/html",
+        "scope":  "HTTP delivery only; does not validate rendered state, focus or events"
+    },
+    {
+        "path":  "/productos/unknown/personalizar",
+        "status":  200,
+        "contentType":  "text/html",
+        "scope":  "HTTP delivery only; does not validate rendered state, focus or events"
+    },
+    {
+        "path":  "/pedido/demo/editar",
+        "status":  200,
+        "contentType":  "text/html",
+        "scope":  "HTTP delivery only; does not validate rendered state, focus or events"
+    }
+]

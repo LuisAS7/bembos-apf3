@@ -4,7 +4,7 @@ import { getLocation } from '../../data/locations.ts'
 
 type LocationChange = { ok: true; order: OrderDraft } | { ok: false; message: string }
 
-// Protect saved data until the cart impact dialog is implemented in its phase.
+// Saved items are never modified here. Cart impact handling belongs to phase 4.
 export function prepareLocationChange(locationId: string, current: OrderDraft, stored: StorageRead<OrderDraft>): LocationChange {
   if (!getLocation(locationId)) return { ok: false, message: 'Elige uno de los locales de la lista.' }
   if (current.items.length || (stored.status === 'ok' && stored.value.items.length)) {

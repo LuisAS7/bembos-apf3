@@ -13,6 +13,7 @@ export interface ProductVariant {
   id: string
   label: string
   additionalPriceCents: Cents
+  source?: DataSource
 }
 
 export interface ProductOption extends ProductVariant {
@@ -39,13 +40,15 @@ export interface Product {
   image: { src: string; alt: string; crop?: 'apf2-cheese' | 'apf2-royal' }
   basePriceCents: Cents
   variants: ProductVariant[]
+  variantLabel?: string
+  defaultVariantId?: string | null
   // Ordered groups vary per product. Variants are priced separately.
   optionGroups: OptionGroup[]
   source: DataSource
 }
 
 // Phase 2 displays products without loading a configurator.
-export type CatalogProduct = Omit<Product, 'variants' | 'optionGroups'>
+export type CatalogProduct = Omit<Product, 'variants' | 'optionGroups' | 'variantLabel' | 'defaultVariantId'>
 
 export interface Location {
   id: string
