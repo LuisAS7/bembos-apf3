@@ -2,10 +2,16 @@ import type { CartItem, CheckoutDraft, ConfirmationReceipt, DisplayPreferences, 
 import { emptyCheckout } from '../features/checkout/checkout.ts'
 import { addItem, editItem, itemLabel, removeItem, restoreItem } from '../features/cart/cart.ts'
 import type { CartToast } from '../features/cart/cart.ts'
+import { emptyPayment, paymentContextReady } from '../features/payments/payment.ts'
+import type { PaymentSimulation } from '../features/payments/payment.ts'
+import type { PaymentMethod } from '../domain/models.ts'
+import { checkoutTotals } from '../features/checkout/checkout.ts'
 
 export interface AppState {
   order: OrderDraft
   checkout: CheckoutDraft
+  payment: PaymentSimulation
+  paymentRevision: number
   preferences: DisplayPreferences
   lastConfirmation: ConfirmationReceipt | null
   storageNotice: string
@@ -17,6 +23,10 @@ export interface AppState {
 export type AppAction =
   | { type: 'order/replace'; value: OrderDraft }
   | { type: 'checkout/replace'; value: CheckoutDraft }
+  | { type: 'payment/start'; attemptId: string; method: PaymentMethod; totalCents: number; revision: number }
+  | { type: 'payment/finish'; attemptId: string; revision: number; outcome: 'approved' | 'error' }
+  | { type: 'payment/reset' }
+  | { type: 'payment/cancel' }
   | { type: 'cart/add'; item: CartItem }
   | { type: 'cart/edit'; itemId: string; configuration: ProductConfiguration; quantity: number }
   | { type: 'cart/quantity'; itemId: string; quantity: number }
@@ -32,6 +42,7 @@ export function createInitialState(): AppState {
   return {
     order: { catalogVersion: 1, locationId: 'san-miguel', items: [] },
     checkout: emptyCheckout(),
+    payment: emptyPayment(), paymentRevision: 0,
     preferences: { textSize: 'default', reduceMotion: false, underlineLinks: false },
     lastConfirmation: null, storageNotice: '', recoveryNotice: '', toasts: [], notificationSequence: 0, cartAnnouncement: '',
   }
@@ -43,8 +54,23 @@ function notify(state: AppState, order: OrderDraft, message: string, removed?: C
     toasts: [...state.toasts.filter((toast) => toast.removed), { id: `notice-${sequence}`, message, removed }] }
 }
 
-export function appReducer(state: AppState, action: AppAction): AppState {
+function reduceAppState(state: AppState, action: AppAction): AppState {
   switch (action.type) {
+    case 'payment/start': {
+      if (['processing', 'approved'].includes(state.payment.status) || !action.attemptId.trim() ||
+        !['cash', 'card', 'yape'].includes(action.method) || action.revision !== state.paymentRevision ||
+        !paymentContextReady(state.order, state.checkout) || checkoutTotals(state.order, state.checkout.deliveryMethod).totalCents !== action.totalCents) return state
+      return { ...state, payment: { status: 'processing', method: action.method, totalCents: action.totalCents, attemptId: action.attemptId, revision: action.revision } }
+    }
+    case 'payment/finish': {
+      if (state.payment.status !== 'processing' || action.attemptId !== state.payment.attemptId || action.revision !== state.paymentRevision) return state
+      if (!paymentContextReady(state.order, state.checkout) || checkoutTotals(state.order, state.checkout.deliveryMethod).totalCents !== state.payment.totalCents) {
+        return { ...state, payment: { ...emptyPayment(), status: 'invalidated' } }
+      }
+      return { ...state, payment: { ...state.payment, status: action.outcome === 'approved' ? 'approved' : 'error' } }
+    }
+    case 'payment/reset': return { ...state, payment: emptyPayment() }
+    case 'payment/cancel': return state.payment.status === 'processing' ? { ...state, payment: { ...emptyPayment(), status: 'invalidated' } } : state
     case 'order/replace': return { ...state, order: action.value, recoveryNotice: '', checkout: action.value.locationId === state.order.locationId
       ? state.checkout : { ...state.checkout, pickupSlot: 'asap' } }
     case 'checkout/replace': return { ...state, checkout: { ...action.value } }
@@ -82,4 +108,14 @@ export function appReducer(state: AppState, action: AppAction): AppState {
     case 'confirmation/replace': return { ...state, lastConfirmation: action.value }
     case 'storage/notice': return { ...state, storageNotice: action.value }
   }
+}
+
+// Every order/checkout mutation cancels an in-flight simulation or its approval.
+// A revision prevents late callbacks from approving even a change later undone.
+export function appReducer(state: AppState, action: AppAction): AppState {
+  const next = reduceAppState(state, action)
+  if (next.order === state.order && next.checkout === state.checkout) return next
+  const invalidated = action.type !== 'cart/clear' && ['processing', 'approved', 'invalidated'].includes(state.payment.status)
+  return { ...next, paymentRevision: state.paymentRevision + 1,
+    payment: { ...emptyPayment(), status: invalidated ? 'invalidated' : 'idle' } }
 }

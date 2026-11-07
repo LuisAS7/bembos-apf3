@@ -9,6 +9,7 @@ import { checkoutTotals, pickupSlots, validateCheckout } from '../features/check
 import { OrderSummary } from '../features/checkout/OrderSummary.tsx'
 import { getLocation } from '../data/locations.ts'
 import type { CheckoutDraft, OrderDraft } from '../domain/models.ts'
+import { PaymentPanel } from '../features/payments/PaymentPanel.tsx'
 import '../features/catalog/Catalog.css'
 import '../features/checkout/Checkout.css'
 
@@ -26,7 +27,7 @@ function CheckoutForm() {
   const draft = state.checkout
   const [attempt, setAttempt] = useState(0)
   const [reviewed, setReviewed] = useState<{ draft: CheckoutDraft; order: OrderDraft } | null>(null)
-  const pendingFocus = useRef<keyof CheckoutDraft | null>(null)
+  const pendingFocus = useRef<keyof CheckoutDraft | 'payment' | null>(null)
   const location = getLocation(state.order.locationId)!
   const totals = checkoutTotals(state.order, draft.deliveryMethod)
   const issues = attempt ? validateCheckout(draft, state.order.locationId) : []
@@ -35,7 +36,7 @@ function CheckoutForm() {
 
   useLayoutEffect(() => {
     if (!pendingFocus.current) return
-    const field = document.getElementById(`checkout-${pendingFocus.current}`)
+    const field = document.getElementById(pendingFocus.current === 'payment' ? 'payment-heading' : `checkout-${pendingFocus.current}`)
     const control = field?.querySelector<HTMLElement>('input:not([disabled])') ?? field
     control?.focus()
     pendingFocus.current = null
@@ -51,6 +52,7 @@ function CheckoutForm() {
     setAttempt((previous) => previous + 1)
     if (errors.length) { pendingFocus.current = errors[0].field; setReviewed(null); return }
     if (!checkoutTotals(state.order, draft.deliveryMethod).canContinue) return
+    pendingFocus.current = 'payment'
     setReviewed({ draft, order: state.order })
   }
 
@@ -96,10 +98,11 @@ function CheckoutForm() {
         </section>}
         <p role="alert">{issues.length > 0 ? `Revisa los ${issues.length} campos indicados. Conservamos tus datos.` : ''}</p>
         <AccessibleButton type="submit" disabled={!totals.canContinue} aria-describedby="continue-help">Continuar</AccessibleButton>
-        <p id="continue-help" className="control-help">Revisaremos la entrega. El paso de pago todavía no está habilitado en este prototipo.</p>
-        <p role="status" aria-atomic="true">{validReview ? 'Datos de entrega válidos. Los pagos aún no están disponibles en este prototipo. No se ha confirmado ningún pedido.' : ''}</p>
+        <p id="continue-help" className="control-help">Revisaremos la entrega antes de habilitar el pago simulado. No se realizan pagos reales.</p>
+        <p role="status" aria-atomic="true">{state.payment.status === 'invalidated' ? 'La simulación anterior quedó invalidada. Revisa nuevamente la entrega y el pago.' : validReview ? 'Datos de entrega válidos. Revisa el pago simulado a continuación.' : ''}</p>
       </form>
       <OrderSummary order={state.order} method={draft.deliveryMethod} />
     </div>
+    {validReview && <PaymentPanel key={state.paymentRevision} />}
   </>
 }

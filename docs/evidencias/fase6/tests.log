@@ -1,0 +1,427 @@
+> bembos-project@0.0.0 test
+> node --test --test-concurrency=1 tests/foundation.test.mjs tests/catalog.test.mjs tests/menu-markup.test.mjs tests/customization.test.mjs tests/customization-markup.test.mjs tests/cart.test.mjs tests/cart-markup.test.mjs tests/checkout.test.mjs tests/checkout-markup.test.mjs tests/payment.test.mjs tests/payment-markup.test.mjs
+
+TAP version 13
+# Subtest: cart markup exposes exact selections, independent edit routes, totals and disabled continuation
+ok 1 - cart markup exposes exact selections, independent edit routes, totals and disabled continuation
+  ---
+  duration_ms: 624.8829
+  type: 'test'
+  ...
+# 2:34:03 a. m. [vite] (client) [optimizer] bundling dependencies...
+# Subtest: edit route loads the exact saved configuration and quantity without mutating it
+ok 2 - edit route loads the exact saved configuration and quantity without mutating it
+  ---
+  duration_ms: 1957.6439
+  type: 'test'
+  ...
+# 2:34:05 a. m. [vite] (client) [optimizer] bundling dependencies...
+# Subtest: Toast exposes native Undo and dismiss controls without autofocus or automatic expiration
+ok 3 - Toast exposes native Undo and dismiss controls without autofocus or automatic expiration
+  ---
+  duration_ms: 577.3681
+  type: 'test'
+  ...
+# Subtest: direct checkout blocks empty and incompatible carts and exposes no payment controls
+ok 4 - direct checkout blocks empty and incompatible carts and exposes no payment controls
+  ---
+  duration_ms: 487.1007
+  type: 'test'
+  ...
+# 2:34:06 a. m. [vite] (client) [optimizer] bundling dependencies...
+# Subtest: provider recovers and recalculates saved cart on initialization without writing storage or autofocus
+ok 5 - provider recovers and recalculates saved cart on initialization without writing storage or autofocus
+  ---
+  duration_ms: 554.9024
+  type: 'test'
+  ...
+# Subtest: same product can be added independently; identity collisions and invalid configurations are rejected
+ok 6 - same product can be added independently; identity collisions and invalid configurations are rejected
+  ---
+  duration_ms: 5.5181
+  type: 'test'
+  ...
+# Subtest: edit replaces exactly the requested item without duplicates and recalculates all additions once
+ok 7 - edit replaces exactly the requested item without duplicates and recalculates all additions once
+  ---
+  duration_ms: 1.1053
+  type: 'test'
+  ...
+# Subtest: quantity reducer reuses valid limits, preserves item identity and uses recalculated prices
+ok 8 - quantity reducer reuses valid limits, preserves item identity and uses recalculated prices
+  ---
+  duration_ms: 1.6979
+  type: 'test'
+  ...
+# Subtest: Undo restores exact identity, configuration, quantity and original position, once only
+ok 9 - Undo restores exact identity, configuration, quantity and original position, once only
+  ---
+  duration_ms: 1.3542
+  type: 'test'
+  ...
+# Subtest: multiple removals retain surviving neighbour positions in either undo order and with new additions
+ok 10 - multiple removals retain surviving neighbour positions in either undo order and with new additions
+  ---
+  duration_ms: 1.7693
+  type: 'test'
+  ...
+# Subtest: Undo after a local change preserves selections, recalculates and marks incompatibilities
+ok 11 - Undo after a local change preserves selections, recalculates and marks incompatibilities
+  ---
+  duration_ms: 0.6848
+  type: 'test'
+  ...
+# Subtest: round-trip recovery never trusts saved prices and retains exact configuration and quantity
+ok 12 - round-trip recovery never trusts saved prices and retains exact configuration and quantity
+  ---
+  duration_ms: 1.2929
+  type: 'test'
+  ...
+# Subtest: unknown products, stale groups/options, invalid quantities and unknown local stay visible and block continuation
+ok 13 - unknown products, stale groups/options, invalid quantities and unknown local stay visible and block continuation
+  ---
+  duration_ms: 0.6463
+  type: 'test'
+  ...
+# Subtest: duplicate recovered identities are repaired deterministically without losing or merging items
+ok 14 - duplicate recovered identities are repaired deterministically without losing or merging items
+  ---
+  duration_ms: 1.0333
+  type: 'test'
+  ...
+# Subtest: broken JSON, incompatible schema/catalog and blocked storage recover safely without writes
+ok 15 - broken JSON, incompatible schema/catalog and blocked storage recover safely without writes
+  ---
+  duration_ms: 0.9925
+  type: 'test'
+  ...
+# Subtest: local changes require acknowledgement, retain affected items, block continuation and can be corrected
+ok 16 - local changes require acknowledgement, retain affected items, block continuation and can be corrected
+  ---
+  duration_ms: 0.7699
+  type: 'test'
+  ...
+# Subtest: local guard protects divergent saved orders and permits a temporary order when storage is blocked
+ok 17 - local guard protects divergent saved orders and permits a temporary order when storage is blocked
+  ---
+  duration_ms: 0.4978
+  type: 'test'
+  ...
+# Subtest: clear removes only the order snapshot, preserves preferences and other keys, and invalidates Undo
+ok 18 - clear removes only the order snapshot, preserves preferences and other keys, and invalidates Undo
+  ---
+  duration_ms: 0.7125
+  type: 'test'
+  ...
+# Subtest: catalog has 12 unique products and four per category, with local images and explicit provenance
+ok 19 - catalog has 12 unique products and four per category, with local images and explicit provenance
+  ---
+  duration_ms: 3.0029
+  type: 'test'
+  ...
+# Subtest: APF2 names and prices remain Cheese S/16.90 and Royal S/21.90
+ok 20 - APF2 names and prices remain Cheese S/16.90 and Royal S/21.90
+  ---
+  duration_ms: 0.9751
+  type: 'test'
+  ...
+# Subtest: APF2 photograph bytes match the embedded original; no remote image requests are required
+ok 21 - APF2 photograph bytes match the embedded original; no remote image requests are required
+  ---
+  duration_ms: 401.7928
+  type: 'test'
+  ...
+# Subtest: search ignores case, accents and outer spaces and crosses the three categories
+ok 22 - search ignores case, accents and outer spaces and crosses the three categories
+  ---
+  duration_ms: 1.6174
+  type: 'test'
+  ...
+# Subtest: category combines with search, no matches returns empty, and clearing restores the category
+ok 23 - category combines with search, no matches returns empty, and clearing restores the category
+  ---
+  duration_ms: 0.4169
+  type: 'test'
+  ...
+# Subtest: availability changes by location and unknown references are unavailable
+ok 24 - availability changes by location and unknown references are unavailable
+  ---
+  duration_ms: 0.3287
+  type: 'test'
+  ...
+# Subtest: empty-order location selection does not mutate data or erase snapshot metadata
+ok 25 - empty-order location selection does not mutate data or erase snapshot metadata
+  ---
+  duration_ms: 0.5069
+  type: 'test'
+  ...
+# Subtest: location selection protects existing cart snapshots and invalid/unavailable storage
+ok 26 - location selection protects existing cart snapshots and invalid/unavailable storage
+  ---
+  duration_ms: 0.344
+  type: 'test'
+  ...
+# Subtest: critical catalog color-token pairs meet the specified contrast thresholds
+ok 27 - critical catalog color-token pairs meet the specified contrast thresholds
+  ---
+  duration_ms: 85.4293
+  type: 'test'
+  ...
+# Subtest: checkout markup exposes delivery/pickup semantics, exact summary and associated field errors
+ok 28 - checkout markup exposes delivery/pickup semantics, exact summary and associated field errors
+  ---
+  duration_ms: 953.0489
+  type: 'test'
+  ...
+# Subtest: delivery validation orders errors by form order and preserves valid data without mutation
+ok 29 - delivery validation orders errors by form order and preserves valid data without mutation
+  ---
+  duration_ms: 2.5699
+  type: 'test'
+  ...
+# Subtest: field boundaries, telephone format and optional reference are validated with textual errors
+ok 30 - field boundaries, telephone format and optional reference are validated with textual errors
+  ---
+  duration_ms: 0.4585
+  type: 'test'
+  ...
+# Subtest: pickup hides delivery-only validation, requires a known slot, and still validates contact
+ok 31 - pickup hides delivery-only validation, requires a known slot, and still validates contact
+  ---
+  duration_ms: 0.4695
+  type: 'test'
+  ...
+# Subtest: totals reuse catalog pricing, include delivery exactly once, and charge zero for pickup
+ok 32 - totals reuse catalog pricing, include delivery exactly once, and charge zero for pickup
+  ---
+  duration_ms: 1.3105
+  type: 'test'
+  ...
+# Subtest: empty, incompatible, obsolete and unknown-location carts cannot continue
+ok 33 - empty, incompatible, obsolete and unknown-location carts cannot continue
+  ---
+  duration_ms: 0.5623
+  type: 'test'
+  ...
+# Subtest: checkout stays outside persisted order, survives editing, resets schedule on local change and clears with the order
+ok 34 - checkout stays outside persisted order, survives editing, resets schedule on local change and clears with the order
+  ---
+  duration_ms: 0.8361
+  type: 'test'
+  ...
+# Subtest: configuration markup varies by product, explains disabled choices and exposes native add action
+ok 35 - configuration markup varies by product, explains disabled choices and exposes native add action
+  ---
+  duration_ms: 923.2829
+  type: 'test'
+  ...
+# Subtest: unknown product, sold-out product and missing cart item have explicit states
+ok 36 - unknown product, sold-out product and missing cart item have explicit states
+  ---
+  duration_ms: 435.3831
+  type: 'test'
+  ...
+# 2:34:11 a. m. [vite] (client) [optimizer] bundling dependencies...
+# 2:34:12 a. m. [vite] (client) [optimizer] bundling dependencies...
+# Subtest: dialog markup declares a native dialog and an associated title; interaction is not simulated
+ok 37 - dialog markup declares a native dialog and an associated title; interaction is not simulated
+  ---
+  duration_ms: 881.7511
+  type: 'test'
+  ...
+# Subtest: every product has consistent, independent configuration data and explicit provenance
+ok 38 - every product has consistent, independent configuration data and explicit provenance
+  ---
+  duration_ms: 2.0987
+  type: 'test'
+  ...
+# Subtest: burgers, combos and promotions expose only applicable stages
+ok 39 - burgers, combos and promotions expose only applicable stages
+  ---
+  duration_ms: 0.733
+  type: 'test'
+  ...
+# Subtest: APF2 Cheese size and potato price points are preserved
+ok 40 - APF2 Cheese size and potato price points are preserved
+  ---
+  duration_ms: 0.2293
+  type: 'test'
+  ...
+# Subtest: default configurations are valid at a location where the product is available
+ok 41 - default configurations are valid at a location where the product is available
+  ---
+  duration_ms: 1.1681
+  type: 'test'
+  ...
+# Subtest: size, side and extra are charged once each, then multiplied by quantity
+ok 42 - size, side and extra are charged once each, then multiplied by quantity
+  ---
+  duration_ms: 0.2561
+  type: 'test'
+  ...
+# Subtest: combo additions and promotion-unit additions do not multiply by internal products
+ok 43 - combo additions and promotion-unit additions do not multiply by internal products
+  ---
+  duration_ms: 0.1777
+  type: 'test'
+  ...
+# Subtest: family presentation is a separate variant and its additional is counted once
+ok 44 - family presentation is a separate variant and its additional is counted once
+  ---
+  duration_ms: 0.2003
+  type: 'test'
+  ...
+# Subtest: duplicates, foreign groups, unknown variants and unknown options invalidate the price
+ok 45 - duplicates, foreign groups, unknown variants and unknown options invalidate the price
+  ---
+  duration_ms: 0.3013
+  type: 'test'
+  ...
+# Subtest: required groups, multi-select limits and malformed configurations are rejected
+ok 46 - required groups, multi-select limits and malformed configurations are rejected
+  ---
+  duration_ms: 0.4513
+  type: 'test'
+  ...
+# Subtest: invalid quantities and unsafe or fractional prices never produce a usable total
+ok 47 - invalid quantities and unsafe or fractional prices never produce a usable total
+  ---
+  duration_ms: 0.8494
+  type: 'test'
+  ...
+# Subtest: potato restriction is explained before selection and changes by local
+ok 48 - potato restriction is explained before selection and changes by local
+  ---
+  duration_ms: 0.2635
+  type: 'test'
+  ...
+# Subtest: changing local revalidates without mutating the prior configuration
+ok 49 - changing local revalidates without mutating the prior configuration
+  ---
+  duration_ms: 0.2666
+  type: 'test'
+  ...
+# Subtest: product, variant and option availability fail closed for unknown references
+ok 50 - product, variant and option availability fail closed for unknown references
+  ---
+  duration_ms: 0.1322
+  type: 'test'
+  ...
+# Subtest: the complete local matrix has explanatory reasons and restrictions reference known choices
+ok 51 - the complete local matrix has explanatory reasons and restrictions reference known choices
+  ---
+  duration_ms: 1.3555
+  type: 'test'
+  ...
+# Subtest: missing, malformed and future-version snapshots are distinct and not overwritten
+ok 52 - missing, malformed and future-version snapshots are distinct and not overwritten
+  ---
+  duration_ms: 2.1002
+  type: 'test'
+  ...
+# Subtest: order snapshot keeps independent configuration and strips unrelated properties
+ok 53 - order snapshot keeps independent configuration and strips unrelated properties
+  ---
+  duration_ms: 1.5004
+  type: 'test'
+  ...
+# Subtest: only the sanitized receipt is stored in sessionStorage; null clears that key
+ok 54 - only the sanitized receipt is stored in sessionStorage; null clears that key
+  ---
+  duration_ms: 0.6329
+  type: 'test'
+  ...
+# Subtest: preferences persist independently and reject invalid enum values
+ok 55 - preferences persist independently and reject invalid enum values
+  ---
+  duration_ms: 0.279
+  type: 'test'
+  ...
+# Subtest: blocked storage getters and quota failures do not throw
+ok 56 - blocked storage getters and quota failures do not throw
+  ---
+  duration_ms: 1.1447
+  type: 'test'
+  ...
+# Subtest: reducer keeps preferences and draft isolated and does not mutate previous state
+ok 57 - reducer keeps preferences and draft isolated and does not mutate previous state
+  ---
+  duration_ms: 0.6041
+  type: 'test'
+  ...
+# Subtest: rendered menu exposes labeled native controls, products and unavailable state
+ok 58 - rendered menu exposes labeled native controls, products and unavailable state
+  ---
+  duration_ms: 1661.3923
+  type: 'test'
+  ...
+# Subtest: payment markup uses native controls, fictional QR, associated labels and no final-confirmation link
+ok 59 - payment markup uses native controls, fictional QR, associated labels and no final-confirmation link
+  ---
+  duration_ms: 1625.6413
+  type: 'test'
+  ...
+# 2:34:19 a. m. [vite] (client) [optimizer] bundling dependencies...
+# Subtest: cash accepts exact decimal cents and requires tendered amount strictly greater than recalculated total
+ok 60 - cash accepts exact decimal cents and requires tendered amount strictly greater than recalculated total
+  ---
+  duration_ms: 5.4204
+  type: 'test'
+  ...
+# Subtest: Visa/Mastercard ranges, accepted lengths and Luhn are checked independently from detection
+ok 61 - Visa/Mastercard ranges, accepted lengths and Luhn are checked independently from detection
+  ---
+  duration_ms: 2.5108
+  type: 'test'
+  ...
+# Subtest: card field errors follow DOM order and expiry accepts the current month but rejects past or malformed dates
+ok 62 - card field errors follow DOM order and expiry accepts the current month but rejects past or malformed dates
+  ---
+  duration_ms: 2.0358
+  type: 'test'
+  ...
+# Subtest: Yape QR is demonstration text only and a generated code must match its current challenge
+ok 63 - Yape QR is demonstration text only and a generated code must match its current challenge
+  ---
+  duration_ms: 0.6992
+  type: 'test'
+  ...
+# Subtest: invalid order/checkout or tampered amounts cannot start or approve a simulation
+ok 64 - invalid order/checkout or tampered amounts cannot start or approve a simulation
+  ---
+  duration_ms: 0.9929
+  type: 'test'
+  ...
+# Subtest: processing prevents duplicate submissions, ignores stale callbacks and supports explicit retry after rejection
+ok 65 - processing prevents duplicate submissions, ignores stale callbacks and supports explicit retry after rejection
+  ---
+  duration_ms: 0.3542
+  type: 'test'
+  ...
+# Subtest: order, configuration, quantity, local, delivery and contact changes invalidate approval; preferences do not
+ok 66 - order, configuration, quantity, local, delivery and contact changes invalidate approval; preferences do not
+  ---
+  duration_ms: 0.9595
+  type: 'test'
+  ...
+# Subtest: changing a pending attempt and undoing the change cannot revive its late approval
+ok 67 - changing a pending attempt and undoing the change cannot revive its late approval
+  ---
+  duration_ms: 0.3092
+  type: 'test'
+  ...
+# Subtest: shared payment metadata and existing storage/receipt allowlists exclude injected sensitive fields
+ok 68 - shared payment metadata and existing storage/receipt allowlists exclude injected sensitive fields
+  ---
+  duration_ms: 0.9541
+  type: 'test'
+  ...
+1..68
+# tests 68
+# suites 0
+# pass 68
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17763.8298

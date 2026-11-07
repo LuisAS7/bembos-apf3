@@ -2,7 +2,7 @@
 
 Prototipo académico del curso Interacción Hombre Máquina. El alcance y el trabajo por fases se rigen por [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md).
 
-La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos, revisar cantidades, precios y restricciones por local. La Fase 4 conecta el carrito multiproducto. La Fase 5 añade Delivery, Recojo, validación y resumen de importes. Pagos y confirmación final siguen pendientes de sus fases y aprobación independiente.
+La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos, revisar cantidades, precios y restricciones por local. La Fase 4 conecta el carrito multiproducto. La Fase 5 añade entrega y resumen; la Fase 6 incorpora efectivo, tarjeta y Yape simulados. La confirmación final requiere aprobación de Fase 7.
 
 ## Entorno y comandos
 
@@ -33,7 +33,7 @@ El build ejecuta TypeScript y Vite y regenera `dist/`, excluido por Git junto co
 | `/productos/cheese/personalizar` | Configurador del producto; también aplica a otros IDs del catálogo |
 | `/pedido` | Pedido |
 | `/pedido/:itemId/editar` | Edición del ítem exacto del carrito; un ID ausente muestra un estado explicativo |
-| `/pagar` | Entrega y resumen; bloqueado con pedido vacío o incompatible, sin pagos |
+| `/pagar` | Entrega, resumen y pagos exclusivamente simulados; bloqueado con pedido vacío o incompatible |
 | `/confirmacion/demo` | Confirmación vacía |
 | Otras rutas | Página no encontrada |
 
@@ -69,11 +69,17 @@ Se recupera el pedido completo al abrir, revalidando catálogo, selecciones y di
 
 Delivery solicita nombre, teléfono, dirección y referencia opcional. Recojo conserva el contacto, oculta dirección/referencia y ofrece información y horarios relativos mock del local. Tarifas de entrega mock: San Miguel S/5.00, Centro S/6.00 y Norte S/7.00; recojo S/0.00. El resumen recalcula desde el catálogo y permite editar el pedido.
 
-Los datos personales se conservan solo en Context en memoria, también al editar el pedido; recargar o limpiar los descarta. Continuar valida, conserva los valores y prepara foco al primer campo inválido. Con datos válidos informa que el pago aún no está disponible, sin confirmar nada. Cambiar de local reinicia el horario a «Lo antes posible». Detalles y validaciones pendientes en el [reporte de Fase 5](docs/trazabilidad/fase5-checkout.md).
+Los datos personales se conservan solo en Context en memoria, también al editar el pedido; recargar o limpiar los descarta. Continuar valida, conserva los valores y prepara foco al primer campo inválido. Con datos válidos habilita la sección de pago simulado. Cambiar de local reinicia el horario a «Lo antes posible». Detalles de entrega en el [reporte de Fase 5](docs/trazabilidad/fase5-checkout.md).
+
+## Pagos simulados
+
+Efectivo admite vuelto con monto estrictamente mayor al total. Tarjeta valida titular, Visa/Mastercard, longitud, Luhn, MM/AA y CVV ficticio. Yape genera una operación, QR y código de demostración sin iniciar transferencias. Hay procesamiento de 800 ms, rechazo explícito de prueba y aprobación simulada; no se confirma un pedido.
+
+Los datos de tarjeta y códigos permanecen en el formulario, se limpian al iniciar una simulación válida/cambiar de método y se descartan al salir. El estado compartido solo conserva metadatos, nunca esos campos. Cambiar pedido o checkout invalida los intentos/aprobaciones, incluso si luego se deshace el cambio; el cierre cancela intentos pendientes. Sin persistencia de pagos ni conexiones externas. [Reporte y evidencias de Fase 6](docs/trazabilidad/fase6-pagos.md).
 
 ## Accesibilidad y persistencia
 
-Se mantiene `lang="es"`, títulos por ruta, landmarks, enlaces nativos, skip link, targets principales con mínimo CSS de 44 px, `:focus-visible`, colores claros y reducción de movimiento. La tipografía usa Arial/Segoe UI del sistema. El checkout incorpora autocomplete, etiquetas, instrucciones y errores asociados; los formularios de pago siguen pendientes.
+Se mantiene `lang="es"`, títulos por ruta, landmarks, enlaces nativos, skip link, targets principales con mínimo CSS de 44 px, `:focus-visible`, colores claros y reducción de movimiento. La tipografía usa Arial/Segoe UI del sistema. Checkout y pagos simulados incorporan etiquetas, instrucciones, errores asociados y anuncios; se conserva autocomplete para entrega y se desactiva para los campos ficticios de pago.
 
 La política de navegación trata `/` y `/menu` como la misma pantalla y conserva el foco inicial del documento en ambas cargas. Los cambios posteriores entre pantallas mantienen el traslado del foco a `main`. Su aceptación en navegador se registra separadamente de la revisión de código.
 

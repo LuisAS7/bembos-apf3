@@ -1,0 +1,8 @@
+.payment-panel { display: grid; gap: var(--space-4); margin-block-start: var(--space-6); padding: var(--space-5); background: var(--color-surface); border-radius: var(--radius-md); }
+.payment-panel .catalog-notice { margin: 0; }
+.payment-panel form, .payment-controls, .payment-fields { display: grid; gap: var(--space-4); min-width: 0; }
+.payment-controls { margin: 0; padding: 0; border: 0; }
+.payment-controls > legend { margin-block-end: var(--space-3); font-weight: 700; }
+.payment-panel [aria-disabled='true'] { cursor: default; }
+.yape-demo { display: grid; gap: var(--space-3); overflow-wrap: anywhere; }
+.yape-demo svg { max-width: 100%; height: auto; }
