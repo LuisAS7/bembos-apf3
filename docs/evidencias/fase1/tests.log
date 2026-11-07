@@ -1,0 +1,49 @@
+> bembos-project@0.0.0 test
+> node --test tests/foundation.test.mjs
+
+TAP version 13
+# Subtest: missing, malformed and future-version snapshots are distinct and not overwritten
+ok 1 - missing, malformed and future-version snapshots are distinct and not overwritten
+  ---
+  duration_ms: 1.971
+  type: 'test'
+  ...
+# Subtest: order snapshot keeps independent configuration and strips unrelated properties
+ok 2 - order snapshot keeps independent configuration and strips unrelated properties
+  ---
+  duration_ms: 1.6966
+  type: 'test'
+  ...
+# Subtest: only the sanitized receipt is stored in sessionStorage; null clears that key
+ok 3 - only the sanitized receipt is stored in sessionStorage; null clears that key
+  ---
+  duration_ms: 0.8122
+  type: 'test'
+  ...
+# Subtest: preferences persist independently and reject invalid enum values
+ok 4 - preferences persist independently and reject invalid enum values
+  ---
+  duration_ms: 0.391
+  type: 'test'
+  ...
+# Subtest: blocked storage getters and quota failures do not throw
+ok 5 - blocked storage getters and quota failures do not throw
+  ---
+  duration_ms: 0.8388
+  type: 'test'
+  ...
+# Subtest: reducer keeps preferences and draft isolated and does not mutate previous state
+ok 6 - reducer keeps preferences and draft isolated and does not mutate previous state
+  ---
+  duration_ms: 0.4455
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 208.8478

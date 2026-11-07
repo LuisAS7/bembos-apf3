@@ -1,0 +1,12 @@
+﻿{
+    "builtLangEs":  true,
+    "baseTitle":  true,
+    "lightScheme":  true,
+    "automaticDarkMedia":  false,
+    "initialLockBlob":  "706f8f7d39deec4f2d0284ed00a7f4005cc44e2a",
+    "currentLockBlob":  "706f8f7d39deec4f2d0284ed00a7f4005cc44e2a",
+    "ignored":  [
+                    ".gitignore:11:/dist/\tdist/index.html",
+                    ".gitignore:10:node_modules\tnode_modules/react/package.json"
+                ]
+}

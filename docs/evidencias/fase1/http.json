@@ -1,0 +1,50 @@
+﻿[
+    {
+        "path":  "/",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    },
+    {
+        "path":  "/menu",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    },
+    {
+        "path":  "/productos/demo/personalizar",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    },
+    {
+        "path":  "/pedido",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    },
+    {
+        "path":  "/pedido/demo/editar",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    },
+    {
+        "path":  "/pagar",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    },
+    {
+        "path":  "/confirmacion/demo",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    },
+    {
+        "path":  "/ruta-inexistente",
+        "status":  200,
+        "langEs":  true,
+        "method":  "HTTP GET; does not execute React or inspect DOM"
+    }
+]

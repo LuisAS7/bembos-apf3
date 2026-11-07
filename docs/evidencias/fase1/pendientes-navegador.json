@@ -1,0 +1,385 @@
+﻿{
+    "execution":  "Current closure only; not a reclassification of the user supplied audit",
+    "cases":  [
+                  {
+                      "route":  "/menu",
+                      "widthCssPx":  360,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/menu",
+                      "widthCssPx":  390,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/menu",
+                      "widthCssPx":  430,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/menu",
+                      "widthCssPx":  768,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/menu",
+                      "widthCssPx":  1024,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/menu",
+                      "widthCssPx":  1440,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/productos/demo/personalizar",
+                      "widthCssPx":  360,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/productos/demo/personalizar",
+                      "widthCssPx":  390,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/productos/demo/personalizar",
+                      "widthCssPx":  430,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/productos/demo/personalizar",
+                      "widthCssPx":  768,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/productos/demo/personalizar",
+                      "widthCssPx":  1024,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/productos/demo/personalizar",
+                      "widthCssPx":  1440,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido",
+                      "widthCssPx":  360,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido",
+                      "widthCssPx":  390,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido",
+                      "widthCssPx":  430,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido",
+                      "widthCssPx":  768,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido",
+                      "widthCssPx":  1024,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido",
+                      "widthCssPx":  1440,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido/demo/editar",
+                      "widthCssPx":  360,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido/demo/editar",
+                      "widthCssPx":  390,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido/demo/editar",
+                      "widthCssPx":  430,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido/demo/editar",
+                      "widthCssPx":  768,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido/demo/editar",
+                      "widthCssPx":  1024,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pedido/demo/editar",
+                      "widthCssPx":  1440,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pagar",
+                      "widthCssPx":  360,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pagar",
+                      "widthCssPx":  390,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pagar",
+                      "widthCssPx":  430,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pagar",
+                      "widthCssPx":  768,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pagar",
+                      "widthCssPx":  1024,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/pagar",
+                      "widthCssPx":  1440,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/confirmacion/demo",
+                      "widthCssPx":  360,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/confirmacion/demo",
+                      "widthCssPx":  390,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/confirmacion/demo",
+                      "widthCssPx":  430,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/confirmacion/demo",
+                      "widthCssPx":  768,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/confirmacion/demo",
+                      "widthCssPx":  1024,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/confirmacion/demo",
+                      "widthCssPx":  1440,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/ruta-inexistente",
+                      "widthCssPx":  360,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/ruta-inexistente",
+                      "widthCssPx":  390,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/ruta-inexistente",
+                      "widthCssPx":  430,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/ruta-inexistente",
+                      "widthCssPx":  768,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/ruta-inexistente",
+                      "widthCssPx":  1024,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  },
+                  {
+                      "route":  "/ruta-inexistente",
+                      "widthCssPx":  1440,
+                      "visualStatus":  "not_executed",
+                      "keyboardStatus":  "not_executed",
+                      "axeStatus":  "not_executed",
+                      "consoleStatus":  "not_captured",
+                      "reason":  "The browser access host is unavailable"
+                  }
+              ],
+    "realBrowserZoom200":  "not_executed",
+    "initialFocusRegression":  "code corrected; DOM verification pending"
+}

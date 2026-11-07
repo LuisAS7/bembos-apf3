@@ -1,0 +1,16 @@
+> bembos-project@0.0.0 dev
+> vite
+
+npm.cmd : error when starting dev server:
+En línea: 2 Carácter: 15
++ $taskOutput = & npm.cmd run dev 2>&1; $taskExit = $LASTEXITCODE; $tas ...
++               ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error when starting dev server::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Error: Port 5173 is already in use
+    at httpServerStart (file:///D:/bembos-project/node_modules/vite/dist/node/chunks/node.js:14669:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async startServer (file:///D:/bembos-project/node_modules/vite/dist/node/chunks/node.js:25069:30)
+    at async Object.listen (file:///D:/bembos-project/node_modules/vite/dist/node/chunks/node.js:24875:4)
+    at async CAC.<anonymous> (file:///D:/bembos-project/node_modules/vite/dist/node/cli.js:734:3)

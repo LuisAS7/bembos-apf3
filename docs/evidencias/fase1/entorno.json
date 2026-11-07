@@ -1,0 +1,15 @@
+﻿{
+    "fechaLima":  "2026-11-07T00:43:49.3979954-05:00",
+    "initialCommit":  "01d9d34abe752d720db1021a22748bc9b6a8f225",
+    "node":  "v22.19.0",
+    "npm":  "10.9.3",
+    "origin":  "http://127.0.0.1:5173",
+    "browserControl":  "blocked",
+    "browserControlReason":  "The browser access host is unavailable",
+    "browserAttempts":  [
+                            "createBrowserTab iab with explicit local URL",
+                            "createBrowserTab chrome with explicit local URL",
+                            "getState: browsers empty; browser host unavailable"
+                        ],
+    "scope":  "Phase 1 only"
+}
