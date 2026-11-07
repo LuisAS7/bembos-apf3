@@ -15,7 +15,7 @@
 .nav-link--active span { text-decoration: underline; text-underline-offset: .3em; }
 .nav-link:hover { background: var(--color-background); }
 .site-header .brand:focus-visible, .header-location:focus-visible { outline-color: var(--color-action); box-shadow: 0 0 0 4px var(--color-brand); }
-.main-content { flex: 1; padding-block: calc(var(--space-5) + var(--toast-space, 0px)) var(--space-7); }
+.main-content { flex: 1; padding-block: var(--space-5) var(--space-7); }
 .page-heading { margin-block-end: var(--space-5); }
 .eyebrow { margin-block-end: .5rem; color: var(--color-brand); font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
 .page-description { max-width: 43rem; margin-block-start: .75rem; color: var(--color-text-muted); font-size: var(--text-lg); }
@@ -46,7 +46,7 @@
   .nav-link--active { color: var(--color-action); background: transparent; }
   .nav-link:hover { background: var(--color-brand-hover); }
   .nav-link:focus-visible { outline-color: var(--color-action); box-shadow: 0 0 0 4px var(--color-brand); }
-  .main-content { padding-block-start: calc(2.5rem + var(--toast-space, 0px)); }
+  .main-content { padding-block-start: 2.5rem; }
 }
 @media (min-width: 64rem) { .content-layout--split { grid-template-columns: minmax(0,1.7fr) minmax(16rem,1fr); } }
 

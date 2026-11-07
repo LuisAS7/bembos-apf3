@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "test": "node --test --test-concurrency=1 tests/foundation.test.mjs tests/catalog.test.mjs tests/menu-markup.test.mjs tests/customization.test.mjs tests/customization-markup.test.mjs tests/cart.test.mjs tests/cart-markup.test.mjs tests/checkout.test.mjs tests/checkout-markup.test.mjs tests/payment.test.mjs tests/payment-markup.test.mjs tests/confirmation.test.mjs tests/confirmation-markup.test.mjs tests/visual-interactions.test.mjs tests/visual-markup.test.mjs tests/iteration2.test.mjs",
+    "test": "node --test --test-concurrency=1 tests/foundation.test.mjs tests/catalog.test.mjs tests/menu-markup.test.mjs tests/customization.test.mjs tests/customization-markup.test.mjs tests/cart.test.mjs tests/cart-markup.test.mjs tests/checkout.test.mjs tests/checkout-markup.test.mjs tests/payment.test.mjs tests/payment-markup.test.mjs tests/confirmation.test.mjs tests/confirmation-markup.test.mjs tests/visual-interactions.test.mjs tests/visual-markup.test.mjs tests/iteration2.test.mjs tests/visual-correction.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -30,6 +30,7 @@ export function createConfirmation(context: ConfirmationContext, orderId: string
     items: totals.items.map(({ item, product, unitPriceCents, totalCents }) => ({
       productId: item.productId, quantity: item.quantity, lineTotalCents: totalCents!,
       snapshot: { itemId: item.itemId, name: product!.name, source: product!.source.kind, unitPriceCents: unitPriceCents!,
+        image: { src: product!.image.src, ...(product!.image.duo ? { duo: true } : {}) },
         variantLabel: product!.variants.find((variant) => variant.id === item.configuration.variantId)?.label ?? null,
         selections: product!.optionGroups.map((group) => ({ label: group.label,
           options: (item.configuration.selections[group.id] ?? []).map((id) => group.options.find((option) => option.id === id)!.label) })) },

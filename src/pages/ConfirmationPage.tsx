@@ -1,4 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
+import { UtensilsCrossed } from 'lucide-react'
+import { ProductImage } from '../components/ui/ProductImage.tsx'
 import { QRCodeSVG } from 'qrcode.react'
 import { useAppState } from '../hooks/useAppState.ts'
 import { hasCompleteSummary } from '../features/confirmation/confirmation.ts'
@@ -41,13 +43,18 @@ export function ConfirmationPage() {
       </section>
       <details className="receipt-products"><summary>Ver detalle del pedido</summary><section aria-labelledby="confirmed-products-heading">
         <h2 id="confirmed-products-heading">Productos confirmados</h2>
-        <ol className="checkout-products">{receipt.items.map((item, index) => <li key={item.snapshot.itemId}>
-          <h3>{index + 1}. {displayName(item.snapshot.name)}</h3>
-          <p>Cantidad: {item.quantity} · Por unidad: {formatPrice(item.snapshot.unitPriceCents)} · Importe: <strong>{formatPrice(item.lineTotalCents)}</strong></p>
+        <ol className="receipt-item-list">{receipt.items.map((item) => <li key={item.snapshot.itemId}>
+          <div className="receipt-photo">{item.snapshot.image ? <ProductImage image={{ ...item.snapshot.image, alt: '' }} />
+            : <div className="receipt-photo-missing" role="img" aria-label="Fotografía no disponible"><UtensilsCrossed size={28} aria-hidden="true" /></div>}</div>
+          <div className="receipt-item-body">
+          <h3>{displayName(item.snapshot.name)}</h3>
+          <p>Cantidad: <strong>{item.quantity}</strong></p>
+          <p className="control-help">Por unidad: {formatPrice(item.snapshot.unitPriceCents)}</p>
           <dl className="checkout-options">
             {item.snapshot.variantLabel && <div><dt>Variante</dt><dd>{displayName(item.snapshot.variantLabel)}</dd></div>}
             {item.snapshot.selections.map((group, groupIndex) => <div key={groupIndex}><dt>{group.label}</dt><dd>{group.options.join(', ') || 'Sin opciones seleccionadas'}</dd></div>)}
           </dl>
+          <p className="receipt-line-total">Importe: <strong>{formatPrice(item.lineTotalCents)}</strong></p></div>
         </li>)}</ol>
       </section></details>
 

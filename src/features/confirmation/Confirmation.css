@@ -19,3 +19,14 @@
 .receipt-products summary { cursor: pointer; padding: .75rem; min-height: var(--target-size); font-weight: 700; }
 .receipt-products section { margin-block-start: 1rem; }
 .receipt-products .checkout-options { font-size: .8125rem; }
+
+.receipt-products > section { margin-block-start: 1.5rem; padding-block-start: 1.5rem; border-block-start: 1px solid var(--color-decoration); }
+.receipt-item-list { list-style: none; display: grid; gap: 1.5rem; padding: 0; margin: 1.5rem 0 0; }
+.receipt-item-list > li { display: grid; grid-template-columns: 4.5rem minmax(0,1fr); gap: 1rem; padding-block-end: 1.5rem; border-block-end: 1px solid var(--color-decoration); }
+.receipt-item-list > li:last-child { border: 0; padding-block-end: 0; }
+.receipt-item-body { display: grid; gap: .75rem; min-width: 0; overflow-wrap: anywhere; }
+.receipt-item-body h3 { font-size: 1.125rem; }
+.receipt-item-body .control-help { margin: 0; }
+.receipt-photo .product-image, .receipt-photo-missing { width: 4.5rem; height: 4.5rem; aspect-ratio: 1; border-radius: .5rem; }
+.receipt-photo-missing { display: grid; place-items: center; color: var(--color-text-muted); background: var(--color-background); }
+.receipt-line-total { padding-block-start: .5rem; }

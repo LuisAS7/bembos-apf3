@@ -1,5 +1,8 @@
 # Segunda iteración visual y de interacción
 
+> Informe histórico: la [corrección puntual posterior](correccion-visual-2.md) sustituye la reserva superior de avisos, la entrada de cantidad, parte de la cobertura fotográfica, campos de tarjeta y detalle del comprobante.
+
+
 Base: `86a156a`, 7 de noviembre de 2026, America/Lima. Autorización específica del usuario; no se ejecuta la Fase 8 completa.
 
 ## Cambios y decisiones

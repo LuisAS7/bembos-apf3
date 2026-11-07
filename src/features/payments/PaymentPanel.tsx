@@ -8,6 +8,7 @@ import { checkoutTotals } from '../checkout/checkout.ts'
 import { formatPrice } from '../catalog/filterProducts.ts'
 import { cardBrand, emptyPaymentDraft, validatePayment } from './payment.ts'
 import type { PaymentDraft, PaymentIssue, YapeChallenge } from './payment.ts'
+import { formatExpiry } from './expiry.ts'
 import { YapeDemo } from './YapeDemo.tsx'
 import './Payments.css'
 
@@ -21,7 +22,6 @@ export function PaymentPanel({ onContinue, initialMethod = 'cash' }: { onContinu
   const [challenge, setChallenge] = useState<YapeChallenge | null>(null)
   const [issues, setIssues] = useState<PaymentIssue[]>([])
   const [attempt, setAttempt] = useState(0)
-  const [decline, setDecline] = useState(false)
   const pendingFocus = useRef<PaymentIssue['field'] | null>(null)
   const inFlight = useRef(false)
   const timer = useRef<number | undefined>(undefined)
@@ -60,7 +60,9 @@ export function PaymentPanel({ onContinue, initialMethod = 'cash' }: { onContinu
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (inFlight.current || processing || approved) return
-    const errors = validatePayment(state.order, state.checkout, draft, challenge)
+    const normalized = { ...draft, expiry: formatExpiry(draft.expiry) }
+    setDraft(normalized)
+    const errors = validatePayment(state.order, state.checkout, normalized, challenge)
     setIssues(errors)
     setAttempt((previous) => previous + 1)
     if (errors.length) { pendingFocus.current = errors[0].field; return }
@@ -72,7 +74,7 @@ export function PaymentPanel({ onContinue, initialMethod = 'cash' }: { onContinu
     setDraft(emptyPaymentDraft(draft.method))
     setChallenge(null)
     timer.current = window.setTimeout(() => {
-      dispatch({ type: 'payment/finish', attemptId, revision, outcome: decline ? 'error' : 'approved' })
+      dispatch({ type: 'payment/finish', attemptId, revision, outcome: 'approved' })
       inFlight.current = false
       timer.current = undefined
     }, 800)
@@ -109,10 +111,11 @@ export function PaymentPanel({ onContinue, initialMethod = 'cash' }: { onContinu
             <FormField id="payment-number" label="Número de tarjeta" help="Visa: 13, 16 o 19 dígitos. Mastercard: 16 dígitos. Se admiten espacios o guiones. Usa solo números de prueba."
               value={draft.number} onChange={(value) => update('number', value)} error={error('number')} autoComplete="off" inputMode="numeric" maxLength={25} />
             <p role="status" aria-atomic="true">{draft.number ? `Tipo de tarjeta detectado: ${brand ?? 'no reconocido'}. La detección no acredita un número válido.` : 'Ingresa un número de prueba para detectar Visa o Mastercard.'}</p>
-            <FormField id="payment-expiry" label="Vencimiento (MM/AA)" help="Formato MM/AA. Se acepta el mes actual completo o uno posterior."
+            <div className="payment-card-row"><FormField id="payment-expiry" label="Vencimiento (MM/AA)" placeholder="MM/AA" inputMode="numeric"
+              onBlur={() => { const formatted = formatExpiry(draft.expiry); if (formatted !== draft.expiry) update('expiry', formatted) }}
               value={draft.expiry} onChange={(value) => update('expiry', value)} error={error('expiry')} autoComplete="off" maxLength={5} />
             <FormField id="payment-cvv" label="CVV" help="3 dígitos."
-              value={draft.cvv} onChange={(value) => update('cvv', value)} error={error('cvv')} autoComplete="off" type="password" inputMode="numeric" maxLength={3} />
+              value={draft.cvv} onChange={(value) => update('cvv', value)} error={error('cvv')} autoComplete="off" type="password" inputMode="numeric" maxLength={3} /></div>
           </div>}
           {draft.method === 'yape' && <div className="payment-fields">
             <p>Genera un código de prueba y escríbelo para continuar.</p>
@@ -125,7 +128,6 @@ export function PaymentPanel({ onContinue, initialMethod = 'cash' }: { onContinu
             <FormField id="payment-yapeCode" label="Código Yape" help="Genera el código de prueba y escribe sus 6 dígitos. Generar otro invalida el anterior."
               value={draft.yapeCode} onChange={(value) => update('yapeCode', value)} error={error('yapeCode')} autoComplete="off" inputMode="numeric" maxLength={6} />
           </div>}
-          <label className="delivery-choice"><input type="checkbox" checked={decline} onChange={(event) => setDecline(event.target.checked)} /><span>Probar pago rechazado</span></label>
         </>}
       </fieldset>
       <p id="payment-context" tabIndex={-1} className="field-error">{error('context')}</p>

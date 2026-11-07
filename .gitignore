@@ -32,3 +32,4 @@ dist-ssr
 *.sw?
 
 !docs/evidencias/iteracion2/*.log
+!docs/evidencias/correccion-visual/*.log

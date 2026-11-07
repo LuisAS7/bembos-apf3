@@ -6,6 +6,8 @@ La primera evolución visual autorizada sobre `da30ab7` incorpora recursos ofici
 
 La segunda iteración amplía a 20 productos y siete categorías, renueva configurador, carrito, avisos superiores y comprobante, y organiza el checkout en tres etapas. [Cambios, fuentes, verificaciones y pendientes](docs/trazabilidad/iteracion-visual-2.md). Sin dependencias nuevas.
 
+Corrección puntual posterior a `672f78e`: avisos flotantes sin reserva de espacio, cantidades mediante botones, fotografías de opciones, ajustes de tarjeta/checkout y miniaturas históricas del comprobante. [Reporte y cobertura pendiente](docs/trazabilidad/correccion-visual-2.md).
+
 La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos; la Fase 4 conecta el carrito multiproducto. La Fase 5 añade entrega y resumen; la Fase 6 incorpora pagos simulados y la Fase 7 confirma el pedido de demostración y guarda su último comprobante reducido. Auditoría y pulido posteriores requieren su aprobación.
 
 ## Entorno y comandos
@@ -63,7 +65,7 @@ Las salsas nuevas parten vacías; la edición conserva las guardadas. Se usan fi
 
 Cada alta usa un `itemId` independiente, incluso para el mismo producto. Editar carga la configuración y cantidad guardadas; cancelar no modifica el ítem. Los límites de cantidad siguen siendo 1–99 y los precios se recalculan desde el catálogo en céntimos.
 
-Sonner presenta centralmente los avisos del estado existente. Eliminar ofrece Deshacer sin caducidad automática, con botón nativo; conserva identidad, configuración, cantidad y posición lógica. No hay foco automático al aparecer. Se preparan destinos de foco tras eliminar, Deshacer y cerrar avisos, con espacio reservado para notificaciones y navegación. La integración real y sus anuncios siguen pendientes de prueba en navegador.
+Sonner presenta centralmente los avisos del estado existente. Eliminar ofrece Deshacer sin caducidad automática, con botón nativo; conserva identidad, configuración, cantidad y posición lógica. No hay foco automático al aparecer. Se preparan destinos de foco tras eliminar, Deshacer y cerrar avisos, con navegación protegida y avisos flotantes sin desplazar el contenido. La integración real y sus anuncios siguen pendientes de prueba en navegador.
 
 Se recupera el pedido completo al abrir, revalidando catálogo, selecciones y disponibilidad. Los precios guardados no autorizan importes. Ítems obsoletos o agotados se conservan para revisión; precios imposibles de recalcular se muestran pendientes. Datos dañados/versiones incompatibles no se sobrescriben al montar; el aviso explica cómo iniciar un pedido nuevo. El almacenamiento bloqueado permite trabajar en memoria y muestra la limitación. La recuperación se anuncia mediante una región de estado, sin mover el foco.
 
@@ -83,7 +85,7 @@ Los datos de tarjeta y códigos permanecen en el formulario, se limpian al inici
 
 ## Confirmación
 
-«Confirmar pedido» revalida carrito, disponibilidad, entrega e importe aprobado. Guarda una instantánea no sensible y solo después limpia carrito, checkout y pago. El ID ficticio se muestra como texto y es el único contenido del QR. El comprobante conserva productos/opciones/precios/local sin depender del catálogo o de pedidos posteriores. Su detalle de productos se abre mediante details/summary y comienza cerrado.
+«Confirmar pedido» revalida carrito, disponibilidad, entrega e importe aprobado. Guarda una instantánea no sensible y solo después limpia carrito, checkout y pago. El ID ficticio se muestra como texto y es el único contenido del QR. El comprobante conserva productos/opciones/precios/local y una referencia de imagen local permitida, sin depender del catálogo o de pedidos posteriores. Comprobantes anteriores sin foto tienen una alternativa. Su detalle de productos se abre mediante details/summary y comienza cerrado.
 
 Solo se conserva `bembos.apf3.lastConfirmation` en sessionStorage. Si falla guardarlo, el pedido permanece intacto y se permite reintentar. Si falla borrar la copia local del carrito, se advierte y sus ítems confirmados no se restauran mientras este comprobante esté disponible. Repetir el mismo intento devuelve el mismo comprobante; recargar y Atrás/Adelante no ejecutan confirmaciones. No hay tracking ni historial. [Reporte y evidencias de Fase 7](docs/trazabilidad/fase7-confirmacion.md).
 

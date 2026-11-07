@@ -116,6 +116,7 @@ export interface ConfirmedItemSnapshot {
   selections: Array<{ label: string; options: string[] }>
   unitPriceCents: Cents
   source: DataSource['kind']
+  image?: { src: string; duo?: boolean }
 }
 export interface ConfirmationSummary {
   locationName: string

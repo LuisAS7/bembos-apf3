@@ -1,4 +1,5 @@
 import { OptionVisual } from './OptionVisual.tsx'
+import { optionPhoto } from '../../data/optionPhotos.ts'
 import { CircleAlert } from 'lucide-react'
 import { AccessibleButton } from '../../components/ui/AccessibleButton.tsx'
 import { formatPrice } from '../catalog/filterProducts.ts'
@@ -24,6 +25,7 @@ export function OptionGroup({ group, fieldId, selectedIds, errors, availability,
       {group.options.map((option) => {
         const status = availability(option.id)
         const selected = selectedIds.includes(option.id)
+        const photo = optionPhoto(group.id, option)
         const inputId = `${fieldId}-${option.id}`
         const descriptionId = `${inputId}-description`
         return <div key={option.id} className={`config-option${selected ? ' config-option--selected' : ''}${!status.available ? ' config-option--unavailable' : ''}`}>
@@ -37,6 +39,7 @@ export function OptionGroup({ group, fieldId, selectedIds, errors, availability,
             <OptionVisual groupId={group.id} option={option} /><span className="option-name">{option.label}{selected && <span className="selected-text"> · Seleccionado</span>}</span>
             <span className="option-price">{option.additionalPriceCents === 0 ? 'Sin costo adicional' : `+ ${formatPrice(option.additionalPriceCents)}`}</span>
           </label>
+          {photo?.author && <p className="option-photo-credit">Foto referencial, ajena a Bembos: <a href={photo.page}>{photo.author} · {photo.license}</a></p>}
           {!status.available && <div id={descriptionId} className="option-description"><p className="restriction-text"><CircleAlert size={18} aria-hidden="true" /><span>{status.reason}{selected && group.selection === 'multiple' && ' Puedes desmarcar esta opción para retirarla.'}</span></p></div>}
           {!status.available && <AccessibleButton className="button--secondary option-locations" onClick={() => onViewLocations(option.id, option.label)}>
             Ver locales<span className="sr-only"> para {option.label}</span>

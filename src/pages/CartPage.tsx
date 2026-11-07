@@ -1,11 +1,13 @@
 import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { AccessibleButton } from '../components/ui/AccessibleButton.tsx'
-import { Minus, Plus, Pencil, Trash2 } from 'lucide-react'
+import { Pencil, Trash2 } from 'lucide-react'
 import { useAppState } from '../hooks/useAppState.ts'
 import { inspectOrder, itemLabel } from '../features/cart/cart.ts'
 import { formatPrice } from '../features/catalog/filterProducts.ts'
 import { ProductImage } from '../components/ui/ProductImage.tsx'
+import { QuantitySelector } from '../features/customization/QuantitySelector.tsx'
+import '../features/customization/Customization.css'
 import { MAX_QUANTITY } from '../features/customization/configuration.ts'
 import '../features/catalog/Catalog.css'
 import '../features/cart/Cart.css'
@@ -51,14 +53,11 @@ export function CartPage() {
               })}
             </dl>
             {issues.length > 0 && <div className="cart-restrictions" id={`issues-${item.itemId}`}><h3>Requiere actualización</h3><ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul><p>Edita el producto, elige otro local o elimínalo para continuar.</p></div>}
-            <div className="cart-item-footer"><div className="cart-item-count"><div className="cart-quantity" role="group" aria-label={`Cantidad de ${itemLabel(item)}, ítem ${index + 1}`}>
-              <AccessibleButton className="button--secondary" aria-label={`Disminuir cantidad de ${itemLabel(item)}, ítem ${index + 1}`}
-                disabled={item.quantity <= 1 || issues.length > 0} onClick={() => changeQuantity(item.itemId, item.quantity - 1)}><Minus size={20} aria-hidden="true" /></AccessibleButton>
-              <p id={`cart-quantity-${item.itemId}`} tabIndex={-1} role="status" aria-atomic="true">Cantidad: <strong>{item.quantity}</strong></p>
-              <AccessibleButton className="button--secondary" aria-label={`Aumentar cantidad de ${itemLabel(item)}, ítem ${index + 1}`}
-                disabled={item.quantity >= MAX_QUANTITY || issues.length > 0} onClick={() => changeQuantity(item.itemId, item.quantity + 1)}><Plus size={20} aria-hidden="true" /></AccessibleButton>
+            <div className="cart-item-footer"><div className="cart-item-count">
+              <QuantitySelector id={`cart-quantity-${item.itemId}`} value={String(item.quantity)} productName={`${itemLabel(item)}, ítem ${index + 1}`}
+                disabled={issues.length > 0} onChange={(value) => changeQuantity(item.itemId, Number(value))} />
+              {issues.length > 0 && <p className="control-help">Edita las restricciones antes de ajustar la cantidad.</p>}
             </div>
-            <p className="control-help">De 1 a {MAX_QUANTITY} unidades.{issues.length > 0 && ' Corrige las restricciones mediante Editar antes de ajustar la cantidad.'}</p></div>
             <p className="cart-item-price">{unitPriceCents === null ? 'Importe pendiente de actualización.' : <>Por unidad: {formatPrice(unitPriceCents)} · Importe: <strong>{formatPrice(totalCents!)}</strong>{issues.length > 0 && ' (informativo; no disponible para continuar)'}</>}</p>
             <div className="cart-actions">
               {product && <Link className="button button--secondary" to={`/pedido/${encodeURIComponent(item.itemId)}/editar`} aria-label={`Editar ${itemLabel(item)}, ítem ${index + 1}`} title="Editar producto"><Pencil size={20} aria-hidden="true" /></Link>}

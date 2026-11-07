@@ -11,7 +11,7 @@ import { getLocation } from '../data/locations.ts'
 import type { CheckoutDraft } from '../domain/models.ts'
 import { PaymentPanel } from '../features/payments/PaymentPanel.tsx'
 import { ConfirmOrderButton } from '../features/confirmation/ConfirmOrderButton.tsx'
-import { checkoutStep, checkoutStages } from '../features/checkout/steps.ts'
+import { checkoutBackStep, checkoutStep, checkoutStages } from '../features/checkout/steps.ts'
 import { StepIndicator } from '../features/customization/StepIndicator.tsx'
 import '../features/customization/Customization.css'
 import '../features/catalog/Catalog.css'
@@ -33,6 +33,7 @@ function CheckoutForm() {
   const [requestedStep, setStep] = useState(0)
   const [paymentVisited, setPaymentVisited] = useState(false)
   const step = checkoutStep(requestedStep, state)
+  const backStep = checkoutBackStep(step)
   const pendingFocus = useRef<keyof CheckoutDraft | 'stage' | null>(null)
   const previousStep = useRef(step)
   const location = getLocation(state.order.locationId)!
@@ -131,7 +132,7 @@ function CheckoutForm() {
         <p>Revisa los productos y el total antes de confirmar.</p>
         {state.payment.attemptId && <ConfirmOrderButton attemptId={state.payment.attemptId} />}
       </div>}
-      {step > 0 && <AccessibleButton className="button--secondary checkout-back" disabled={state.payment.status === 'processing'} onClick={() => goTo(step - 1)}>Volver</AccessibleButton>}
+      {backStep !== null && <AccessibleButton className="button--secondary checkout-back" disabled={state.payment.status === 'processing'} onClick={() => goTo(backStep)}>Volver</AccessibleButton>}
       </section>
       <OrderSummary order={state.order} method={draft.deliveryMethod} />
     </div>

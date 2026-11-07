@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Toaster as SonnerToaster, toast } from 'sonner'
 import { useAppState } from '../../hooks/useAppState.ts'
 import { notificationDuration, notificationEntries, notificationPlan } from './notificationPlan.ts'
@@ -9,7 +9,7 @@ export function Toaster() {
   const { state, dispatch } = useAppState()
   const { toasts, storageNotice, recoveryNotice } = state
   const known = useRef(new Map<string, string>())
-  const dock = useRef<HTMLDivElement>(null)
+  const [position, setPosition] = useState<'top-right' | 'top-center'>('top-right')
   useEffect(() => {
     const entries = notificationEntries({ toasts, storageNotice, recoveryNotice })
     const plan = notificationPlan(known.current, entries)
@@ -33,23 +33,25 @@ export function Toaster() {
       onAutoClose: () => dismiss(notice.id, Boolean(document.getElementById(`dismiss-${notice.id}`)?.closest('[data-sonner-toast]')?.contains(document.activeElement))) }))
   }, [toasts, storageNotice, recoveryNotice, dispatch])
   useEffect(() => {
-    const element = dock.current
-    if (!element || typeof ResizeObserver === 'undefined') return
     const header = document.querySelector('header')
-    const observer = new ResizeObserver(() => {
-      document.documentElement.style.setProperty('--toast-space', `${element.getBoundingClientRect().height}px`)
+    const media = window.matchMedia('(max-width: 47.99rem)')
+    const place = () => {
+      setPosition(media.matches ? 'top-center' : 'top-right')
       document.documentElement.style.setProperty('--header-height', `${header?.getBoundingClientRect().height ?? 96}px`)
-    })
-    if (header) observer.observe(header)
-    observer.observe(element)
-    return () => { observer.disconnect(); document.documentElement.style.removeProperty('--toast-space'); document.documentElement.style.removeProperty('--header-height') }
+    }
+    place()
+    media.addEventListener('change', place)
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(place) : null
+    if (header) observer?.observe(header)
+    return () => { media.removeEventListener('change', place); observer?.disconnect(); document.documentElement.style.removeProperty('--header-height') }
   }, [])
   useEffect(() => {
     const active = known.current
     return () => { active.forEach((_, id) => toast.dismiss(id)); active.clear() }
   }, [])
-  return <div className="notification-dock" ref={dock}>
-    <SonnerToaster theme="light" position="top-right" expand visibleToasts={Math.max(state.toasts.length + 2, 3)}
+  return <SonnerToaster className="notification-toaster"
+    theme="light" position={position} expand visibleToasts={Math.max(state.toasts.length + 2, 3)}
+      offset={{ top: 'calc(var(--header-height, 96px) + .5rem)', right: '1rem', left: '1rem' }}
+      mobileOffset={{ top: 'calc(var(--header-height, 96px) + .5rem)', right: '1rem', left: '1rem' }}
       customAriaLabel="Avisos del pedido. Alt+T para ir a los avisos." hotkey={['altKey', 'KeyT']} />
-  </div>
 }

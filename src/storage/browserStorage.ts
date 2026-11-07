@@ -18,6 +18,11 @@ const record = (value: unknown): value is Record<string, unknown> =>
 const text = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0
 const money = (value: unknown): value is number => Number.isSafeInteger(value) && (value as number) >= 0
 const positive = (value: unknown): value is number => money(value) && value > 0
+// Resource allowlist independent of today's catalog. Keep historical files/references.
+const receiptPhotos = new Set(['cheese', 'royal', 'clasica', 'bbq', 'combo-cheese', 'combo-royal', 'combo-clasica', 'combo-bbq', 'compartir', 'familiar',
+  'menu-taypa', 'menu-pobre', 'papas', 'nuggets', 'chicken-grill', 'bembroster', 'loncherita-burger', 'loncherita-nuggets'].map((name) => `/images/official/${name}.jpg`))
+const localReceiptImage = (value: unknown): boolean => record(value) && typeof value.src === 'string' && receiptPhotos.has(value.src) &&
+  (value.duo === undefined || typeof value.duo === 'boolean')
 
 function isPreferences(value: unknown): value is DisplayPreferences {
   return record(value) && typeof value.textSize === 'string' && ['default', 'large', 'extra-large'].includes(value.textSize) &&
@@ -60,6 +65,7 @@ function isConfirmation(value: unknown): value is ConfirmationReceipt {
     if (!record(snapshot) || !text(snapshot.itemId) || ids.has(snapshot.itemId) || !text(snapshot.name) ||
       !(snapshot.variantLabel === null || text(snapshot.variantLabel)) || !money(snapshot.unitPriceCents) ||
       !['apf2', 'academic-mock'].includes(snapshot.source as string) || !Array.isArray(snapshot.selections) ||
+      (snapshot.image !== undefined && !localReceiptImage(snapshot.image)) ||
       !snapshot.selections.every((group: unknown) => record(group) && text(group.label) && Array.isArray(group.options) && group.options.every(text)) ||
       snapshot.unitPriceCents * (item.quantity as number) !== item.lineTotalCents) return false
     ids.add(snapshot.itemId)
@@ -122,6 +128,7 @@ function safeConfirmation(value: ConfirmationReceipt): ConfirmationReceipt {
       productId: item.productId, quantity: item.quantity, lineTotalCents: item.lineTotalCents,
       ...(item.snapshot ? { snapshot: { itemId: item.snapshot.itemId, name: item.snapshot.name, source: item.snapshot.source,
         unitPriceCents: item.snapshot.unitPriceCents, variantLabel: item.snapshot.variantLabel,
+        ...(item.snapshot.image ? { image: { src: item.snapshot.image.src, ...(item.snapshot.image.duo !== undefined ? { duo: item.snapshot.image.duo } : {}) } } : {}),
         selections: item.snapshot.selections.map((group) => ({ label: group.label, options: [...group.options] })) } } : {}),
     })),
   }

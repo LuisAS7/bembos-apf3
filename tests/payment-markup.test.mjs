@@ -29,10 +29,13 @@ test('payment markup uses native controls, fictional QR, associated labels and n
     const card = render()
     for (const name of ['holder', 'number', 'expiry', 'cvv']) {
       assert.ok(card.includes(`for="payment-${name}"`))
-      assert.ok(card.includes(`aria-describedby="payment-${name}-help"`))
+      if (name !== 'expiry') assert.ok(card.includes(`aria-describedby="payment-${name}-help"`))
     }
     assert.match(card, /id="payment-cvv"[^>]*autoComplete="off"[^>]*type="password"/)
     assert.ok(card.includes('Visa o Mastercard'))
+    assert.match(card, /id="payment-expiry"[^>]*placeholder="MM\/AA"[^>]*type="text"[^>]*inputMode="numeric"/)
+    assert.ok(!card.includes('payment-expiry-help'))
+    assert.ok(!card.includes('Probar pago rechazado'))
     state.payment.method = 'yape'
     const yape = render()
     assert.ok(yape.includes('Generar código de prueba'))

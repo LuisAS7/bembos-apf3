@@ -1,0 +1,243 @@
+{
+  "resources": [
+    {
+      "name": "Mayonesa",
+      "page": "https://www.bembos.com.pe/promo-cheese",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461476_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/mayonesa.jpg",
+      "bytes": 5325,
+      "sha256": "6b8e056d1e532c68560209849409afb6ebc268b849791191ecc92378ea0f4f4f",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Ketchup",
+      "page": "https://www.bembos.com.pe/promo-cheese",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461478_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/ketchup.jpg",
+      "bytes": 9224,
+      "sha256": "51c4d856873955fb91b72e34d960c9ffbf95290a1d950f7b9f44886e64984510",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Papa Grande",
+      "page": "https://www.bembos.com.pe/promo-cheese",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461456_2.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/papas-grandes.jpg",
+      "bytes": 5972,
+      "sha256": "0e0839dd4a1bd927066da167dd73ea1639750e3ee45235fdcb34b62d9941dadc",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Papa Mediana",
+      "page": "https://www.bembos.com.pe/promo-cheese",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461454_2.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/papas-medianas.jpg",
+      "bytes": 6741,
+      "sha256": "02e10b3791d567ac861ffa664f0b53803767fabd0271889faab8cbefeae01d39",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Queso Medium Extra",
+      "page": "https://www.bembos.com.pe/hamburguesa-mexicana",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146463721_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/extra-queso.jpg",
+      "bytes": 2819,
+      "sha256": "1b376c4fa039ba443b22666f729a0648dbdcc73e3fe7342e6076f3b7d4b44da1",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Tocino Extra",
+      "page": "https://www.bembos.com.pe/hamburguesa-mexicana",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146463723_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/extra-tocino.jpg",
+      "bytes": 7619,
+      "sha256": "aae5378f8f7eabdb3baffbb3a9f438bdb0a6ca46805704393c40eda670a5f867",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Cheese Mediana",
+      "page": "https://www.bembos.com.pe/promo-cheese",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461455_2.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/cheese-mediana.jpg",
+      "bytes": 7634,
+      "sha256": "35eb419f238e1ed7cc994fec2d85f1dfd5f35a8425d22c3e698294494c2a6721",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Cheese Grande",
+      "page": "https://www.bembos.com.pe/promo-cheese",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461459_2.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/cheese-grande.jpg",
+      "bytes": 8222,
+      "sha256": "cf0101e8846e780f138d9b9e871f65e7bc1820796ba1b08cc84f87e84dc445ab",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Royal Mediana",
+      "page": "https://www.bembos.com.pe/hamburguesa-royal",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461480_2.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/royal-mediana.jpg",
+      "bytes": 7903,
+      "sha256": "f7464a93a9054012ba759ee72f80a1e8cbd2832eb1795c5287fdedf5062a9d05",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Royal Grande",
+      "page": "https://www.bembos.com.pe/hamburguesa-royal",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461482_2.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/royal-grande.jpg",
+      "bytes": 8405,
+      "sha256": "a2525e77e7f164764fc62c37bd546abe4ce5b932a3c6be096eb01ea3cd3a82d2",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Clásica Mediana",
+      "page": "https://www.bembos.com.pe/hamburguesa-clasica",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461451_2.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/clasica-mediana.jpg",
+      "bytes": 7651,
+      "sha256": "8003093a03c935d3faf9693efa7b6c0c8d5057e1d57f8984eb190ca6eee3db78",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "Clásica Grande",
+      "page": "https://www.bembos.com.pe/hamburguesa-clasica",
+      "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146461452_3.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=240&width=240&canvas=240:240&format=jpeg",
+      "file": "public/images/official/clasica-grande.jpg",
+      "bytes": 8258,
+      "sha256": "183b98245a3e2e7ae7450ee0a6fdb768d92643a7b3094c689ae4cc43032ce3fe",
+      "contentType": "image/jpeg"
+    },
+    {
+      "name": "aros",
+      "page": "https://commons.wikimedia.org/wiki/File:Onion_rings_fried.jpg",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Onion_rings_fried.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+      "file": "public/images/reference/aros.jpg",
+      "bytes": 218007,
+      "sha256": "c189465644ce8bba31c8dfe77e8b50bb8e1c2bf78bef88ce9606f4af27681506",
+      "contentType": "image/jpeg",
+      "author": "Jon Sullivan",
+      "license": "Public domain",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Onion_rings_fried.jpg",
+      "usage": "Generic reference photograph; not a Bembos photograph; unchanged bytes."
+    },
+    {
+      "name": "limonada",
+      "page": "https://commons.wikimedia.org/wiki/File:Glass_of_lemonade.jpg",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Glass_of_lemonade.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+      "file": "public/images/reference/limonada.jpg",
+      "bytes": 127976,
+      "sha256": "2640a98b3949f134b9fa657a53de1c048ee2481a6dc5bbdf241af8fc0035d646",
+      "contentType": "image/jpeg",
+      "author": "Lemur12",
+      "license": "Attribution",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Glass_of_lemonade.jpg",
+      "usage": "Generic reference photograph; not a Bembos photograph; unchanged bytes."
+    }
+  ],
+  "pending": [
+    {
+      "productId": "cheese",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "royal",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "clasica-demo",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "bbq-demo",
+      "groupId": "variant",
+      "optionId": "mediana",
+      "label": "BBQ mediana",
+      "reason": "No verified photograph matching this prototype presentation."
+    },
+    {
+      "productId": "bbq-demo",
+      "groupId": "variant",
+      "optionId": "grande",
+      "label": "BBQ grande",
+      "reason": "No verified photograph matching this prototype presentation."
+    },
+    {
+      "productId": "bbq-demo",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "combo-cheese-demo",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "combo-royal-demo",
+      "groupId": "principal",
+      "optionId": "alternativo",
+      "label": "BBQ",
+      "reason": "No verified photograph matching this prototype option."
+    },
+    {
+      "productId": "combo-royal-demo",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "combo-clasica-demo",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "combo-bbq-demo",
+      "groupId": "principal",
+      "optionId": "incluido",
+      "label": "BBQ",
+      "reason": "No verified photograph matching this prototype option."
+    },
+    {
+      "productId": "combo-bbq-demo",
+      "groupId": "papas",
+      "optionId": "rusticas",
+      "label": "Papas rústicas",
+      "reason": "No official photograph located. Wikimedia Commons reference download returned HTTP 429; not downloaded or attributed to Bembos."
+    },
+    {
+      "productId": "familiar-demo",
+      "groupId": "variant",
+      "optionId": "dos",
+      "label": "Para dos personas",
+      "reason": "No verified photograph matching this prototype presentation."
+    },
+    {
+      "productId": "familiar-demo",
+      "groupId": "variant",
+      "optionId": "cuatro",
+      "label": "Para cuatro personas",
+      "reason": "No verified photograph matching this prototype presentation."
+    }
+  ],
+  "notes": [
+    "Official photographs were inspected locally. Nonofficial reference photographs retain authorship and licensing, with visible attribution.",
+    "Ingredient-removal controls have no image; they are not selectable additions.",
+    "No full coverage claim: pending lists every remaining option occurrence."
+  ]
+}
