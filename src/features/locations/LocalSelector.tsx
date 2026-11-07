@@ -26,7 +26,7 @@ export function LocalSelector() {
     const fresh = makePlan(candidate.locationId)
     if (fresh.blocked || JSON.stringify(fresh) !== JSON.stringify(candidate)) { setPlan(fresh); return }
     dispatch({ type: 'order/replace', value: fresh.order! })
-    dispatch({ type: 'toast/notify', message: `Local actualizado: ${getLocation(fresh.locationId)?.name}. Revisa la disponibilidad de tu selección.` })
+    dispatch({ type: 'toast/notify', kind: fresh.issues.length ? 'warning' : 'success', message: `Local actualizado: ${getLocation(fresh.locationId)?.name}. Revisa la disponibilidad de tu selección.` })
     close()
   }
   function select(event: FormEvent<HTMLFormElement>) {

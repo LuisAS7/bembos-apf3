@@ -6,7 +6,7 @@ import type { AppAction } from '../state/appState.ts'
 import { recoverOrder } from '../features/cart/cart.ts'
 import { excludeConfirmedItems } from '../features/confirmation/confirmation.ts'
 import { confirmOrder as commitConfirmation } from '../features/confirmation/confirmOrder.ts'
-import { clearStoredOrder, readLastConfirmation, readOrder, readPreferences, saveLastConfirmation, saveOrder, savePreferences } from '../storage/browserStorage.ts'
+import { readLastConfirmation, readOrder, readPreferences, saveLastConfirmation, saveOrder, savePreferences } from '../storage/browserStorage.ts'
 
 function initialize() {
   const state = createInitialState()
@@ -41,15 +41,12 @@ export function AppProviders({ children }: PropsWithChildren) {
     const next = appReducer(previous, action)
     currentState.current = next
     let saved = true
-    if (action.type === 'cart/clear') saved = clearStoredOrder().ok
-    else if (next.order !== previous.order) saved = saveOrder(next.order).ok
+    if (next.order !== previous.order) saved = saveOrder(next.order).ok
     if (action.type === 'preferences/replace') saved = savePreferences(action.value).ok
     if (action.type === 'confirmation/replace') saved = saveLastConfirmation(action.value).ok
     reduce(action)
     if (!saved) {
-      const notice: AppAction = { type: 'storage/notice', value: action.type === 'cart/clear'
-        ? 'Limpiamos el pedido en esta página, pero no pudimos borrar la copia guardada. Puede reaparecer al recargar. Revisa los permisos de almacenamiento.'
-        : 'No pudimos guardar los cambios en este navegador. Permanecerán disponibles mientras esta página esté abierta.' }
+      const notice: AppAction = { type: 'storage/notice', value: 'No pudimos guardar los cambios en este navegador. Permanecerán disponibles mientras esta página esté abierta.' }
       currentState.current = appReducer(next, notice)
       reduce(notice)
     }

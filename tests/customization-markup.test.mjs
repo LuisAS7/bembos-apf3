@@ -20,12 +20,12 @@ test('configuration markup varies by product and starts with one active stage wi
       state.order.locationId = locations.find((location) => productAvailability(product, location.id).available).id
       const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(ProductConfigurator, { product }))))
       const expectedGroups = product.optionGroups.length + (product.variants.length ? 1 : 0)
-      assert.equal((html.match(/class="config-group"/g) ?? []).length, 1, product.id)
+      assert.equal((html.match(/class="config-group"/g) ?? []).length, expectedGroups ? 1 : 0, product.id)
       assert.equal((html.match(/data-state=/g) ?? []).length, expectedGroups + 1, product.id)
       assert.equal((html.match(/aria-current="step"/g) ?? []).length, 1, product.id)
       assert.ok(!html.includes('data-state="completed"'))
-      assert.ok(html.includes('Continuar'))
-      assert.ok(!html.includes('>Agregar al pedido<'))
+      assert.ok(html.includes(expectedGroups ? 'Continuar' : 'Agregar al pedido'))
+      assert.equal(html.includes('>Agregar al pedido<'), expectedGroups === 0)
       assert.ok(!html.includes('Guardar cambios'))
       assert.equal((html.match(/<form /g) ?? []).length, 1, 'no nested location form')
     }

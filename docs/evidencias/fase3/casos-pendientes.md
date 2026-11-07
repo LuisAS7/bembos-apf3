@@ -9,7 +9,7 @@ Todos los casos siguientes están **pendientes / no ejecutados en navegador** po
 | P3-03 | Desde ese borrador, elegir Demo Centro y Aplicar local | Diálogo con título, producto y restricciones de variante/papas; foco dentro y fondo inaccesible |
 | P3-04 | En el diálogo anterior, cancelar, usar Escape y luego confirmar en reapertura | Cancelar/Escape conservan San Miguel; confirmar cambia el local, conserva borrador y marca restricciones; foco devuelto a Aplicar local |
 | P3-05 | Abrir Ver locales de papas rústicas | Estado explicado por local; Tab/Shift+Tab contenidos, cierre con botón/Escape y devolución al botón exacto |
-| P3-06 | Seleccionar extra tocino de Cheese y cambiar a Demo Norte | Advertencia; selección agotada conservada y deshabilitada tras confirmar; Limpiar selección permite corregirla |
+| P3-06 | Seleccionar extra tocino de Cheese y cambiar a Demo Norte | Advertencia; selección agotada conservada tras confirmar; se puede desmarcar directamente para corregirla (actualización de iteración visual 2) |
 | P3-07 | Recorrer hamburguesas, combos, Dúo Royal y Familiar en un local disponible | Etapas distintas; no se fuerza tamaño/ingredientes a todos; cantidades y adicionales aplicados por unidad/promoción |
 | P3-08 | Abrir Royal directamente en Demo Norte | Estado agotado, motivo y alternativas; no se ofrecen opciones configurables mientras esté agotado |
 | P3-09 | Abrir producto desconocido y ruta de edición de pedido | Estado explícito; no se duplica, guarda ni modifica un ítem de carrito |

@@ -12,7 +12,7 @@ function sides(documented = false): OptionGroup {
   return group('papas', 'Papas', 'single', [option('medianas', 'Papas medianas', 0, source), option('grandes', 'Papas grandes', 400, source), option('rusticas', 'Papas rústicas', 400, source)], ['medianas'], 1, 1)
 }
 function sauces(): OptionGroup {
-  return group('salsas', 'Salsas', 'multiple', [option('mayonesa', 'Mayonesa'), option('ketchup', 'Ketchup'), option('aji', 'Ají')], ['mayonesa', 'ketchup'], 0, 2, 'Puedes elegir hasta dos salsas, sin costo adicional.')
+  return group('salsas', 'Salsas', 'multiple', [option('mayonesa', 'Mayonesa'), option('ketchup', 'Ketchup'), option('aji', 'Ají')], [], 0, 2, 'Puedes elegir hasta dos salsas, sin costo adicional.')
 }
 function extras(): OptionGroup {
   return group('extras', 'Extras', 'multiple', [option('queso', 'Extra queso', 250), option('tocino', 'Extra tocino', 350)], [], 0, 2, 'Elige hasta 2 adicionales. El precio se aplica por unidad.')
@@ -57,7 +57,9 @@ const promotions: Record<string, Pick<Product, 'variants' | 'optionGroups' | 'va
 
 export const configurableProducts: readonly Product[] = products.map((product) => {
   const definition = product.category === 'hamburguesas' ? burger(product)
-    : product.category === 'combos' ? combo(...mainProducts[product.id]) : promotions[product.id]
+    : product.category === 'combos' ? combo(...mainProducts[product.id]) : product.category === 'promociones' ? promotions[product.id]
+    : product.category === 'pollo' ? { variants: [], optionGroups: [sauces(), group('ingredientes', 'Ingredientes', 'multiple', [option('sin-lechuga', 'Sin lechuga'), option('sin-tomate', 'Sin tomate')], [], 0, 2)] }
+    : { variants: [], optionGroups: [] }
   return { ...product, ...definition }
 })
 

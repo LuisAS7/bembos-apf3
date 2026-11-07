@@ -1,6 +1,6 @@
 // Shared contracts; data and validation live in data/ and the corresponding features.
 export type Cents = number
-export type Category = 'hamburguesas' | 'combos' | 'promociones'
+export type Category = 'hamburguesas' | 'combos' | 'promociones' | 'menus' | 'complementos' | 'pollo' | 'loncheritas'
 export type DeliveryMethod = 'delivery' | 'pickup'
 export type PaymentMethod = 'cash' | 'card' | 'yape'
 

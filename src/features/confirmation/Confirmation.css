@@ -1,15 +1,21 @@
 .confirmation-layout { display: grid; gap: var(--space-5); align-items: start; margin-block-end: var(--space-5); }
 .confirmation-layout > * { min-width: 0; }
-.receipt-products { display: grid; gap: var(--space-5); padding: var(--space-5); background: var(--color-surface); border-radius: var(--radius-md); }
+
 .receipt-id, .receipt-details dd { overflow-wrap: anywhere; }
 .receipt-details { display: grid; gap: var(--space-3); margin: 0; }
 .receipt-details dt { font-weight: 700; }
 .receipt-details dd { margin: 0; }
 .confirmation-layout svg { max-width: 100%; height: auto; }
 .confirm-order-action { display: grid; gap: var(--space-3); }
-@media (min-width: 64rem) {
-  .confirmation-layout { grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 1fr); }
-}
 
 .receipt-products { border: 1px solid var(--color-decoration); }
 .receipt-id { display: block; color: var(--color-brand); font-size: 1.125rem; }
+
+.confirmation-layout { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 44rem; margin-inline: auto; gap: 1.5rem; }
+.receipt-main { text-align: center; padding: 1.5rem; }
+.receipt-main .receipt-details, .receipt-main .checkout-totals { text-align: start; }
+.receipt-qr { display: grid; place-items: center; }
+.receipt-products { min-width: 0; border: 1px solid var(--color-decoration); border-radius: var(--radius-md); padding: 1rem; background: white; }
+.receipt-products summary { cursor: pointer; padding: .75rem; min-height: var(--target-size); font-weight: 700; }
+.receipt-products section { margin-block-start: 1rem; }
+.receipt-products .checkout-options { font-size: .8125rem; }

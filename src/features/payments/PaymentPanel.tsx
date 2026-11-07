@@ -9,16 +9,15 @@ import { formatPrice } from '../catalog/filterProducts.ts'
 import { cardBrand, emptyPaymentDraft, validatePayment } from './payment.ts'
 import type { PaymentDraft, PaymentIssue, YapeChallenge } from './payment.ts'
 import { YapeDemo } from './YapeDemo.tsx'
-import { ConfirmOrderButton } from '../confirmation/ConfirmOrderButton.tsx'
 import './Payments.css'
 
 const methods: { id: PaymentMethod; label: string }[] = [
-  { id: 'cash', label: 'Efectivo' }, { id: 'card', label: 'Tarjeta simulada' }, { id: 'yape', label: 'Yape simulado' },
+  { id: 'cash', label: 'Efectivo' }, { id: 'card', label: 'Tarjeta' }, { id: 'yape', label: 'Yape' },
 ]
 
-export function PaymentPanel() {
+export function PaymentPanel({ onContinue, initialMethod = 'cash' }: { onContinue?: () => void; initialMethod?: PaymentMethod }) {
   const { state, dispatch } = useAppState()
-  const [draft, setDraft] = useState(() => emptyPaymentDraft(state.payment.method ?? 'cash'))
+  const [draft, setDraft] = useState(() => emptyPaymentDraft(state.payment.method ?? initialMethod))
   const [challenge, setChallenge] = useState<YapeChallenge | null>(null)
   const [issues, setIssues] = useState<PaymentIssue[]>([])
   const [attempt, setAttempt] = useState(0)
@@ -80,15 +79,15 @@ export function PaymentPanel() {
   }
 
   return <section className="payment-panel" aria-labelledby="payment-heading">
-    <h2 id="payment-heading" tabIndex={-1}>Pago simulado</h2>
-    <p className="catalog-notice"><strong>Simulación académica. No se realizará ningún pago real.</strong> Usa solo datos ficticios.</p>
-    <p>Importe de demostración: <strong>{total === null ? 'Revisa tu pedido' : formatPrice(total)}</strong></p>
+    <h3 id="payment-heading" tabIndex={-1}>Elige cómo pagar</h3>
+    <p className="control-help">Usa datos de prueba.</p>
+    <p>Importe: <strong>{total === null ? 'Revisa tu pedido' : formatPrice(total)}</strong></p>
     <form onSubmit={submit} noValidate autoComplete="off" aria-busy={processing}>
       <fieldset className="payment-controls" disabled={processing}>
-        <legend>Selecciona y revisa el pago de demostración</legend>
+        <legend>Revisa tu método de pago</legend>
         <fieldset className="delivery-methods" id="payment-method" tabIndex={-1} aria-describedby={`payment-method-help${error('method') ? ' payment-method-error' : ''}`}>
           <legend>Método de pago (obligatorio)</legend>
-          <p id="payment-method-help" className="control-help">Selecciona un método de demostración. No se realizará ningún cobro.</p>
+          <p id="payment-method-help" className="control-help">Elige cómo pagar.</p>
           <div className="delivery-options">{methods.map((method) => <label key={method.id} className={`delivery-choice${draft.method === method.id ? ' delivery-choice--selected' : ''}`}>
             <input type="radio" name="paymentMethod" value={method.id} checked={draft.method === method.id} required aria-required="true"
               aria-invalid={Boolean(error('method'))} aria-describedby={`payment-method-help${error('method') ? ' payment-method-error' : ''}`}
@@ -98,7 +97,7 @@ export function PaymentPanel() {
         </fieldset>
         {!approved && <>
           {draft.method === 'cash' && <div className="payment-fields">
-            <p><strong>Pagarás al recibir tu pedido.</strong></p>
+            <p><strong>Pagar al recibir</strong></p>
             <label className="delivery-choice"><input type="checkbox" checked={draft.needsChange}
               onChange={(event) => { update('needsChange', event.target.checked); if (!event.target.checked) update('tendered', '') }} /><span>¿Necesitas vuelto?</span></label>
             {draft.needsChange && <FormField id="payment-tendered" label="¿De cuánto pagarás?" help="Monto mayor al total, en soles. Usa coma o punto y hasta dos decimales, sin separadores de miles."
@@ -107,37 +106,39 @@ export function PaymentPanel() {
           {draft.method === 'card' && <div className="payment-fields">
             <FormField id="payment-holder" label="Nombre del titular" help="Hasta 100 caracteres."
               value={draft.holder} onChange={(value) => update('holder', value)} error={error('holder')} autoComplete="off" maxLength={100} />
-            <FormField id="payment-number" label="Número de tarjeta simulada" help="Visa: 13, 16 o 19 dígitos. Mastercard: 16 dígitos. Se admiten espacios o guiones. Usa solo números de prueba."
+            <FormField id="payment-number" label="Número de tarjeta" help="Visa: 13, 16 o 19 dígitos. Mastercard: 16 dígitos. Se admiten espacios o guiones. Usa solo números de prueba."
               value={draft.number} onChange={(value) => update('number', value)} error={error('number')} autoComplete="off" inputMode="numeric" maxLength={25} />
             <p role="status" aria-atomic="true">{draft.number ? `Tipo de tarjeta detectado: ${brand ?? 'no reconocido'}. La detección no acredita un número válido.` : 'Ingresa un número de prueba para detectar Visa o Mastercard.'}</p>
-            <FormField id="payment-expiry" label="Vencimiento (MM/AA)" help="Mes y año ficticios. Se acepta el mes actual completo o uno posterior."
+            <FormField id="payment-expiry" label="Vencimiento (MM/AA)" help="Formato MM/AA. Se acepta el mes actual completo o uno posterior."
               value={draft.expiry} onChange={(value) => update('expiry', value)} error={error('expiry')} autoComplete="off" maxLength={5} />
-            <FormField id="payment-cvv" label="CVV simulado" help="3 dígitos."
+            <FormField id="payment-cvv" label="CVV" help="3 dígitos."
               value={draft.cvv} onChange={(value) => update('cvv', value)} error={error('cvv')} autoComplete="off" type="password" inputMode="numeric" maxLength={3} />
           </div>}
           {draft.method === 'yape' && <div className="payment-fields">
-            <p>Yape de demostración, sin conexión con Yape ni con cuentas o teléfonos reales.</p>
+            <p>Genera un código de prueba y escríbelo para continuar.</p>
             <AccessibleButton className="button--secondary" onClick={() => {
               setChallenge({ operationId: `DEMO-${crypto.randomUUID()}`, code: String(crypto.getRandomValues(new Uint32Array(1))[0] % 1000000).padStart(6, '0') })
               update('yapeCode', '')
-            }}>Generar código ficticio</AccessibleButton>
-            <p role="status" aria-atomic="true">{challenge ? `Demostración generada. Código ficticio: ${challenge.code.split('').join(' ')}.` : ''}</p>
+            }}>Generar código de prueba</AccessibleButton>
+            <p role="status" aria-atomic="true">{challenge ? `Código de prueba: ${challenge.code.split('').join(' ')}.` : ''}</p>
             {challenge && <YapeDemo challenge={challenge} />}
-            <FormField id="payment-yapeCode" label="Código ficticio Yape" help="Genera el código de demostración y escribe sus 6 dígitos. Generar otro invalida el anterior."
+            <FormField id="payment-yapeCode" label="Código Yape" help="Genera el código de prueba y escribe sus 6 dígitos. Generar otro invalida el anterior."
               value={draft.yapeCode} onChange={(value) => update('yapeCode', value)} error={error('yapeCode')} autoComplete="off" inputMode="numeric" maxLength={6} />
           </div>}
-          <label className="delivery-choice"><input type="checkbox" checked={decline} onChange={(event) => setDecline(event.target.checked)} /><span>Simular rechazo (prueba académica)</span></label>
+          <label className="delivery-choice"><input type="checkbox" checked={decline} onChange={(event) => setDecline(event.target.checked)} /><span>Probar pago rechazado</span></label>
         </>}
       </fieldset>
       <p id="payment-context" tabIndex={-1} className="field-error">{error('context')}</p>
-      <p role="alert">{issues.length ? 'Revisa los campos de pago indicados.' : state.payment.status === 'error' ? 'Rechazo simulado. No se realizó ningún cobro. Revisa los datos ficticios y vuelve a intentar.' : ''}</p>
-      <AccessibleButton type="submit" aria-disabled={processing || approved}>{processing ? 'Procesando simulación…' : approved ? 'Simulación aprobada' : 'Confirmar pago simulado'}</AccessibleButton>
+      <p role="alert">{issues.length ? 'Revisa los campos de pago indicados.' : ''}</p>
+      <AccessibleButton type="submit" aria-disabled={processing || approved}>{processing ? 'Procesando pago…' : approved ? 'Pago aprobado' : 'Validar pago'}</AccessibleButton>
       {(approved || state.payment.status === 'error') && <AccessibleButton className="button--secondary" onClick={() => {
         reset(); pendingFocus.current = 'method'; setAttempt((previous) => previous + 1)
-      }}>Revisar otra simulación</AccessibleButton>}
+      }}>Revisar pago</AccessibleButton>}
     </form>
-    <p role="status" aria-atomic="true">{processing ? 'Procesando pago simulado. No se envían datos a servicios de pago.' : approved
-      ? 'Simulación aprobada. No se ha confirmado el pedido ni realizado un pago real.' : state.payment.status === 'invalidated' ? 'La simulación anterior ya no es válida. Revisa el pedido, la entrega y el pago.' : ''}</p>
-    {approved && state.payment.attemptId && <ConfirmOrderButton attemptId={state.payment.attemptId} />}
+    <p role="status" aria-atomic="true">{processing ? 'Procesando pago…' : state.payment.status === 'invalidated' ? 'El pago anterior ya no es válido. Revisa el pedido, la entrega y el pago.' : ''}</p>
+    {state.payment.status === 'error' && <p className="field-error">Pago rechazado. Revisa los datos de prueba y vuelve a intentar.</p>}
+    {approved && <p>Pago aprobado. Continúa a la revisión del pedido.</p>}
+    {approved && onContinue && <AccessibleButton onClick={onContinue}>Revisar pedido</AccessibleButton>}
+
   </section>
 }

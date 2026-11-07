@@ -60,7 +60,7 @@ export function paymentContextReady(order: OrderDraft, checkout: CheckoutDraft):
 export function validatePayment(order: OrderDraft, checkout: CheckoutDraft, draft: PaymentDraft, challenge: YapeChallenge | null, now = new Date()): PaymentIssue[] {
   const issues: PaymentIssue[] = []
   const total = checkoutTotals(order, checkout.deliveryMethod).totalCents
-  if (!paymentContextReady(order, checkout)) issues.push({ field: 'context', message: 'Revisa el pedido y los datos de entrega antes de simular el pago.' })
+  if (!paymentContextReady(order, checkout)) issues.push({ field: 'context', message: 'Revisa el pedido y los datos de entrega antes de revisar el pago.' })
   if (draft.method === 'cash') {
     const tendered = decimalCents(draft.tendered)
     if (draft.needsChange && (tendered === null || total === null || tendered <= total)) {
@@ -78,11 +78,11 @@ export function validatePayment(order: OrderDraft, checkout: CheckoutDraft, draf
       (2000 + Number(expiry[2]) === now.getFullYear() && Number(expiry[1]) < now.getMonth() + 1)) {
       issues.push({ field: 'expiry', message: 'Usa MM/AA con un mes válido, actual o posterior.' })
     }
-    if (!/^\d{3}$/.test(draft.cvv)) issues.push({ field: 'cvv', message: 'Escribe un CVV ficticio de 3 dígitos.' })
+    if (!/^\d{3}$/.test(draft.cvv)) issues.push({ field: 'cvv', message: 'Escribe un CVV de prueba de 3 dígitos.' })
   } else if (draft.method === 'yape') {
     if (!challenge || !/^DEMO-[a-zA-Z0-9-]{1,64}$/.test(challenge.operationId) || !/^\d{6}$/.test(challenge.code) || draft.yapeCode !== challenge.code) {
-      issues.push({ field: 'yapeCode', message: 'Genera una demostración e ingresa exactamente su código ficticio de 6 dígitos.' })
+      issues.push({ field: 'yapeCode', message: 'Genera un código de prueba e ingresa exactamente su código de prueba de 6 dígitos.' })
     }
-  } else issues.push({ field: 'method', message: 'Elige Efectivo, Tarjeta simulada o Yape simulado.' })
+  } else issues.push({ field: 'method', message: 'Elige Efectivo, Tarjeta o Yape.' })
   return issues
 }

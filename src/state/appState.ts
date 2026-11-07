@@ -27,7 +27,7 @@ export type AppAction =
   | { type: 'order/replace'; value: OrderDraft }
   | { type: 'checkout/replace'; value: CheckoutDraft }
   | { type: 'configuration/preview'; value: AppState['configurationPreview'] }
-  | { type: 'toast/notify'; message: string }
+  | { type: 'toast/notify'; message: string; kind?: CartToast['kind'] }
   | { type: 'payment/start'; attemptId: string; method: PaymentMethod; totalCents: number; revision: number }
   | { type: 'payment/finish'; attemptId: string; revision: number; outcome: 'approved' | 'error' }
   | { type: 'payment/reset' }
@@ -37,7 +37,6 @@ export type AppAction =
   | { type: 'cart/quantity'; itemId: string; quantity: number }
   | { type: 'cart/remove'; itemId: string }
   | { type: 'cart/undo'; toastId: string }
-  | { type: 'cart/clear' }
   | { type: 'toast/dismiss'; toastId: string }
   | { type: 'preferences/replace'; value: DisplayPreferences }
   | { type: 'confirmation/replace'; value: ConfirmationReceipt | null }
@@ -58,21 +57,22 @@ export function createInitialState(): AppState {
   }
 }
 
-function notify(state: AppState, order: OrderDraft, message: string, removed?: CartToast['removed']): AppState {
+function notify(state: AppState, order: OrderDraft, message: string, removed?: CartToast['removed'], kind: CartToast['kind'] = 'success'): AppState {
   const sequence = state.notificationSequence + 1
   return { ...state, order, recoveryNotice: '', notificationSequence: sequence, cartAnnouncement: `${message}${removed ? ' Deshacer disponible en Avisos del pedido.' : ''}`,
-    toasts: [...state.toasts.filter((toast) => toast.removed), { id: `notice-${sequence}`, message, removed }] }
+    toasts: [...state.toasts.filter((toast) => toast.removed), { id: `notice-${sequence}`, message, removed, kind }] }
 }
 
 function reduceAppState(state: AppState, action: ReducerAction): AppState {
   switch (action.type) {
     case 'configuration/preview': return { ...state, configurationPreview: action.value }
-    case 'toast/notify': return notify(state, state.order, action.message)
+    case 'toast/notify': return notify(state, state.order, action.message, undefined, action.kind)
     case 'confirmation/complete': {
       if (!canConfirm(state) || action.receipt.paymentAttemptId !== state.payment.attemptId || action.receipt.totalCents !== state.payment.totalCents) return state
-      return { ...state, order: { ...state.order, items: [] }, checkout: emptyCheckout(), payment: emptyPayment(),
+      const completed = { ...state, order: { ...state.order, items: [] }, checkout: emptyCheckout(), payment: emptyPayment(),
         lastConfirmation: action.receipt, toasts: [], recoveryNotice: '', cartAnnouncement: '',
         storageNotice: action.cleanupFailed ? 'Pedido confirmado y comprobante guardado. No pudimos borrar la copia anterior del carrito. No restauraremos esos ítems mientras este comprobante esté disponible en esta sesión.' : '' }
+      return notify(completed, completed.order, 'Pedido confirmado.')
     }
     case 'payment/start': {
       if (['processing', 'approved'].includes(state.payment.status) || !action.attemptId.trim() ||
@@ -85,7 +85,7 @@ function reduceAppState(state: AppState, action: ReducerAction): AppState {
       if (!paymentContextReady(state.order, state.checkout) || checkoutTotals(state.order, state.checkout.deliveryMethod).totalCents !== state.payment.totalCents) {
         return { ...state, payment: { ...emptyPayment(), status: 'invalidated' } }
       }
-      return { ...state, payment: { ...state.payment, status: action.outcome === 'approved' ? 'approved' : 'error' } }
+      return notify({ ...state, payment: { ...state.payment, status: action.outcome } }, state.order, action.outcome === 'approved' ? 'Pago aprobado.' : 'Pago rechazado. Revisa los datos de prueba y vuelve a intentar.', undefined, action.outcome === 'approved' ? 'success' : 'error')
     }
     case 'payment/reset': return { ...state, payment: emptyPayment() }
     case 'payment/cancel': return state.payment.status === 'processing' ? { ...state, payment: { ...emptyPayment(), status: 'invalidated' } } : state
@@ -104,7 +104,7 @@ function reduceAppState(state: AppState, action: ReducerAction): AppState {
       const item = state.order.items.find((entry) => entry.itemId === action.itemId)
       if (!item) return state
       const order = editItem(state.order, action.itemId, item.configuration, action.quantity)
-      return order === state.order ? state : notify(state, order, `Cantidad de ${itemLabel(item)} actualizada: ${action.quantity}.`)
+      return order === state.order ? state : { ...state, order }
     }
     case 'cart/remove': {
       const { order, removed } = removeItem(state.order, action.itemId)
@@ -119,8 +119,6 @@ function reduceAppState(state: AppState, action: ReducerAction): AppState {
         toasts: state.toasts.map((entry) => entry.id === action.toastId
         ? { id: entry.id, message: `${itemLabel(toast.removed!.item)} restaurada en el pedido. Revisa su disponibilidad en el local actual.` } : entry) }
     }
-    case 'cart/clear': return notify({ ...state, checkout: emptyCheckout(), toasts: [], recoveryNotice: '' },
-      { ...state.order, catalogVersion: 1, items: [] }, 'Pedido limpiado. Se conservaron tus preferencias de visualización y el local actual.')
     case 'toast/dismiss': return { ...state, toasts: state.toasts.filter((toast) => toast.id !== action.toastId) }
     case 'preferences/replace': return { ...state, preferences: action.value }
     case 'confirmation/replace': return { ...state, lastConfirmation: action.value }
@@ -133,7 +131,7 @@ function reduceAppState(state: AppState, action: ReducerAction): AppState {
 export function appReducer(state: AppState, action: ReducerAction): AppState {
   const next = reduceAppState(state, action)
   if (next.order === state.order && next.checkout === state.checkout) return next
-  const invalidated = action.type !== 'cart/clear' && action.type !== 'confirmation/complete' && ['processing', 'approved', 'invalidated'].includes(state.payment.status)
+  const invalidated = action.type !== 'confirmation/complete' && ['processing', 'approved', 'invalidated'].includes(state.payment.status)
   return { ...next, paymentRevision: state.paymentRevision + 1,
     payment: { ...emptyPayment(), status: invalidated ? 'invalidated' : 'idle' } }
 }

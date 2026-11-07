@@ -8,8 +8,12 @@ import { inspectOrder } from '../features/cart/cart.ts'
 import { checkoutTotals, pickupSlots, validateCheckout } from '../features/checkout/checkout.ts'
 import { OrderSummary } from '../features/checkout/OrderSummary.tsx'
 import { getLocation } from '../data/locations.ts'
-import type { CheckoutDraft, OrderDraft } from '../domain/models.ts'
+import type { CheckoutDraft } from '../domain/models.ts'
 import { PaymentPanel } from '../features/payments/PaymentPanel.tsx'
+import { ConfirmOrderButton } from '../features/confirmation/ConfirmOrderButton.tsx'
+import { checkoutStep, checkoutStages } from '../features/checkout/steps.ts'
+import { StepIndicator } from '../features/customization/StepIndicator.tsx'
+import '../features/customization/Customization.css'
 import '../features/catalog/Catalog.css'
 import '../features/checkout/Checkout.css'
 
@@ -26,21 +30,25 @@ function CheckoutForm() {
   const { state, dispatch } = useAppState()
   const draft = state.checkout
   const [attempt, setAttempt] = useState(0)
-  const [reviewed, setReviewed] = useState<{ draft: CheckoutDraft; order: OrderDraft } | null>(null)
-  const pendingFocus = useRef<keyof CheckoutDraft | 'payment' | null>(null)
+  const [requestedStep, setStep] = useState(0)
+  const [paymentVisited, setPaymentVisited] = useState(false)
+  const step = checkoutStep(requestedStep, state)
+  const pendingFocus = useRef<keyof CheckoutDraft | 'stage' | null>(null)
+  const previousStep = useRef(step)
   const location = getLocation(state.order.locationId)!
   const totals = checkoutTotals(state.order, draft.deliveryMethod)
   const issues = attempt ? validateCheckout(draft, state.order.locationId) : []
   const error = (field: keyof CheckoutDraft) => issues.find((issue) => issue.field === field)?.message
-  const validReview = reviewed?.draft === draft && reviewed.order === state.order
 
   useLayoutEffect(() => {
+    if (previousStep.current !== step && !pendingFocus.current) pendingFocus.current = 'stage'
+    previousStep.current = step
     if (!pendingFocus.current) return
-    const field = document.getElementById(pendingFocus.current === 'payment' ? 'payment-heading' : `checkout-${pendingFocus.current}`)
+    const field = document.getElementById(pendingFocus.current === 'stage' ? 'checkout-stage-heading' : `checkout-${pendingFocus.current}`)
     const control = field?.querySelector<HTMLElement>('input:not([disabled])') ?? field
     control?.focus()
     pendingFocus.current = null
-  }, [attempt])
+  }, [attempt, step])
 
   function update<K extends keyof CheckoutDraft>(field: K, value: CheckoutDraft[K]) {
     dispatch({ type: 'checkout/replace', value: { ...draft, [field]: value } })
@@ -50,18 +58,28 @@ function CheckoutForm() {
     event.preventDefault()
     const errors = validateCheckout(draft, state.order.locationId)
     setAttempt((previous) => previous + 1)
-    if (errors.length) { pendingFocus.current = errors[0].field; setReviewed(null); return }
+    if (errors.length) { pendingFocus.current = errors[0].field; return }
     if (!checkoutTotals(state.order, draft.deliveryMethod).canContinue) return
-    pendingFocus.current = 'payment'
-    setReviewed({ draft, order: state.order })
+    goTo(1)
+  }
+
+  function goTo(index: number) {
+    if (state.payment.status === 'processing') return
+    if (index === 1) setPaymentVisited(true)
+    pendingFocus.current = 'stage'
+    setStep(index)
+    setAttempt((previous) => previous + 1)
   }
 
   return <>
-    <div className="page-heading"><p className="eyebrow">Entrega del pedido</p><h1>¿Cómo recibirás tu pedido?</h1>
-      <p className="page-description">Completa los datos de entrega y revisa el total antes de continuar.</p></div>
+    <div className="page-heading"><p className="eyebrow">Ya falta poco</p><h1>Completa tu pedido</h1></div>
+    <StepIndicator label="Etapas del pedido" stages={checkoutStages.map((label, index) => ({ id: String(index), label, fieldId: 'checkout-stage-heading', kind: 'summary' }))}
+      current={step} completed={checkoutStages.map((_, index) => index < step)} onBack={goTo} />
     <div className="checkout-layout">
-      <form className="checkout-form" onSubmit={continueCheckout} noValidate>
-        <h2>Datos de entrega</h2>
+      <section className="checkout-stage" aria-labelledby="checkout-stage-heading">
+      <h2 id="checkout-stage-heading" tabIndex={-1}>{checkoutStages[step]}</h2>
+      {requestedStep > step && <p className="field-error">Los datos cambiaron. Revisa la entrega y el pago antes de confirmar.</p>}
+      {step === 0 && <form className="checkout-form" onSubmit={continueCheckout} noValidate>
         <fieldset id="checkout-deliveryMethod" className="delivery-methods" tabIndex={-1} aria-describedby={`delivery-help${error('deliveryMethod') ? ' delivery-error' : ''}`}>
           <legend>Forma de entrega (obligatoria)</legend>
           <p id="delivery-help" className="control-help">Elige Delivery o Recojo en local. No cambia de pantalla al seleccionar.</p>
@@ -98,10 +116,24 @@ function CheckoutForm() {
         <p role="alert">{issues.length > 0 ? `Revisa los ${issues.length} campos indicados. Conservamos tus datos.` : ''}</p>
         <AccessibleButton type="submit" disabled={!totals.canContinue} aria-describedby="continue-help">Continuar</AccessibleButton>
         <p id="continue-help" className="control-help">Revisa los datos de entrega antes de continuar.</p>
-        <p role="status" aria-atomic="true">{state.payment.status === 'invalidated' ? 'La simulación anterior quedó invalidada. Revisa nuevamente la entrega y el pago.' : validReview ? 'Datos de entrega válidos. Revisa el pago simulado a continuación.' : ''}</p>
-      </form>
+      </form>}
+      {paymentVisited && <div hidden={step !== 1}><PaymentPanel onContinue={() => goTo(2)} /></div>}
+      {step === 2 && <div className="checkout-review">
+        <section><h3>Entrega</h3><p>{draft.fullName} · {draft.phone}</p>
+          <p>{draft.deliveryMethod === 'delivery' ? `Delivery: ${draft.address}` : `Recojo en ${location.name}`}</p>
+          {draft.deliveryMethod === 'delivery' && draft.reference && <p>{draft.reference}</p>}
+          {draft.deliveryMethod === 'pickup' && <p>{pickupSlots(location.id).find((slot) => slot.id === draft.pickupSlot)?.label}</p>}
+          <AccessibleButton className="button--secondary" onClick={() => goTo(0)}>Editar entrega</AccessibleButton>
+        </section>
+        <section><h3>Método de pago</h3><p>{{ cash: 'Pagar al recibir', card: 'Tarjeta', yape: 'Yape' }[state.payment.method ?? 'cash']} · Pago aprobado</p>
+          <AccessibleButton className="button--secondary" onClick={() => { dispatch({ type: 'payment/reset' }); goTo(1) }}>Editar pago</AccessibleButton>
+        </section>
+        <p>Revisa los productos y el total antes de confirmar.</p>
+        {state.payment.attemptId && <ConfirmOrderButton attemptId={state.payment.attemptId} />}
+      </div>}
+      {step > 0 && <AccessibleButton className="button--secondary checkout-back" disabled={state.payment.status === 'processing'} onClick={() => goTo(step - 1)}>Volver</AccessibleButton>}
+      </section>
       <OrderSummary order={state.order} method={draft.deliveryMethod} />
     </div>
-    {validReview && <PaymentPanel key={state.paymentRevision} />}
   </>
 }

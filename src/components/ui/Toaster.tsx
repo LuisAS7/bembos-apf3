@@ -35,16 +35,21 @@ export function Toaster() {
   useEffect(() => {
     const element = dock.current
     if (!element || typeof ResizeObserver === 'undefined') return
-    const observer = new ResizeObserver(() => document.documentElement.style.setProperty('--toast-space', `${element.getBoundingClientRect().height}px`))
+    const header = document.querySelector('header')
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--toast-space', `${element.getBoundingClientRect().height}px`)
+      document.documentElement.style.setProperty('--header-height', `${header?.getBoundingClientRect().height ?? 96}px`)
+    })
+    if (header) observer.observe(header)
     observer.observe(element)
-    return () => { observer.disconnect(); document.documentElement.style.removeProperty('--toast-space') }
+    return () => { observer.disconnect(); document.documentElement.style.removeProperty('--toast-space'); document.documentElement.style.removeProperty('--header-height') }
   }, [])
   useEffect(() => {
     const active = known.current
     return () => { active.forEach((_, id) => toast.dismiss(id)); active.clear() }
   }, [])
   return <div className="notification-dock" ref={dock}>
-    <SonnerToaster theme="light" position="bottom-right" expand visibleToasts={Math.max(state.toasts.length + 2, 3)}
+    <SonnerToaster theme="light" position="top-right" expand visibleToasts={Math.max(state.toasts.length + 2, 3)}
       customAriaLabel="Avisos del pedido. Alt+T para ir a los avisos." hotkey={['altKey', 'KeyT']} />
   </div>
 }

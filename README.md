@@ -2,7 +2,9 @@
 
 Prototipo académico del curso Interacción Hombre Máquina. El alcance y el trabajo por fases se rigen por [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md).
 
-La evolución visual autorizada sobre `da30ab7` incorpora recursos oficiales locales, selector de local en el header, categorías visuales, progreso real de personalización y Sonner. Las decisiones visuales anteriores se sustituyen según la nueva solicitud; reglas de precios, disponibilidad, privacidad, persistencia y pagos se conservan. [Cambios, fuentes y pendientes](docs/trazabilidad/evolucion-visual.md). La aceptación visual y de interacción sigue pendiente; no se ejecutó la Fase 8 completa.
+La primera evolución visual autorizada sobre `da30ab7` incorpora recursos oficiales locales, selector de local en el header, categorías visuales, progreso real de personalización y Sonner. Las decisiones visuales anteriores se sustituyen según la nueva solicitud; reglas de precios, disponibilidad, privacidad, persistencia y pagos se conservan. [Cambios, fuentes y pendientes](docs/trazabilidad/evolucion-visual.md). La aceptación visual y de interacción sigue pendiente; no se ejecutó la Fase 8 completa.
+
+La segunda iteración amplía a 20 productos y siete categorías, renueva configurador, carrito, avisos superiores y comprobante, y organiza el checkout en tres etapas. [Cambios, fuentes, verificaciones y pendientes](docs/trazabilidad/iteracion-visual-2.md). Sin dependencias nuevas.
 
 La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos; la Fase 4 conecta el carrito multiproducto. La Fase 5 añade entrega y resumen; la Fase 6 incorpora pagos simulados y la Fase 7 confirma el pedido de demostración y guarda su último comprobante reducido. Auditoría y pulido posteriores requieren su aprobación.
 
@@ -47,15 +49,15 @@ Los enlaces «Ver producto» abren su configurador. «Agregar al pedido» crea u
 
 ## Catálogo y locales
 
-Cuatro hamburguesas, cuatro combos y cuatro promociones. Cheese y Royal conservan nombre, descripción y precio del APF2; los otros diez registros se identifican como mock académico. Los precios y el stock simulado no representan información comercial vigente.
+Cuatro hamburguesas, cuatro combos y cuatro promociones, más dos productos en cada categoría nueva: Menús Bembos, Complementos, Pollo y Loncherita por la Educación. Cheese y Royal conservan nombre, descripción y precio del APF2; los otros dieciocho registros se identifican como mock académico. Los precios y el stock simulado no representan información comercial vigente.
 
-Hamburguesas es la categoría inicial; no hay opción Todas. La búsqueda ignora mayúsculas/acentos y cruza siempre las tres categorías; elegir una categoría vuelve a la exploración y limpia la búsqueda. El botón del local en el header abre un selector con confirmación explícita. Si afecta al carrito o borrador, explica el impacto antes de cambiar. Conserva ítems incompatibles con «Requiere actualización» y protege pedidos guardados diferentes. Los IDs siguen siendo `san-miguel`, `demo-centro` y `demo-norte`; sus nombres visibles son San Miguel, Real Plaza y Mall del Sur, ubicaciones simuladas.
+Hamburguesas es la categoría inicial; no hay opción Todas. La búsqueda ignora mayúsculas/acentos y cruza siempre las siete categorías; elegir una categoría vuelve a la exploración y limpia la búsqueda. El botón del local en el header abre un selector con confirmación explícita. Si afecta al carrito o borrador, explica el impacto antes de cambiar. Conserva ítems incompatibles con «Requiere actualización» y protege pedidos guardados diferentes. Los IDs siguen siendo `san-miguel`, `demo-centro` y `demo-norte`; sus nombres visibles son San Miguel, Real Plaza y Mall del Sur, ubicaciones simuladas.
 
 ## Personalización
 
 Los grupos y variantes se definen por producto: hamburguesas, combos y promociones tienen etapas distintas, más una revisión final de cantidad/resumen. Cada etapa requiere Continuar explícito y válido, incluso si usa opciones predeterminadas o es opcional sin extras. Volver conserva selecciones; cambiar local revalida el progreso. Precios en céntimos, adicionales una vez y cantidad 1–99. Las restricciones se muestran antes de seleccionar y los datos inválidos se conservan para corregirlos.
 
-Se usan fieldsets, radios, checkboxes y botones nativos. Los diálogos se implementan con `<dialog>`, título, foco inicial, contención de Tab, Escape y retorno al disparador. La comprobación real de esos comportamientos sigue pendiente de acceso al navegador.
+Las salsas nuevas parten vacías; la edición conserva las guardadas. Se usan fieldsets, radios, checkboxes y botones nativos. Los diálogos se implementan con `<dialog>`, título, foco inicial, contención de Tab, Escape y retorno al disparador. La comprobación real de esos comportamientos sigue pendiente de acceso al navegador.
 
 ## Carrito y recuperación
 
@@ -65,23 +67,23 @@ Sonner presenta centralmente los avisos del estado existente. Eliminar ofrece De
 
 Se recupera el pedido completo al abrir, revalidando catálogo, selecciones y disponibilidad. Los precios guardados no autorizan importes. Ítems obsoletos o agotados se conservan para revisión; precios imposibles de recalcular se muestran pendientes. Datos dañados/versiones incompatibles no se sobrescriben al montar; el aviso explica cómo iniciar un pedido nuevo. El almacenamiento bloqueado permite trabajar en memoria y muestra la limitación. La recuperación se anuncia mediante una región de estado, sin mover el foco.
 
-«Limpiar pedido» solicita confirmación y elimina `bembos.apf3.order`, el historial temporal de Deshacer y los datos de checkout en memoria. Conserva preferencias, otras claves y el comprobante independiente de una confirmación anterior. El local actual permanece en memoria; tras recargar sin instantánea vuelve al inicial.
+El carrito se vacía eliminando sus productos individualmente, con Deshacer. No hay una acción manual de limpieza. El borrado interno del pedido guardado se conserva exclusivamente al completar correctamente la confirmación.
 
 ## Checkout
 
 Delivery solicita nombre, teléfono, dirección y referencia opcional. Recojo conserva el contacto, oculta dirección/referencia y ofrece información y horarios relativos mock del local. Tarifas de entrega mock: San Miguel S/5.00, Centro S/6.00 y Norte S/7.00; recojo S/0.00. El resumen recalcula desde el catálogo y permite editar el pedido.
 
-Los datos personales se conservan solo en Context en memoria, también al editar el pedido; recargar o limpiar los descarta. Continuar valida, conserva los valores y prepara foco al primer campo inválido. Con datos válidos habilita la sección de pago simulado. Cambiar de local reinicia el horario a «Lo antes posible». Detalles de entrega en el [reporte de Fase 5](docs/trazabilidad/fase5-checkout.md).
+Los datos personales se conservan solo en Context en memoria, también al editar el pedido; recargar o confirmar correctamente los descarta. Continuar valida, conserva los valores y prepara foco al primer campo inválido. Con datos válidos avanza al método de pago; después de aprobarlo pasa a revisión/confirmación. Volver conserva el borrador en memoria y permite editar entrega, pago o pedido. Cambiar de local reinicia el horario a «Lo antes posible». Detalles de entrega en el [reporte de Fase 5](docs/trazabilidad/fase5-checkout.md).
 
 ## Pagos simulados
 
 Efectivo admite vuelto con monto estrictamente mayor al total. Tarjeta valida titular, Visa/Mastercard, longitud, Luhn, MM/AA y CVV ficticio. Yape genera una operación, QR y código de demostración sin iniciar transferencias. Hay procesamiento de 800 ms, rechazo explícito de prueba y aprobación simulada. Después se confirma el pedido académico mediante una acción separada.
 
-Los datos de tarjeta y códigos permanecen en el formulario, se limpian al iniciar una simulación válida/cambiar de método y se descartan al salir. El estado compartido solo conserva metadatos, nunca esos campos. Cambiar pedido o checkout invalida los intentos/aprobaciones, incluso si luego se deshace el cambio; el cierre cancela intentos pendientes. Sin persistencia de pagos ni conexiones externas. [Reporte y evidencias de Fase 6](docs/trazabilidad/fase6-pagos.md).
+Los datos de tarjeta y códigos permanecen en el formulario, se limpian al iniciar una simulación válida/cambiar de método y se descartan al salir del checkout. Retroceder entre etapas conserva el formulario oculto exclusivamente en memoria. El estado compartido solo conserva metadatos, nunca esos campos. Cambiar pedido o checkout invalida los intentos/aprobaciones, incluso si luego se deshace el cambio; el cierre cancela intentos pendientes. Sin persistencia de pagos ni conexiones externas. [Reporte y evidencias de Fase 6](docs/trazabilidad/fase6-pagos.md).
 
 ## Confirmación
 
-«Confirmar pedido simulado» revalida carrito, disponibilidad, entrega e importe aprobado. Guarda una instantánea no sensible y solo después limpia carrito, checkout y pago. El ID ficticio se muestra como texto y es el único contenido del QR. El comprobante conserva productos/opciones/precios/local sin depender del catálogo o de pedidos posteriores.
+«Confirmar pedido» revalida carrito, disponibilidad, entrega e importe aprobado. Guarda una instantánea no sensible y solo después limpia carrito, checkout y pago. El ID ficticio se muestra como texto y es el único contenido del QR. El comprobante conserva productos/opciones/precios/local sin depender del catálogo o de pedidos posteriores. Su detalle de productos se abre mediante details/summary y comienza cerrado.
 
 Solo se conserva `bembos.apf3.lastConfirmation` en sessionStorage. Si falla guardarlo, el pedido permanece intacto y se permite reintentar. Si falla borrar la copia local del carrito, se advierte y sus ítems confirmados no se restauran mientras este comprobante esté disponible. Repetir el mismo intento devuelve el mismo comprobante; recargar y Atrás/Adelante no ejecutan confirmaciones. No hay tracking ni historial. [Reporte y evidencias de Fase 7](docs/trazabilidad/fase7-confirmacion.md).
 

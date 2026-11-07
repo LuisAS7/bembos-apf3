@@ -61,7 +61,7 @@ test('edit route loads the exact saved configuration and quantity without mutati
     assert.ok(!html.includes('>Agregar al pedido<'))
     assert.match(html, /id="variant-cheese-grande"[^>]*checked=""/)
     assert.ok(html.includes('S/67.20'), 'exact saved extra and quantity are included in the initial summary')
-    assert.ok(html.includes('Cantidad y resumen'))
+    assert.ok(html.includes('Cantidad'))
     assert.ok(html.includes('Cancelar edición y volver al pedido'))
     assert.deepEqual(state, before)
   } finally { await server.close() }
@@ -98,7 +98,7 @@ test('direct checkout blocks empty and incompatible carts and exposes no payment
     assert.ok(render(state).includes('Revisa tu pedido'))
     state.order.items = [item()]
     const valid = render(state)
-    assert.ok(valid.includes('Datos de entrega'))
+    assert.ok(valid.includes('Entrega y contacto'))
     assert.ok(!valid.includes('cardNumber'))
     assert.ok(!valid.includes('/confirmacion/'))
     state.order.locationId = 'demo-centro'

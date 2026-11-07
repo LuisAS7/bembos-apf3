@@ -81,7 +81,7 @@ test('empty, incompatible, obsolete and unknown-location carts cannot continue',
   assert.equal(unknown.totalCents, null)
 })
 
-test('checkout stays outside persisted order, survives editing, resets schedule on local change and clears with the order', () => {
+test('checkout stays outside persisted order, survives editing, resets schedule on local change', () => {
   const initial = { ...createInitialState(), order: order() }
   const draft = { ...valid(), deliveryMethod: 'pickup', pickupSlot: 'in-90' }
   const filled = appReducer(initial, { type: 'checkout/replace', value: draft })
@@ -93,9 +93,6 @@ test('checkout stays outside persisted order, survives editing, resets schedule 
   const moved = appReducer(edited, { type: 'order/replace', value: { ...edited.order, locationId: 'demo-centro' } })
   assert.equal(moved.checkout.pickupSlot, 'asap')
   assert.equal(moved.checkout.fullName, draft.fullName)
-  const cleared = appReducer(moved, { type: 'cart/clear' })
-  assert.deepEqual(cleared.checkout, emptyCheckout())
-  assert.equal(cleared.preferences, initial.preferences)
   assert.ok(!JSON.stringify(filled.order).includes(draft.fullName))
   assert.deepEqual(createInitialState().checkout, emptyCheckout(), 'new page starts without personal data')
 })

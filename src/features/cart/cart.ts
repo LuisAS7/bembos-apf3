@@ -6,7 +6,8 @@ import { evaluateConfiguration, quoteConfiguration } from '../customization/conf
 
 export const CATALOG_VERSION = 1
 export interface RemovedItem { item: CartItem; index: number; beforeIds: string[]; afterIds: string[] }
-export interface CartToast { id: string; message: string; removed?: RemovedItem }
+export interface CartToast {
+  kind?: 'success' | 'info' | 'warning' | 'error'; id: string; message: string; removed?: RemovedItem }
 
 export function cloneConfiguration(configuration: ProductConfiguration): ProductConfiguration {
   return { variantId: configuration.variantId, selections: Object.fromEntries(
@@ -75,9 +76,9 @@ export function recoverOrder(saved: StorageRead<OrderDraft>, fallback: OrderDraf
   if (saved.status === 'missing') return { order: fallback, message: '' }
   if (saved.status !== 'ok') return { order: fallback, message: saved.status === 'unavailable'
     ? 'No pudimos acceder al pedido guardado. Puedes usar un pedido temporal mientras esta página siga abierta.'
-    : 'No pudimos recuperar el pedido: datos dañados o versión incompatible. No lo sobrescribimos al abrir la página; los cambios explícitos o Limpiar pedido reemplazarán esos datos.' }
+    : 'No pudimos recuperar el pedido: datos dañados o versión incompatible. No lo sobrescribimos al abrir la página; los cambios explícitos o Eliminar los productos individualmente reemplazarán esos datos.' }
   if (saved.value.catalogVersion !== CATALOG_VERSION) return { order: fallback,
-    message: 'La versión del catálogo guardado es incompatible. Conservamos la copia guardada hasta que modifiques o limpies el pedido.' }
+    message: 'La versión del catálogo guardado es incompatible. Conservamos la copia guardada hasta que modifiques el pedido.' }
   let repairedIds = false
   const used = new Set<string>()
   const reserved = new Set(saved.value.items.map((item) => item.itemId))

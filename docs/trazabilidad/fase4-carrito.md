@@ -15,13 +15,13 @@ Base autorizada: `e8cb02425ce2a5a992a72725e229731b5c6a22b0`. Alcance: sección F
 
 ## Identidad, edición, cantidades e importes
 
-Cada alta usa `crypto.randomUUID()` y mantiene un `itemId` independiente. Dos configuraciones idénticas se conservan como dos ítems; no se fusionan. El reducer rechaza IDs repetidos en altas, referencias inválidas y cantidades fuera de 1–99. Editar identifica el ítem por su ID, carga una copia exacta de selección/cantidad y actualiza solo esa posición. No recalcula una selección predeterminada al abrir la edición. «Restablecer opciones del producto» es una acción explícita para reemplazar selecciones antiguas o inválidas; cancelar conserva el pedido original.
+Cada alta usa `crypto.randomUUID()` y mantiene un `itemId` independiente. Dos configuraciones idénticas se conservan como dos ítems; no se fusionan. El reducer rechaza IDs repetidos en altas, referencias inválidas y cantidades fuera de 1–99. Editar identifica el ítem por su ID, carga una copia exacta de selección/cantidad y actualiza solo esa posición. No recalcula una selección predeterminada al abrir la edición. La acción global de restablecimiento fue retirada en la segunda iteración visual. Las opciones se cambian mediante sus controles; cancelar conserva el pedido original. Si una referencia obsoleta no se puede corregir, se puede eliminar el ítem y agregarlo nuevamente.
 
 Agregar, editar y cantidades reutilizan la validación completa de Fase 3. Los importes usan enteros seguros en céntimos: base + variante + cada adicional una vez, multiplicado por cantidad. `quoteConfiguration` comparte el mismo evaluador, omitiendo únicamente disponibilidad para mostrar el importe informativo de un ítem retenido. Esa cotización nunca autoriza agregar ni continuar al pago. Si los datos no permiten cotizar, no se usa el precio guardado ni se presenta cero como precio válido.
 
 ## Eliminar, Deshacer y foco
 
-Eliminar no abre diálogo. Guarda en memoria copia de ítem, índice y IDs de vecinos anteriores/posteriores. Deshacer restaura la misma identidad, selección y cantidad, usando el vecino superviviente o índice original. Se recalcula y revisa disponibilidad en el local actual; puede quedar «Requiere actualización». Cada eliminación conserva su propio Deshacer, sin caducidad automática. Cerrar su aviso descarta esa oportunidad; limpiar pedido descarta todas. Los avisos informativos sin Deshacer se sustituyen por el aviso nuevo para evitar acumulación.
+Eliminar no abre diálogo. Guarda en memoria copia de ítem, índice y IDs de vecinos anteriores/posteriores. Deshacer restaura la misma identidad, selección y cantidad, usando el vecino superviviente o índice original. Se recalcula y revisa disponibilidad en el local actual; puede quedar «Requiere actualización». Cada eliminación conserva su propio Deshacer, sin caducidad automática. Cerrar su aviso descarta esa oportunidad. Los avisos informativos sin Deshacer se sustituyen por el aviso nuevo para evitar acumulación.
 
 La implementación prepara el foco tras eliminar al encabezado del siguiente ítem, anterior o estado vacío. Al llegar a los límites de cantidad, se prepara el foco al texto de cantidad para evitar perderlo en un botón que se deshabilita. No se mueve al Toast al aparecer. El botón Deshacer y Cerrar aviso son nativos; cuando el control activado desaparece se prepara un destino conectado. Los diálogos de limpieza/local reutilizan `AccessibleModal`: título, `showModal`, contención de Tab, Escape y devolución al disparador. Los botones que los abren se mantienen montados. Si una relectura cambia los motivos del diálogo de local, se vuelve a abrir con foco preparado al título, conservando el disparador. **Ninguna de estas interacciones se declara ejecutada en navegador.**
 
@@ -33,7 +33,7 @@ No se escribe durante la inicialización, incluso con StrictMode. JSON/formato d
 
 «Restauramos tu pedido anterior» se coloca en una región `role="status"` montada vacía y se actualiza después del montaje, sin llamada a `focus`. La eficacia de su anuncio con NVDA sigue pendiente. La persistencia guarda solo producto, configuración, cantidad, precio recalculado, local y versión; los avisos/Deshacer no se persisten.
 
-«Limpiar pedido» confirma y elimina exclusivamente `bembos.apf3.order` y su estado temporal/Deshacer. Conserva preferencias, otras claves y `lastConfirmation`, que es el comprobante independiente de una confirmación anterior. El local seleccionado se mantiene solo en memoria hasta otra acción que guarde el pedido; recargar sin instantánea restaura San Miguel. Todavía no hay estado de checkout que limpiar.
+La operación manual de limpieza de esta fase fue retirada en la segunda iteración visual; ya no está disponible. Se conservan eliminación individual, Deshacer y limpieza interna tras confirmar.
 
 ## Cambio de local y protección
 

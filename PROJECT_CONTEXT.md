@@ -1,5 +1,8 @@
 # APF3 BEMBOS — ESPECIFICACIÓN MAESTRA DE DESARROLLO
 
+> Actualización autorizada por el usuario (segunda iteración visual, 2026-11-07): siete categorías/20 productos, salsas nuevas vacías, checkout de tres etapas, textos naturales de pago y comprobante, y retiro de la operación manual de limpieza. Se conservan pagos exclusivamente de prueba, privacidad y limpieza interna tras confirmación. Esta autorización prevalece sobre las cantidades y decisiones visuales históricas siguientes; no inicia la Fase 8 completa. Detalles: [iteración visual 2](docs/trazabilidad/iteracion-visual-2.md).
+
+
 ## 1. ROL
 
 Actúa como un **Senior Frontend Engineer especializado en React, UX/UI, accesibilidad web WCAG 2.1, diseño responsive y pruebas de interfaces**.
@@ -600,24 +603,9 @@ NO guardar:
 
 ---
 
-# 22. LIMPIAR PEDIDO
+# 22. VACIADO DEL PEDIDO
 
-Crear una acción secundaria:
-
-**“Limpiar pedido”**
-
-Debe permitir reiniciar el estado de prueba.
-
-Como es una acción destructiva, solicitar confirmación.
-
-Debe borrar:
-
-- carrito
-- configuraciones
-- localStorage relacionado con pedido
-- estado temporal del checkout
-
-No borrar preferencias de visualización salvo decisión explícita del usuario.
+La acción manual de limpieza fue retirada por autorización del usuario en la segunda iteración visual. Se vacía eliminando productos individualmente con Deshacer. Se conserva la limpieza interna tras guardar correctamente el comprobante y la limpieza de datos sensibles. No se borran preferencias de visualización.
 
 ---
 
@@ -1246,7 +1234,6 @@ El proyecto NO está terminado hasta cumplir:
 - editar
 - eliminar
 - deshacer
-- limpiar pedido
 - Delivery
 - Recojo
 - validaciones completas
@@ -1352,7 +1339,6 @@ Implementar:
 - eliminación
 - Deshacer
 - localStorage
-- limpiar pedido
 
 DETENERSE y reportar.
 

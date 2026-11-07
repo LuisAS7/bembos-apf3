@@ -1,0 +1,101 @@
+[
+  {
+    "name": "Papas Fritas",
+    "page": "https://www.bembos.com.pe/papas-fritas",
+    "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146464253_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/papas.jpg",
+    "bytes": 13112,
+    "sha256": "4eaea9c1adce0783495e4015051dfd80c59906b94fb7db28769a0ef40001c30b",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Nuggets",
+    "page": "https://www.bembos.com.pe/nuggets",
+    "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146464256_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/nuggets.jpg",
+    "bytes": 17797,
+    "sha256": "6dabc946801e2aa2bc1dbcb3903af7edfcf7d043cb2d6f927eb7113f1b05a323",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Coca Cola Sabor Original 500 ml",
+    "page": "https://www.bembos.com.pe/coca-cola-sabor-original-500-ml",
+    "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146469602_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/cola.jpg",
+    "bytes": 9028,
+    "sha256": "85033f85f130bb095500fe404c334320344f1b1eae7b35a765fb1a66bfc9b7e0",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Agua San Luis sin gas 625 ml",
+    "page": "https://www.bembos.com.pe/agua-san-luis-sin-gas-625-ml",
+    "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146469608_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/agua.jpg",
+    "bytes": 8775,
+    "sha256": "f073173827865f6e42090f949ce06e022cde9e71e4006da70b4c20e037a436a1",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Ají Bembos 3oz",
+    "page": "https://www.bembos.com.pe/aji-bembos-3oz",
+    "source": "https://www.bembos.com.pe/media/catalog/product/p/d/pdp_aji-bembos.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/aji.jpg",
+    "bytes": 10561,
+    "sha256": "fd73ac122ebd33d60f43844a97d1b363489e71d25e9089adc673b6d43c48f9d8",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Chicken Grill",
+    "page": "https://www.bembos.com.pe/chicken-grill",
+    "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146463868_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/chicken-grill.jpg",
+    "bytes": 20050,
+    "sha256": "a1fe459c75a33c1ae35a993e710c43729a9ce0d23b74217a46768a681448a663",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Bembroster Clásica",
+    "page": "https://www.bembos.com.pe/bembroster-clasica",
+    "source": "https://www.bembos.com.pe/media/catalog/product/2/1/2146464442_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/bembroster.jpg",
+    "bytes": 20831,
+    "sha256": "e56723674fed7685d191751d6406cdc4dc01d734c7fe61b5e47888d560fedf4e",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Loncherita por la educación - Faber Hamburguesa",
+    "page": "https://www.bembos.com.pe/loncherita-faber-hamburguesa",
+    "source": "https://www.bembos.com.pe/media/catalog/product/l/o/loncherita_ham_faber1000x1000_1_.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/loncherita-burger.jpg",
+    "bytes": 21722,
+    "sha256": "4c816d0588e79647d1c4796fd8fdf5c802236f1eff6fb163b8d0cb91eb39b5c0",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "Loncherita por la educación - Faber Nuggets",
+    "page": "https://www.bembos.com.pe/loncherita-faber-nuggets",
+    "source": "https://www.bembos.com.pe/media/catalog/product/l/o/loncherita_faber_nuggets-_1000x1000.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400&format=jpeg",
+    "file": "public/images/official/loncherita-nuggets.jpg",
+    "bytes": 20488,
+    "sha256": "8b2d2da279aaf9d7ae36a33b9fb4ec98e7bf341e7867e280c437a696c728bbdc",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "menu-taypa",
+    "page": "https://www.bembos.com.pe/menu-taypa",
+    "source": "https://www.bembos.com.pe/media/catalog/product/t/a/taypa_menu.jpeg?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400",
+    "file": "public/images/official/menu-taypa.jpg",
+    "bytes": 24985,
+    "sha256": "8430a56e681a70d1de1f34f66d9a9e237780bef41f95d9089a651910a05f808e",
+    "contentType": "image/jpeg"
+  },
+  {
+    "name": "menu-pobre",
+    "page": "https://www.bembos.com.pe/menu-a-lo-pobre",
+    "source": "https://www.bembos.com.pe/media/catalog/product/a/_/a_lo_pobre_menu.jpeg?optimize=medium&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400",
+    "file": "public/images/official/menu-pobre.jpg",
+    "bytes": 24015,
+    "sha256": "be677e1eb696db112d4be1b41c1ef716ff7979bed8c17ed36d6de706e79f968d",
+    "contentType": "image/jpeg"
+  }
+]

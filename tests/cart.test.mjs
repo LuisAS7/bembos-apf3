@@ -5,7 +5,7 @@ import { defaultConfiguration, MAX_QUANTITY } from '../src/features/customizatio
 import { addItem, editItem, removeItem, restoreItem, inspectOrder, recoverOrder } from '../src/features/cart/cart.ts'
 import { prepareLocationChange } from '../src/features/locations/prepareLocationChange.ts'
 import { appReducer, createInitialState } from '../src/state/appState.ts'
-import { clearStoredOrder, readOrder, saveOrder, savePreferences, saveLastConfirmation, STORAGE_KEYS } from '../src/storage/browserStorage.ts'
+import { clearStoredOrder, readOrder, saveOrder, STORAGE_KEYS } from '../src/storage/browserStorage.ts'
 
 const empty = () => createInitialState().order
 const item = (itemId, productId = 'cheese', quantity = 1) => ({ itemId, productId, quantity, unitPriceCents: 1,
@@ -200,25 +200,4 @@ test('local guard protects divergent saved orders and permits a temporary order 
   const stalePrice = structuredClone(order)
   stalePrice.items[0].unitPriceCents = 1
   assert.equal(prepareLocationChange('demo-centro', order, ok(stalePrice), true).ok, true)
-})
-
-test('clear removes only the order snapshot, preserves preferences and other keys, and invalidates Undo', () => {
-  let state = appReducer(createInitialState(), { type: 'cart/add', item: item('a') })
-  state = appReducer(state, { type: 'cart/remove', itemId: 'a' })
-  const undoId = state.toasts[0].id
-  savePreferences({ ...state.preferences, textSize: 'large' })
-  saveOrder(state.order)
-  const receipt = { orderId: 'TEST', confirmedAt: '2026-11-07T12:00:00Z', locationId: 'san-miguel', deliveryMethod: 'pickup', paymentMethod: 'cash', totalCents: 1690, items: [{ productId: 'cheese', quantity: 1, lineTotalCents: 1690 }] }
-  saveLastConfirmation(receipt)
-  window.localStorage.setItem('other-app', 'keep')
-  const preferences = window.localStorage.getItem(STORAGE_KEYS.preferences)
-  assert.equal(clearStoredOrder().ok, true)
-  const cleared = appReducer(state, { type: 'cart/clear' })
-  assert.equal(readOrder().status, 'missing')
-  assert.equal(window.localStorage.getItem(STORAGE_KEYS.preferences), preferences)
-  assert.equal(window.localStorage.getItem('other-app'), 'keep')
-  assert.ok(window.sessionStorage.getItem(STORAGE_KEYS.lastConfirmation), 'previous independent receipt is retained')
-  assert.equal(cleared.preferences, state.preferences)
-  assert.equal(cleared.order.locationId, state.order.locationId)
-  assert.equal(appReducer(cleared, { type: 'cart/undo', toastId: undoId }), cleared)
 })

@@ -1,7 +1,7 @@
 import type { AppState } from '../../state/appState.ts'
 import type { CartToast } from '../../features/cart/cart.ts'
 
-export interface NotificationEntry extends CartToast { kind?: 'success' | 'info' | 'error' }
+export interface NotificationEntry extends CartToast { kind?: 'success' | 'info' | 'warning' | 'error' }
 export function notificationEntries(state: Pick<AppState, 'toasts' | 'storageNotice' | 'recoveryNotice'>): NotificationEntry[] {
   return [
     ...state.toasts,

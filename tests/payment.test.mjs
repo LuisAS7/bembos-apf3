@@ -135,9 +135,7 @@ test('order, configuration, quantity, local, delivery and contact changes invali
   }
   const prefs = appReducer(approved, { type: 'preferences/replace', value: { ...approved.preferences, reduceMotion: true } })
   assert.equal(prefs.payment, approved.payment)
-  const cleared = appReducer(approved, { type: 'cart/clear' })
-  assert.equal(cleared.payment.status, 'idle')
-  assert.equal(cleared.payment.method, null)
+
 })
 
 test('changing a pending attempt and undoing the change cannot revive its late approval', () => {

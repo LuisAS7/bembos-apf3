@@ -1,0 +1,13 @@
+> bembos-project@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.6 building client environment for production...
+transforming...
+✓ 2127 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.68 kB │ gzip:   0.40 kB
+dist/assets/index-C9Y8D6Mm.css   29.83 kB │ gzip:   6.09 kB
+dist/assets/index-B7T4aY1D.js   411.96 kB │ gzip: 127.39 kB
+
+✓ built in 581ms

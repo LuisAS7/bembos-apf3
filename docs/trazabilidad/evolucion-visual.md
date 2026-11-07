@@ -1,5 +1,8 @@
 # Evolución visual autorizada
 
+> Informe histórico de la primera iteración. Las decisiones sustituidas (tres categorías, posición inferior de avisos, textos y limpieza manual) ya no describen la versión actual. Consultar [segunda iteración](iteracion-visual-2.md).
+
+
 Referencia funcional: `da30ab7`. Esta solicitud sustituye las decisiones visuales previas sobre crema, marca textual, etiquetas académicas visibles, categorías y etapas estáticas. No es la Fase 8 completa.
 
 ## Cambios por bloque

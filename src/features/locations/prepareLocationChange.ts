@@ -33,7 +33,7 @@ export function prepareLocationChange(locationId: string, current: OrderDraft, s
     return { ok: false, message: 'Hay un pedido guardado que requiere revisión. Conservamos su local y sus productos.' }
   }
   if (stored.status === 'invalid') {
-    return { ok: false, message: 'No pudimos leer el pedido guardado. Conservamos sus datos y el local actual. Puedes revisarlo y usar Limpiar pedido para reiniciar con confirmación.' }
+    return { ok: false, message: 'No pudimos leer el pedido guardado. Conservamos sus datos y el local actual. Puedes seguir usando el pedido abierto.' }
   }
   if (stored.status === 'unavailable' && !confirmed) {
     return { ok: false, message: 'No pudimos acceder al pedido guardado. Conservamos el local actual para no modificar sus datos.' }
@@ -42,7 +42,7 @@ export function prepareLocationChange(locationId: string, current: OrderDraft, s
     const comparable = stored.status === 'ok' && stored.value.catalogVersion === CATALOG_VERSION
       ? recoverOrder(stored, current).order : stored.value
     if (comparable?.items.length && orderContents(comparable) !== orderContents(current)) {
-      return { ok: false, message: 'El pedido guardado es diferente del pedido abierto, posiblemente por otra pestaña o por datos recuperados. No lo sobrescribimos al cambiar de local. Recarga para revisarlo o usa Limpiar pedido con confirmación.' }
+      return { ok: false, message: 'El pedido guardado es diferente del pedido abierto, posiblemente por otra pestaña o por datos recuperados. No lo sobrescribimos al cambiar de local. Recarga para revisar el pedido guardado antes de cambiar de local.' }
     }
     return { ok: true, order: { ...current, locationId } }
   }

@@ -1,3 +1,4 @@
+import { OptionVisual } from './OptionVisual.tsx'
 import { CircleAlert } from 'lucide-react'
 import { AccessibleButton } from '../../components/ui/AccessibleButton.tsx'
 import { formatPrice } from '../catalog/filterProducts.ts'
@@ -28,22 +29,21 @@ export function OptionGroup({ group, fieldId, selectedIds, errors, availability,
         return <div key={option.id} className={`config-option${selected ? ' config-option--selected' : ''}${!status.available ? ' config-option--unavailable' : ''}`}>
           <label htmlFor={inputId}>
             <input id={inputId} name={fieldId} type={group.selection === 'single' ? 'radio' : 'checkbox'}
-              checked={selected} disabled={!status.available} required={group.selection === 'single' && group.min > 0}
+              checked={selected} disabled={!status.available && !(group.selection === 'multiple' && selected)} required={group.selection === 'single' && group.min > 0}
               aria-required={group.selection === 'single' && group.min > 0 ? true : undefined}
               aria-invalid={errors.length > 0} aria-describedby={`${helpId}${!status.available ? ` ${descriptionId}` : ''}${errors.length ? ` ${errorId}` : ''}`}
               onChange={(event) => onChange(group.selection === 'single' ? [option.id]
                 : event.target.checked ? [...selectedIds, option.id] : selectedIds.filter((id) => id !== option.id))} />
-            <span className="option-name">{option.label}{selected && <span className="selected-text"> · Seleccionado</span>}</span>
+            <OptionVisual groupId={group.id} option={option} /><span className="option-name">{option.label}{selected && <span className="selected-text"> · Seleccionado</span>}</span>
             <span className="option-price">{option.additionalPriceCents === 0 ? 'Sin costo adicional' : `+ ${formatPrice(option.additionalPriceCents)}`}</span>
           </label>
-          {!status.available && <div id={descriptionId} className="option-description"><p className="restriction-text"><CircleAlert size={18} aria-hidden="true" /><span>{status.reason}</span></p></div>}
+          {!status.available && <div id={descriptionId} className="option-description"><p className="restriction-text"><CircleAlert size={18} aria-hidden="true" /><span>{status.reason}{selected && group.selection === 'multiple' && ' Puedes desmarcar esta opción para retirarla.'}</span></p></div>}
           {!status.available && <AccessibleButton className="button--secondary option-locations" onClick={() => onViewLocations(option.id, option.label)}>
             Ver locales<span className="sr-only"> para {option.label}</span>
           </AccessibleButton>}
         </div>
       })}
     </div>
-    {group.selection === 'multiple' && <AccessibleButton className="button--secondary clear-options" disabled={selectedIds.length === 0} onClick={() => onChange([])}>Limpiar selección de {group.label.toLocaleLowerCase('es-PE')}</AccessibleButton>}
     {errors.length > 0 && <div id={errorId} className="field-errors">{errors.map((error, index) => <p key={`${index}-${error}`}>{error}</p>)}</div>}
   </fieldset>
 }

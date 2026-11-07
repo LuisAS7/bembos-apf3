@@ -16,7 +16,7 @@ export function ConfirmOrderButton({ attemptId }: { attemptId: string }) {
       const result = confirmOrder(attemptId)
       if (result.ok) navigate(`/confirmacion/${encodeURIComponent(result.receipt.orderId)}`, { replace: true })
       else { setError(result.message); submitting.current = false }
-    }}>Confirmar pedido simulado</AccessibleButton>
+    }}>Confirmar pedido</AccessibleButton>
     <p role="alert">{error}</p>
   </div>
 }

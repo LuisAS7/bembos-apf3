@@ -19,8 +19,8 @@ test('payment markup uses native controls, fictional QR, associated labels and n
     state.checkout = { ...state.checkout, fullName: 'Persona Ficticia', phone: '987654321', address: 'Calle Ficticia 100' }
     const render = () => renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(PaymentPanel))))
     const cash = render()
-    assert.ok(cash.includes('Simulación académica. No se realizará ningún pago real.'))
-    assert.ok(cash.includes('Pagarás al recibir tu pedido.'))
+    assert.ok(cash.includes('Usa datos de prueba.'))
+    assert.ok(cash.includes('Pagar al recibir'))
     assert.ok(cash.includes('¿Necesitas vuelto?'))
     assert.ok(cash.includes('S/21.90'))
     assert.ok(cash.includes('role="status"'))
@@ -35,19 +35,19 @@ test('payment markup uses native controls, fictional QR, associated labels and n
     assert.ok(card.includes('Visa o Mastercard'))
     state.payment.method = 'yape'
     const yape = render()
-    assert.ok(yape.includes('Generar código ficticio'))
-    assert.ok(yape.includes('Código ficticio Yape'))
+    assert.ok(yape.includes('Generar código de prueba'))
+    assert.ok(yape.includes('Código Yape'))
     const qr = renderToStaticMarkup(createElement(YapeDemo, { challenge: { operationId: 'DEMO-markup', code: '123456' } }))
     assert.ok(qr.includes('<svg'))
-    assert.ok(qr.includes('QR ficticio de demostración APF3. No inicia transferencias.'))
+    assert.ok(qr.includes('QR de prueba. No inicia transferencias.'))
     assert.ok(qr.includes('DEMO-markup'))
     state.payment = { status: 'processing', method: 'card', totalCents: 2190, attemptId: 'SIM-markup', revision: 0 }
     const pending = render()
     assert.ok(pending.includes('aria-busy="true"'))
-    assert.match(pending, /aria-disabled="true"[^>]*>Procesando simulación/)
+    assert.match(pending, /aria-disabled="true"[^>]*>Procesando pago/)
     state.payment.status = 'approved'
     const approved = render()
-    assert.ok(approved.includes('No se ha confirmado el pedido'))
+    assert.ok(approved.includes('Pago aprobado. Continúa a la revisión del pedido.'))
     assert.ok(!approved.includes('id="payment-number"'))
     assert.ok(!approved.includes('id="payment-cvv"'))
     // SSR does not execute user events, processing timers, cleanup, focus or live announcements.

@@ -13,7 +13,7 @@ export function filterProducts(catalog: readonly CatalogProduct[], query: string
     normalize(`${product.name} ${product.description} ${categoryLabels[product.category]}`).includes(search))
 }
 
-// Searching always crosses the three categories; the category remains a browsing choice.
+// Searching always crosses all categories; the category remains a browsing choice.
 export function menuProducts(catalog: readonly CatalogProduct[], query: string, category: Category): CatalogProduct[] {
   return filterProducts(catalog, query, query.trim() ? 'all' : category)
 }

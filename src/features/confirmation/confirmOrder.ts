@@ -13,11 +13,11 @@ export function confirmOrder(state: AppState, expectedAttemptId: string, depende
     return { state, result: { ok: true, receipt: state.lastConfirmation } }
   }
   if (!canConfirm(state) || state.payment.attemptId !== expectedAttemptId) {
-    return { state, result: { ok: false, message: 'No puedes confirmar este pedido. Revisa los productos, la entrega y la aprobación del pago simulado.' } }
+    return { state, result: { ok: false, message: 'No puedes confirmar este pedido. Revisa los productos, la entrega y la aprobación del pago.' } }
   }
   const receipt = createConfirmation(state, dependencies.createId(), dependencies.now())
   if (!receipt || receipt.orderId === state.lastConfirmation?.orderId || !saveLastConfirmation(receipt).ok) {
-    return { state, result: { ok: false, message: 'No pudimos guardar el comprobante. El pedido no se ha confirmado y conservamos el carrito, la entrega y el pago simulado. Revisa los permisos de almacenamiento e intenta nuevamente.' } }
+    return { state, result: { ok: false, message: 'No pudimos guardar el comprobante. El pedido no se ha confirmado y conservamos el carrito, la entrega y el pago. Revisa los permisos de almacenamiento e intenta nuevamente.' } }
   }
   // Save first. An unsuccessful receipt write must never clear the user's order.
   const action: ConfirmationCompleteAction = { type: 'confirmation/complete', receipt, cleanupFailed: !clearStoredOrder().ok }

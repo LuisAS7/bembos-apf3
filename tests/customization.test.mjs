@@ -8,7 +8,7 @@ import { defaultConfiguration, evaluateConfiguration, MAX_QUANTITY } from '../sr
 const cheese = getConfigurableProduct('cheese')
 
 test('every product has consistent, independent configuration data and explicit provenance', () => {
-  assert.equal(configurableProducts.length, 12)
+  assert.equal(configurableProducts.length, 20)
   for (const product of configurableProducts) {
     assert.equal(new Set(product.optionGroups.map((group) => group.id)).size, product.optionGroups.length)
     assert.ok(product.optionGroups.every((group) => group.id !== 'variant'))

@@ -1,7 +1,7 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { AccessibleButton } from '../components/ui/AccessibleButton.tsx'
-import { AccessibleModal } from '../components/ui/AccessibleModal.tsx'
+import { Minus, Plus, Pencil, Trash2 } from 'lucide-react'
 import { useAppState } from '../hooks/useAppState.ts'
 import { inspectOrder, itemLabel } from '../features/cart/cart.ts'
 import { formatPrice } from '../features/catalog/filterProducts.ts'
@@ -12,7 +12,6 @@ import '../features/cart/Cart.css'
 
 export function CartPage() {
   const { state, dispatch } = useAppState()
-  const [clearing, setClearing] = useState(false)
   const pendingFocus = useRef<string | null>(null)
   const summary = inspectOrder(state.order)
   useLayoutEffect(() => {
@@ -37,6 +36,7 @@ export function CartPage() {
   return <>
     <div className="page-heading"><p className="eyebrow">Revisa tu selección</p><h1>Tu pedido</h1>
       <p className="page-description">Edita cada producto o ajusta sus cantidades antes de continuar.</p></div>
+    <Link className="text-link cart-add-link" to="/menu">Seguir agregando productos</Link>
     <div className="cart-layout">
       <section aria-label="Productos del pedido">
         {!summary.items.length ? <div className="cart-empty"><h2 id="cart-empty-heading" tabIndex={-1}>Tu pedido está vacío</h2><p>Elige un producto y personalízalo para agregarlo.</p><Link className="button" to="/menu">Ver menú</Link></div>
@@ -45,28 +45,27 @@ export function CartPage() {
             <h2 id={`cart-item-${item.itemId}`} tabIndex={-1}>{index + 1}. {itemLabel(item)}</h2>
             <dl className="cart-configuration">
               {item.configuration.variantId && <div><dt>{product?.variantLabel ?? 'Variante'}</dt><dd>{product?.variants.find((entry) => entry.id === item.configuration.variantId)?.label ?? `Variante anterior: ${item.configuration.variantId}`}</dd></div>}
-              {Object.entries(item.configuration.selections).map(([groupId, ids]) => {
+              {Object.entries(item.configuration.selections).filter(([, ids]) => ids.length > 0).map(([groupId, ids]) => {
                 const group = product?.optionGroups.find((entry) => entry.id === groupId)
                 return <div key={groupId}><dt>{group?.label ?? `Grupo anterior: ${groupId}`}</dt><dd>{ids.length ? ids.map((id) => group?.options.find((entry) => entry.id === id)?.label ?? `Opción anterior: ${id}`).join(', ') : 'Sin opciones seleccionadas'}</dd></div>
               })}
             </dl>
             {issues.length > 0 && <div className="cart-restrictions" id={`issues-${item.itemId}`}><h3>Requiere actualización</h3><ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul><p>Edita el producto, elige otro local o elimínalo para continuar.</p></div>}
-            <div className="cart-quantity" role="group" aria-label={`Cantidad de ${itemLabel(item)}, ítem ${index + 1}`}>
-              <AccessibleButton className="button--secondary" aria-label={`Menos: cantidad de ${itemLabel(item)}, ítem ${index + 1}`}
-                disabled={item.quantity <= 1 || issues.length > 0} onClick={() => changeQuantity(item.itemId, item.quantity - 1)}>Menos</AccessibleButton>
-              <p id={`cart-quantity-${item.itemId}`} tabIndex={-1}>Cantidad: <strong>{item.quantity}</strong></p>
-              <AccessibleButton className="button--secondary" aria-label={`Más: cantidad de ${itemLabel(item)}, ítem ${index + 1}`}
-                disabled={item.quantity >= MAX_QUANTITY || issues.length > 0} onClick={() => changeQuantity(item.itemId, item.quantity + 1)}>Más</AccessibleButton>
+            <div className="cart-item-footer"><div className="cart-item-count"><div className="cart-quantity" role="group" aria-label={`Cantidad de ${itemLabel(item)}, ítem ${index + 1}`}>
+              <AccessibleButton className="button--secondary" aria-label={`Disminuir cantidad de ${itemLabel(item)}, ítem ${index + 1}`}
+                disabled={item.quantity <= 1 || issues.length > 0} onClick={() => changeQuantity(item.itemId, item.quantity - 1)}><Minus size={20} aria-hidden="true" /></AccessibleButton>
+              <p id={`cart-quantity-${item.itemId}`} tabIndex={-1} role="status" aria-atomic="true">Cantidad: <strong>{item.quantity}</strong></p>
+              <AccessibleButton className="button--secondary" aria-label={`Aumentar cantidad de ${itemLabel(item)}, ítem ${index + 1}`}
+                disabled={item.quantity >= MAX_QUANTITY || issues.length > 0} onClick={() => changeQuantity(item.itemId, item.quantity + 1)}><Plus size={20} aria-hidden="true" /></AccessibleButton>
             </div>
-            <p className="control-help">De 1 a {MAX_QUANTITY} unidades.{issues.length > 0 && ' Corrige las restricciones mediante Editar antes de ajustar la cantidad.'}</p>
-            <p>{unitPriceCents === null ? 'Importe pendiente de actualización.' : <>Por unidad: {formatPrice(unitPriceCents)} · Importe: <strong>{formatPrice(totalCents!)}</strong>{issues.length > 0 && ' (informativo; no disponible para continuar)'}</>}</p>
+            <p className="control-help">De 1 a {MAX_QUANTITY} unidades.{issues.length > 0 && ' Corrige las restricciones mediante Editar antes de ajustar la cantidad.'}</p></div>
+            <p className="cart-item-price">{unitPriceCents === null ? 'Importe pendiente de actualización.' : <>Por unidad: {formatPrice(unitPriceCents)} · Importe: <strong>{formatPrice(totalCents!)}</strong>{issues.length > 0 && ' (informativo; no disponible para continuar)'}</>}</p>
             <div className="cart-actions">
-              {product && <Link className="button button--secondary" to={`/pedido/${encodeURIComponent(item.itemId)}/editar`} aria-label={`Editar ${itemLabel(item)}, ítem ${index + 1}`}>Editar</Link>}
-              <AccessibleButton className="button--secondary" aria-label={`Eliminar ${itemLabel(item)}, ítem ${index + 1}`} onClick={() => remove(item.itemId)}>Eliminar</AccessibleButton>
-            </div>
+              {product && <Link className="button button--secondary" to={`/pedido/${encodeURIComponent(item.itemId)}/editar`} aria-label={`Editar ${itemLabel(item)}, ítem ${index + 1}`} title="Editar producto"><Pencil size={20} aria-hidden="true" /></Link>}
+              <AccessibleButton className="button--secondary" aria-label={`Eliminar ${itemLabel(item)}, ítem ${index + 1}`} onClick={() => remove(item.itemId)} title="Eliminar producto"><Trash2 size={20} aria-hidden="true" /></AccessibleButton>
+            </div></div>
           </li>)}</ol>}
-        <div className="cart-actions cart-secondary-actions"><Link className="text-link" to="/menu">Seguir agregando productos</Link>
-          <AccessibleButton className="button--secondary" onClick={() => setClearing(true)}>Limpiar pedido</AccessibleButton></div>
+
       </section>
       <aside className="summary-shell" aria-labelledby="summary-heading">
         <h2 id="summary-heading">Resumen del pedido</h2>
@@ -75,14 +74,9 @@ export function CartPage() {
         <p>No incluye el costo de entrega.</p>
         {summary.canContinue ? <Link className="button" to="/pagar" aria-describedby="checkout-help">Continuar al pago</Link>
           : <AccessibleButton disabled aria-describedby="checkout-help">Continuar al pago</AccessibleButton>}
-        <p id="checkout-help">{!summary.items.length ? 'Agrega al menos un producto.' : !summary.canContinue ? 'Actualiza o elimina todos los ítems incompatibles para continuar.' : 'Elige cómo recibir tu pedido y revisa el total antes del pago simulado.'}</p>
+        <p id="checkout-help">{!summary.items.length ? 'Agrega al menos un producto.' : !summary.canContinue ? 'Actualiza o elimina todos los ítems incompatibles para continuar.' : 'Elige cómo recibir tu pedido y revisa el total antes del pago.'}</p>
       </aside>
     </div>
-    <AccessibleModal open={clearing} title="Limpiar pedido" onClose={() => setClearing(false)}>
-      <p>Se eliminarán todos los productos, sus configuraciones, los datos temporales de entrega y la copia del pedido guardada en este navegador. Esta acción no se puede deshacer.</p>
-      <p>Se conservarán tus preferencias de visualización y el local actual mientras esta página siga abierta. No se borran otras claves del navegador.</p>
-      <div className="modal-actions"><AccessibleButton className="button--secondary" onClick={() => setClearing(false)}>Conservar pedido</AccessibleButton>
-        <AccessibleButton onClick={() => { dispatch({ type: 'cart/clear' }); setClearing(false) }}>Sí, limpiar pedido</AccessibleButton></div>
-    </AccessibleModal>
+
   </>
 }

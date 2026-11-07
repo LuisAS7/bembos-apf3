@@ -15,7 +15,7 @@ test('rendered menu exposes labeled native controls, products and unavailable st
       createElement(AppProviders, null, createElement(MenuPage))))
     assert.equal((html.match(/<h1>/g) ?? []).length, 1)
     assert.equal((html.match(/<article /g) ?? []).length, 4)
-    assert.equal((html.match(/type="radio"/g) ?? []).length, 3)
+    assert.equal((html.match(/type="radio"/g) ?? []).length, 7)
     assert.equal((html.match(/<option /g) ?? []).length, 0)
     assert.ok(html.includes('<label for="product-search">Buscar productos</label>'))
     assert.ok(!html.includes('Local del pedido'))

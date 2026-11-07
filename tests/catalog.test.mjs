@@ -7,12 +7,12 @@ import { filterProducts, formatPrice } from '../src/features/catalog/filterProdu
 import { prepareLocationChange } from '../src/features/locations/prepareLocationChange.ts'
 import { createInitialState } from '../src/state/appState.ts'
 
-test('catalog has 12 unique products and four per category, with local images and explicit provenance', () => {
-  assert.equal(products.length, 12)
-  assert.equal(new Set(products.map((product) => product.id)).size, 12)
-  assert.equal(new Set(products.map((product) => product.slug)).size, 12)
+test('catalog has 20 unique products, four per original category and two per new category, with local images and explicit provenance', () => {
+  assert.equal(products.length, 20)
+  assert.equal(new Set(products.map((product) => product.id)).size, 20)
+  assert.equal(new Set(products.map((product) => product.slug)).size, 20)
   for (const category of Object.keys(categoryLabels)) {
-    assert.equal(products.filter((product) => product.category === category).length, 4)
+    assert.equal(products.filter((product) => product.category === category).length, ['hamburguesas', 'combos', 'promociones'].includes(category) ? 4 : 2)
   }
   for (const product of products) {
     assert.ok(Number.isSafeInteger(product.basePriceCents) && product.basePriceCents > 0)
@@ -20,7 +20,7 @@ test('catalog has 12 unique products and four per category, with local images an
     assert.ok(existsSync(new URL(`../public${product.image.src}`, import.meta.url)))
     assert.ok(['apf2', 'academic-mock'].includes(product.source.kind))
   }
-  assert.equal(products.filter((product) => product.source.kind === 'academic-mock').length, 10)
+  assert.equal(products.filter((product) => product.source.kind === 'academic-mock').length, 18)
 })
 
 test('APF2 names and prices remain Cheese S/16.90 and Royal S/21.90', () => {
@@ -41,7 +41,7 @@ test('APF2 photograph bytes match the embedded original; no remote image request
 
 test('search ignores case, accents and outer spaces and crosses the three categories', () => {
   assert.deepEqual(filterProducts(products, '  CHÉESE  ', 'all').map((product) => product.category), ['hamburguesas', 'combos', 'promociones'])
-  assert.equal(filterProducts(products, '  ClÁSica  ', 'all').length, 2)
+  assert.equal(filterProducts(products, '  ClÁSica  ', 'all').length, 3)
   assert.equal(filterProducts(products, 'promociones', 'all').length, 4)
   assert.equal(filterProducts(products, 'huevo', 'all')[0].id, 'royal')
 })
@@ -50,7 +50,7 @@ test('category combines with search, no matches returns empty, and clearing rest
   assert.deepEqual(filterProducts(products, 'Royal', 'combos').map((product) => product.id), ['combo-royal-demo'])
   assert.equal(filterProducts(products, 'producto inexistente', 'all').length, 0)
   assert.equal(filterProducts(products, '', 'combos').length, 4)
-  assert.equal(filterProducts(products, '', 'all').length, 12)
+  assert.equal(filterProducts(products, '', 'all').length, 20)
 })
 
 test('availability changes by location and unknown references are unavailable', () => {
