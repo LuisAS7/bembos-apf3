@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
+import { readFileSync } from 'node:fs'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
@@ -11,6 +12,18 @@ import { configurationStages, inspectProgress, advanceProgress } from '../src/fe
 import { productAvailability } from '../src/data/availability.ts'
 import { locations } from '../src/data/locations.ts'
 import { createInitialState } from '../src/state/appState.ts'
+
+test('Vercel declares a SPA fallback for direct React routes without changing the Vite build', () => {
+  const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'))
+  assert.equal(config.framework, 'vite')
+  assert.equal(config.buildCommand, 'npm run build')
+  assert.equal(config.outputDirectory, 'dist')
+  const fallback = config.rewrites.find((rule) => rule.destination === '/index.html')
+  assert.ok(fallback)
+  const pattern = new RegExp(`^${fallback.source}$`)
+  for (const path of ['/menu', '/pedido', '/pagar', '/productos/cheese/personalizar', '/pedido/a/editar', '/confirmacion/BEM-example']) assert.ok(pattern.test(path))
+  // Configuration contract only; deployed HTTP responses are checked after authentication.
+})
 
 test('mobile final action shares actual progress validation for every product and cannot skip unreviewed stages', () => {
   for (const product of configurableProducts) {
@@ -41,7 +54,7 @@ test('mobile final action shares actual progress validation for every product an
   }
 })
 
-test('category strip preserves seven native choices, selected image/label and named scroll controls', async () => {
+test('category strip preserves native choices without the removed instruction row', async () => {
   const server = await createServer({ server: { middlewareMode: true, hmr: false, watch: null } })
   try {
     const { CategoryCarousel } = await server.ssrLoadModule('/src/features/catalog/CategoryCarousel.tsx')
@@ -51,12 +64,10 @@ test('category strip preserves seven native choices, selected image/label and na
     assert.equal((html.match(/checked=""/g) ?? []).length, 1)
     assert.match(html, /<input(?=[^>]*value="loncheritas")(?=[^>]*checked="")[^>]*>/)
     for (const label of Object.values(categoryLabels)) assert.ok(html.includes(label))
-    assert.ok(html.includes('aria-label="Ver categorías anteriores"'))
-    assert.ok(html.includes('aria-label="Ver categorías siguientes"'))
-    const controls = [...html.matchAll(/aria-controls="([^"]+)"/g)].map((match) => match[1])
-    assert.equal(controls.length, 2)
-    assert.equal(controls[0], controls[1])
-    assert.ok(html.includes(`id="${controls[0]}" class="category-options"`))
+    assert.ok(html.includes('class="category-options"'))
+    assert.ok(!html.includes('<button'))
+    assert.ok(!html.includes('Desliza las categorías'))
+    assert.ok(!html.includes('aria-describedby'))
     assert.ok(!html.includes('role="tab"') && !html.includes('aria-selected'))
     // SSR does not execute touch/trackpad/keyboard scrolling or focus visibility.
   } finally { await server.close() }

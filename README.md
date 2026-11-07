@@ -105,4 +105,4 @@ Detalles: trazabilidad de [Fase 1](docs/trazabilidad/fase1-fundacion.md), [Fase 
 
 Los tests verifican almacenamiento, reducer, catálogo, configuraciones, precios, límites, disponibilidad, identidad y edición de ítems, Deshacer, recuperación, protección del cambio de local, contraste de tokens y markup estático. Los archivos de tests se ejecutan en serie para no competir por la caché de Vite usada por SSR. No sustituyen los eventos de navegador ni el lector de pantalla. El reporte de zoom del usuario corresponde a la versión previa a Fase 2 y no acredita las pantallas nuevas. Axe sigue aplazado; se conservan los demás pendientes. No se declara conformidad WCAG global.
 
-No se ha publicado el prototipo. La preparación de Vercel y las rutas SPA de producción pertenecen a Fase 10.
+La publicación en Vercel está autorizada para auditoría. El fallback SPA y la comprobación HTTP están preparados; falta iniciar sesión en Vercel. [Acceso, comandos, resultados y pendientes](docs/evidencias/publicacion/README.md). La auditoría de accesibilidad sigue pendiente.

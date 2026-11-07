@@ -34,3 +34,7 @@ dist-ssr
 !docs/evidencias/iteracion2/*.log
 !docs/evidencias/correccion-visual/*.log
 !docs/evidencias/cierre-movil/*.log
+
+.vercel/
+!docs/evidencias/publicacion/*.log
+docs/evidencias/publicacion/remoto/
