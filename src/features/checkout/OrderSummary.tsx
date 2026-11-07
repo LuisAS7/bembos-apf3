@@ -13,7 +13,6 @@ export function OrderSummary({ order, method }: { order: OrderDraft; method: Del
     <p>Entrega: {method === 'pickup' ? 'Recojo en local' : 'Delivery'}</p>
     <ol className="checkout-products">{summary.items.map(({ item, product, issues, totalCents }, index) => <li key={item.itemId}>
       <h3>{index + 1}. {itemLabel(item)}</h3>
-      <p className="control-help">{product?.source.kind === 'apf2' ? 'Producto y precio base APF2; adicionales según su procedencia en el configurador.' : 'Producto mock académico.'}</p>
       <p>Cantidad: {item.quantity} · Importe: {totalCents === null ? 'Requiere actualización' : formatPrice(totalCents)}</p>
       <dl className="checkout-options">
         {item.configuration.variantId && <div><dt>{product?.variantLabel ?? 'Variante'}</dt><dd>{product?.variants.find((entry) => entry.id === item.configuration.variantId)?.label ?? item.configuration.variantId}</dd></div>}
@@ -29,7 +28,6 @@ export function OrderSummary({ order, method }: { order: OrderDraft; method: Del
       <div><dt>Costo de entrega</dt><dd>{summary.deliveryFeeCents === null ? 'No disponible' : formatPrice(summary.deliveryFeeCents)}</dd></div>
       <div><dt>Total{!summary.canContinue ? ' informativo' : ''}</dt><dd>{summary.totalCents === null ? 'Requiere actualización' : formatPrice(summary.totalCents)}</dd></div>
     </dl>
-    <p className="control-help">Tarifa de entrega mock académica. No se realizan cobros reales.</p>
     <Link className="button button--secondary" to="/pedido">Editar pedido</Link>
   </aside>
 }

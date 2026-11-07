@@ -15,7 +15,7 @@ function sauces(): OptionGroup {
   return group('salsas', 'Salsas', 'multiple', [option('mayonesa', 'Mayonesa'), option('ketchup', 'Ketchup'), option('aji', 'Ají')], ['mayonesa', 'ketchup'], 0, 2, 'Puedes elegir hasta dos salsas, sin costo adicional.')
 }
 function extras(): OptionGroup {
-  return group('extras', 'Extras', 'multiple', [option('queso', 'Extra queso', 250), option('tocino', 'Extra tocino', 350)], [], 0, 2, 'Precios adicionales mock por unidad de producto.')
+  return group('extras', 'Extras', 'multiple', [option('queso', 'Extra queso', 250), option('tocino', 'Extra tocino', 350)], [], 0, 2, 'Elige hasta 2 adicionales. El precio se aplica por unidad.')
 }
 function drinks(): OptionGroup {
   return group('bebida', 'Bebida', 'single', [option('cola', 'Bebida de cola'), option('agua', 'Agua'), option('limonada', 'Limonada', 200)], ['cola'], 1, 1)

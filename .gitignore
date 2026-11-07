@@ -8,6 +8,7 @@ logs
 !docs/evidencias/fase5/*.log
 !docs/evidencias/fase6/*.log
 !docs/evidencias/fase7/*.log
+!docs/evidencias/visual/*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

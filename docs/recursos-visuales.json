@@ -1,0 +1,95 @@
+{
+  "reference": "https://www.bembos.com.pe/menu/hamburguesas",
+  "downloadedOn": "2026-11-07",
+  "resources": [
+    {
+      "file": "public/images/official/logo.svg",
+      "url": "https://www.bembos.com.pe/static/version1793796800/frontend/Ngr/bembos/es_PE/images/logo.svg",
+      "bytes": 2926,
+      "contentType": "image/svg+xml"
+    },
+    {
+      "file": "public/images/official/cheese.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146463725_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 53736,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/royal.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146463856_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 57325,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/clasica.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146463820_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 55884,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/bbq.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146463855_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 64210,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/combo-cheese.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146468235_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 55269,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/combo-royal.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146468234_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 55661,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/combo-clasica.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146468236_1_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 56048,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/combo-bbq.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146468239_1_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 59260,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/compartir.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/d/u/duo_del_barrio-_1000x1000.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 89006,
+      "contentType": "image/jpeg"
+    },
+    {
+      "file": "public/images/official/familiar.jpg",
+      "url": "https://www.bembos.com.pe/media/catalog/product/2/1/2146470930.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=800&width=800&canvas=800:800&format=jpeg",
+      "bytes": 67019,
+      "contentType": "image/jpeg"
+    }
+  ],
+  "usageNotes": {
+    "logo": "Official SVG, original paths and proportions; trailing blank line normalized. White backing ensures contrast with the blue header.",
+    "photos": "Official reference photographs only. No current commercial prices or recipes are imported.",
+    "bbq": "Queso Tocino burger/combo photographs represent the optional bacon configuration; BBQ recipe and prices are unchanged.",
+    "royal": "Official Royal reference photograph; APF2 description and price are retained, not replaced with current commercial composition.",
+    "duos": "CSS composition of two copies of the relevant original Cheese/Royal photograph; no raster image editing.",
+    "sharing": "Reference photo of two burgers and sides; selection defines the actual contents.",
+    "family": "Reference photo of the four-person presentation, with optional sides. The existing two/four-person variants remain unchanged."
+  },
+  "productImages": {
+    "cheese": "cheese.jpg",
+    "royal": "royal.jpg",
+    "clasica-demo": "clasica.jpg",
+    "bbq-demo": "bbq.jpg",
+    "combo-cheese-demo": "combo-cheese.jpg",
+    "combo-royal-demo": "combo-royal.jpg",
+    "combo-clasica-demo": "combo-clasica.jpg",
+    "combo-bbq-demo": "combo-bbq.jpg",
+    "duo-cheese-demo": "cheese.jpg (duo composition)",
+    "duo-royal-demo": "royal.jpg (duo composition)",
+    "para-compartir-demo": "compartir.jpg",
+    "familiar-demo": "familiar.jpg"
+  }
+}

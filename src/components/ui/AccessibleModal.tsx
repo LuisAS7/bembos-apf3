@@ -2,9 +2,9 @@ import { useEffect, useId, useRef } from 'react'
 import type { KeyboardEvent, ReactNode } from 'react'
 import './AccessibleModal.css'
 
-interface AccessibleModalProps { open: boolean; title: string; children: ReactNode; onClose: () => void }
+interface AccessibleModalProps { id?: string; open: boolean; title: string; children: ReactNode; onClose: () => void }
 
-export function AccessibleModal({ open, title, children, onClose }: AccessibleModalProps) {
+export function AccessibleModal({ id, open, title, children, onClose }: AccessibleModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const titleId = useId()
@@ -39,7 +39,7 @@ export function AccessibleModal({ open, title, children, onClose }: AccessibleMo
     }
   }
 
-  return <dialog ref={dialogRef} className="accessible-modal" role="dialog" aria-modal="true" aria-labelledby={titleId}
+  return <dialog id={id} ref={dialogRef} className="accessible-modal" role="dialog" aria-modal="true" aria-labelledby={titleId}
     onCancel={(event) => { event.preventDefault(); onClose() }} onKeyDown={containFocus}>
     <h2 id={titleId} ref={titleRef} tabIndex={-1}>{title}</h2>
     {children}

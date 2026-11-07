@@ -27,3 +27,15 @@
 @media (min-width: 64rem) {
   .checkout-layout { grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 1fr); }
 }
+
+.checkout-form { border: 1px solid var(--color-decoration); }
+.form-field label { line-height: 1.35; }
+.form-field label span { font-weight: 400; color: var(--color-text-muted); font-size: .8125rem; }
+.form-field input, .form-field textarea, .form-field select { border-width: 1px; min-height: 3.25rem; }
+.delivery-choice--selected { background: #f5f3ff; }
+.checkout-totals { padding-block-start: 1rem; border-block-start: 1px solid var(--color-decoration); }
+.checkout-totals > div:last-child { font-size: 1.375rem; color: var(--color-brand); font-weight: 800; }
+.checkout-options > div { display: flex; flex-wrap: wrap; gap: .2rem .5rem; }
+.checkout-options dd { flex: 1 1 11rem; }
+.checkout-options dt { min-width: 5rem; }
+.checkout-products { max-height: none; }

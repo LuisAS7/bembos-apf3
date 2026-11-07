@@ -39,7 +39,7 @@ test('cart markup exposes exact selections, independent edit routes, totals and 
     state = { ...state, order: { ...state.order, locationId: 'demo-centro' } }
     const incompatible = render(state)
     assert.ok(incompatible.includes('Requiere actualización'))
-    assert.ok(incompatible.includes('Cheese grande agotada en este local Demo.'))
+    assert.ok(incompatible.includes('Cheese grande agotada en este local.'))
     assert.ok(!incompatible.includes('href="/pagar"'))
     assert.match(incompatible, /<button[^>]*disabled=""[^>]*>Continuar al pago/)
   } finally { await server.close() }
@@ -57,11 +57,11 @@ test('edit route loads the exact saved configuration and quantity without mutati
       createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(Routes, null,
         createElement(Route, { path: '/pedido/:itemId/editar', element: createElement(CustomizePage) })))))
     assert.ok(html.includes('<h1>Editar Cheese</h1>'))
-    assert.ok(html.includes('>Guardar cambios<'))
+    assert.ok(html.includes('Continuar'))
     assert.ok(!html.includes('>Agregar al pedido<'))
     assert.match(html, /id="variant-cheese-grande"[^>]*checked=""/)
-    assert.match(html, /id="group-cheese-extras-queso"[^>]*checked=""/)
-    assert.match(html, /id="quantity-cheese"[^>]*value="3"/)
+    assert.ok(html.includes('S/67.20'), 'exact saved extra and quantity are included in the initial summary')
+    assert.ok(html.includes('Cantidad y resumen'))
     assert.ok(html.includes('Cancelar edición y volver al pedido'))
     assert.deepEqual(state, before)
   } finally { await server.close() }
@@ -71,14 +71,17 @@ test('Toast exposes native Undo and dismiss controls without autofocus or automa
   const server = await createServer({ server: { middlewareMode: true, hmr: false, watch: null } })
   try {
     const { Toaster } = await server.ssrLoadModule('/src/components/ui/Toaster.tsx')
+    const { ToastNotice } = await server.ssrLoadModule('/src/components/ui/ToastNotice.tsx')
     const { AppContext } = await server.ssrLoadModule('/src/state/AppContext.ts')
     let state = appReducer(createInitialState(), { type: 'cart/add', item: item() })
     state = appReducer(state, { type: 'cart/remove', itemId: 'a' })
-    const html = renderToStaticMarkup(createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(Toaster)))
-    assert.ok(html.includes('aria-label="Avisos del pedido"'))
+    const region = renderToStaticMarkup(createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(Toaster)))
+    assert.ok(region.includes('aria-live="polite"'))
+    assert.ok(region.includes('Avisos del pedido'))
+    assert.ok(!region.includes('role="status"'), 'Sonner owns the single announcement region')
+    const html = renderToStaticMarkup(createElement(ToastNotice, { notice: state.toasts[0], onUndo() {}, onDismiss() {} }))
     assert.match(html, /<button[^>]*aria-label="Deshacer:[^"]+"[^>]*>Deshacer/)
-    assert.ok(html.includes('>Cerrar aviso<'))
-    assert.ok(html.includes('role="status"'))
+    assert.ok(html.includes('aria-label="Cerrar aviso:'))
     assert.ok(!/autofocus/i.test(html))
     // No click, timing, focus or screen-reader event is claimed by this SSR test.
   } finally { await server.close() }
@@ -123,7 +126,7 @@ test('provider recovers and recalculates saved cart on initialization without wr
     assert.equal(writes, 0)
     assert.ok(html.includes('Restauramos tu pedido anterior.'))
     assert.ok(html.includes('S/67.20'))
-    assert.ok(html.includes('role="status"'))
+    assert.ok(html.includes('aria-live="polite"'))
     assert.ok(!/autofocus/i.test(html))
     // Announcement effects, browser focus and persistence events are not executed by SSR.
   } finally { globalThis.window = previousWindow; await server.close() }

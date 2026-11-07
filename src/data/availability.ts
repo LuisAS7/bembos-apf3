@@ -10,14 +10,14 @@ interface LocalRestrictions {
 export const localRestrictions: Record<string, LocalRestrictions> = {
   'san-miguel': { variants: {}, options: {
     papas: { rusticas: 'Papas rústicas agotadas en Bembos San Miguel. Puedes elegir otras papas o consultar otro local.' },
-    bebida: { limonada: 'Limonada agotada en este local (disponibilidad mock).' },
+    bebida: { limonada: 'Limonada agotada en este local.' },
   } },
-  'demo-centro': { variants: { cheese: { grande: 'Cheese grande agotada en este local Demo.' } }, options: {
-    papas: { grandes: 'Papas grandes agotadas en este local Demo.' },
+  'demo-centro': { variants: { cheese: { grande: 'Cheese grande agotada en este local.' } }, options: {
+    papas: { grandes: 'Papas grandes agotadas en este local.' },
   } },
-  'demo-norte': { variants: { cheese: { grande: 'Cheese grande agotada en este local Demo.' }, 'familiar-demo': { cuatro: 'La presentación para cuatro personas está agotada en este local Demo.' } }, options: {
-    extras: { tocino: 'Extra tocino agotado en este local Demo.' },
-    bebida: { agua: 'Agua agotada en este local Demo.' },
+  'demo-norte': { variants: { cheese: { grande: 'Cheese grande agotada en este local.' }, 'familiar-demo': { cuatro: 'La presentación para cuatro personas está agotada en este local.' } }, options: {
+    extras: { tocino: 'Extra tocino agotado en este local.' },
+    bebida: { agua: 'Agua agotada en este local.' },
   } },
 }
 

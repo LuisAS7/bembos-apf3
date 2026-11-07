@@ -30,16 +30,13 @@ export function OptionGroup({ group, fieldId, selectedIds, errors, availability,
             <input id={inputId} name={fieldId} type={group.selection === 'single' ? 'radio' : 'checkbox'}
               checked={selected} disabled={!status.available} required={group.selection === 'single' && group.min > 0}
               aria-required={group.selection === 'single' && group.min > 0 ? true : undefined}
-              aria-invalid={errors.length > 0} aria-describedby={`${descriptionId}${errors.length ? ` ${errorId}` : ''}`}
+              aria-invalid={errors.length > 0} aria-describedby={`${helpId}${!status.available ? ` ${descriptionId}` : ''}${errors.length ? ` ${errorId}` : ''}`}
               onChange={(event) => onChange(group.selection === 'single' ? [option.id]
                 : event.target.checked ? [...selectedIds, option.id] : selectedIds.filter((id) => id !== option.id))} />
             <span className="option-name">{option.label}{selected && <span className="selected-text"> · Seleccionado</span>}</span>
             <span className="option-price">{option.additionalPriceCents === 0 ? 'Sin costo adicional' : `+ ${formatPrice(option.additionalPriceCents)}`}</span>
           </label>
-          <div id={descriptionId} className="option-description">
-            <span className="option-source">{option.source.kind === 'apf2' ? 'Referencia APF2' : 'Mock académico'}</span>
-            {!status.available && <p className="restriction-text"><CircleAlert size={18} aria-hidden="true" /><span>{status.reason}</span></p>}
-          </div>
+          {!status.available && <div id={descriptionId} className="option-description"><p className="restriction-text"><CircleAlert size={18} aria-hidden="true" /><span>{status.reason}</span></p></div>}
           {!status.available && <AccessibleButton className="button--secondary option-locations" onClick={() => onViewLocations(option.id, option.label)}>
             Ver locales<span className="sr-only"> para {option.label}</span>
           </AccessibleButton>}

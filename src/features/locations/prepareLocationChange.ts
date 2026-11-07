@@ -2,6 +2,22 @@ import type { OrderDraft } from '../../domain/models.ts'
 import type { StorageRead } from '../../storage/browserStorage.ts'
 import { getLocation } from '../../data/locations.ts'
 import { CATALOG_VERSION, recoverOrder } from '../cart/cart.ts'
+import { inspectOrder } from '../cart/cart.ts'
+import { evaluateConfiguration } from '../customization/configuration.ts'
+import type { Product, ProductConfiguration } from '../../domain/models.ts'
+
+export interface LocationPlan { locationId: string; issues: string[]; blocked: boolean; order?: OrderDraft }
+export function planLocationChange(locationId: string, current: OrderDraft, stored: StorageRead<OrderDraft>, preview?: { product: Product; configuration: ProductConfiguration; quantity: number }): LocationPlan {
+  const result = prepareLocationChange(locationId, current, stored, true)
+  if (!result.ok) return { locationId, issues: [result.message], blocked: true }
+  const issues = inspectOrder(result.order).items.flatMap((entry, index) => entry.issues.length
+    ? [`Ítem ${index + 1}: ${entry.product?.name ?? entry.item.productId}. ${entry.issues.join(' ')}`] : [])
+  if (preview) {
+    const affected = evaluateConfiguration(preview.product, preview.configuration, preview.quantity, locationId).issues.filter((issue) => issue.availability)
+    if (affected.length) issues.push(`${preview.product.name}: ${[...new Set(affected.map((issue) => issue.message))].join(' ')}`)
+  }
+  return { locationId, issues, blocked: false, order: result.order }
+}
 
 type LocationChange = { ok: true; order: OrderDraft } | { ok: false; message: string }
 

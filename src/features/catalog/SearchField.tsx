@@ -1,5 +1,4 @@
-import { Search } from 'lucide-react'
-import { AccessibleButton } from '../../components/ui/AccessibleButton.tsx'
+import { Search, X } from 'lucide-react'
 
 interface SearchFieldProps { value: string; onChange: (value: string) => void }
 
@@ -10,10 +9,9 @@ export function SearchField({ value, onChange }: SearchFieldProps) {
       <div className="search-input-wrap">
         <Search size={20} aria-hidden="true" />
         <input id="product-search" type="search" value={value} onChange={(event) => onChange(event.target.value)}
-          placeholder="Nombre, descripción o categoría" aria-describedby="search-help" aria-controls="catalog-results" />
+          placeholder="¿Cheese, Royal o un combo?" aria-controls="catalog-results" />
+        {value && <button className="search-clear" type="button" aria-label="Borrar búsqueda" onClick={() => { onChange(''); document.getElementById('product-search')?.focus() }}><X size={18} aria-hidden="true" /></button>}
       </div>
-      <AccessibleButton className="button--secondary" disabled={!value} onClick={() => onChange('')}>Borrar búsqueda</AccessibleButton>
     </div>
-    <p id="search-help" className="control-help">Busca entre las categorías o filtra por una de ellas.</p>
   </form>
 }

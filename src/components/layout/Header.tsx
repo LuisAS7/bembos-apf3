@@ -1,16 +1,12 @@
-import { MapPin } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { BottomNavigation } from './BottomNavigation.tsx'
-import { getLocation } from '../../data/locations.ts'
-import { useAppState } from '../../hooks/useAppState.ts'
+import { LocalSelector } from '../../features/locations/LocalSelector.tsx'
 
 export function Header() {
-  const { state } = useAppState()
-  const locationName = getLocation(state.order.locationId)?.name ?? 'Local por seleccionar'
   return <header className="site-header">
     <div className="container header-inner">
-      <Link className="brand" to="/menu"><span>Bembos</span></Link>
-      <p className="header-location"><MapPin size={20} aria-hidden="true" /><span>{locationName}</span></p>
+      <Link className="brand" to="/menu"><img src="/images/official/logo.svg" alt="Bembos, inicio" width={138} height={48} /></Link>
+      <LocalSelector />
       <BottomNavigation />
     </div>
   </header>

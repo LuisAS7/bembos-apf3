@@ -8,8 +8,9 @@ import { configurableProducts, getConfigurableProduct } from '../src/data/custom
 import { productAvailability } from '../src/data/availability.ts'
 import { locations } from '../src/data/locations.ts'
 import { createInitialState } from '../src/state/appState.ts'
+import { optionAvailability } from '../src/data/availability.ts'
 
-test('configuration markup varies by product, explains disabled choices and exposes native add action', async () => {
+test('configuration markup varies by product and starts with one active stage without marking defaults complete', async () => {
   const server = await createServer({ server: { middlewareMode: true, hmr: false, watch: null } })
   try {
     const { ProductConfigurator } = await server.ssrLoadModule('/src/features/customization/ProductConfigurator.tsx')
@@ -19,18 +20,22 @@ test('configuration markup varies by product, explains disabled choices and expo
       state.order.locationId = locations.find((location) => productAvailability(product, location.id).available).id
       const html = renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AppContext.Provider, { value: { state, dispatch() {} } }, createElement(ProductConfigurator, { product }))))
       const expectedGroups = product.optionGroups.length + (product.variants.length ? 1 : 0)
-      assert.equal((html.match(/class="config-group"/g) ?? []).length, expectedGroups, product.id)
-      assert.equal((html.match(/<legend>/g) ?? []).length, expectedGroups, product.id)
-      assert.ok(html.includes(`id="quantity-${product.id}"`))
-      assert.ok(html.includes('>Agregar al pedido<'))
+      assert.equal((html.match(/class="config-group"/g) ?? []).length, 1, product.id)
+      assert.equal((html.match(/data-state=/g) ?? []).length, expectedGroups + 1, product.id)
+      assert.equal((html.match(/aria-current="step"/g) ?? []).length, 1, product.id)
+      assert.ok(!html.includes('data-state="completed"'))
+      assert.ok(html.includes('Continuar'))
+      assert.ok(!html.includes('>Agregar al pedido<'))
       assert.ok(!html.includes('Guardar cambios'))
-      assert.ok(html.indexOf('</form>') < html.indexOf('class="configuration-form"'))
-      if (product.id === 'cheese') {
-        assert.ok(html.includes('Papas rústicas agotadas en Bembos San Miguel'))
-        assert.match(html, /id="group-cheese-papas-rusticas"[^>]*disabled=""/)
-        assert.ok(html.includes('Ver locales'))
-      }
+      assert.equal((html.match(/<form /g) ?? []).length, 1, 'no nested location form')
     }
+    const { OptionGroup } = await server.ssrLoadModule('/src/features/customization/OptionGroup.tsx')
+    const cheese = getConfigurableProduct('cheese')
+    const potatoes = renderToStaticMarkup(createElement(OptionGroup, { group: cheese.optionGroups.find((group) => group.id === 'papas'), fieldId: 'group-cheese-papas', selectedIds: ['medianas'], errors: [],
+      availability: (id) => optionAvailability(cheese, 'papas', id, 'san-miguel'), onChange() {}, onViewLocations() {} }))
+    assert.ok(potatoes.includes('Papas rústicas agotadas en Bembos San Miguel'))
+    assert.match(potatoes, /id="group-cheese-papas-rusticas"[^>]*disabled=""/)
+    assert.ok(potatoes.includes('Ver locales'))
   } finally { await server.close() }
 })
 

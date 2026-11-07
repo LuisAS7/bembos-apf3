@@ -14,6 +14,7 @@ export interface AppState {
   checkout: CheckoutDraft
   payment: PaymentSimulation
   paymentRevision: number
+  configurationPreview: { productId: string; configuration: ProductConfiguration; quantity: number } | null
   preferences: DisplayPreferences
   lastConfirmation: ConfirmationReceipt | null
   storageNotice: string
@@ -25,6 +26,8 @@ export interface AppState {
 export type AppAction =
   | { type: 'order/replace'; value: OrderDraft }
   | { type: 'checkout/replace'; value: CheckoutDraft }
+  | { type: 'configuration/preview'; value: AppState['configurationPreview'] }
+  | { type: 'toast/notify'; message: string }
   | { type: 'payment/start'; attemptId: string; method: PaymentMethod; totalCents: number; revision: number }
   | { type: 'payment/finish'; attemptId: string; revision: number; outcome: 'approved' | 'error' }
   | { type: 'payment/reset' }
@@ -49,6 +52,7 @@ export function createInitialState(): AppState {
     order: { catalogVersion: 1, locationId: 'san-miguel', items: [] },
     checkout: emptyCheckout(),
     payment: emptyPayment(), paymentRevision: 0,
+    configurationPreview: null,
     preferences: { textSize: 'default', reduceMotion: false, underlineLinks: false },
     lastConfirmation: null, storageNotice: '', recoveryNotice: '', toasts: [], notificationSequence: 0, cartAnnouncement: '',
   }
@@ -62,6 +66,8 @@ function notify(state: AppState, order: OrderDraft, message: string, removed?: C
 
 function reduceAppState(state: AppState, action: ReducerAction): AppState {
   switch (action.type) {
+    case 'configuration/preview': return { ...state, configurationPreview: action.value }
+    case 'toast/notify': return notify(state, state.order, action.message)
     case 'confirmation/complete': {
       if (!canConfirm(state) || action.receipt.paymentAttemptId !== state.payment.attemptId || action.receipt.totalCents !== state.payment.totalCents) return state
       return { ...state, order: { ...state.order, items: [] }, checkout: emptyCheckout(), payment: emptyPayment(),

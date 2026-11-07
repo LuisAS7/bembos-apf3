@@ -5,7 +5,7 @@ import { AccessibleModal } from '../components/ui/AccessibleModal.tsx'
 import { useAppState } from '../hooks/useAppState.ts'
 import { inspectOrder, itemLabel } from '../features/cart/cart.ts'
 import { formatPrice } from '../features/catalog/filterProducts.ts'
-import { LocalSelector } from '../features/locations/LocalSelector.tsx'
+import { ProductImage } from '../components/ui/ProductImage.tsx'
 import { MAX_QUANTITY } from '../features/customization/configuration.ts'
 import '../features/catalog/Catalog.css'
 import '../features/cart/Cart.css'
@@ -37,14 +37,12 @@ export function CartPage() {
   return <>
     <div className="page-heading"><p className="eyebrow">Revisa tu selección</p><h1>Tu pedido</h1>
       <p className="page-description">Edita cada producto o ajusta sus cantidades antes de continuar.</p></div>
-    <p className="catalog-notice">Prototipo académico. Cheese y Royal conservan sus precios base APF2; los demás productos, adicionales identificados y disponibilidad son mocks académicos.</p>
-    <LocalSelector />
     <div className="cart-layout">
       <section aria-label="Productos del pedido">
         {!summary.items.length ? <div className="cart-empty"><h2 id="cart-empty-heading" tabIndex={-1}>Tu pedido está vacío</h2><p>Elige un producto y personalízalo para agregarlo.</p><Link className="button" to="/menu">Ver menú</Link></div>
           : <ol className="cart-items">{summary.items.map(({ item, product, issues, unitPriceCents, totalCents }, index) => <li key={item.itemId} className="cart-item">
+            {product && <ProductImage image={product.image} />}
             <h2 id={`cart-item-${item.itemId}`} tabIndex={-1}>{index + 1}. {itemLabel(item)}</h2>
-            <p className="control-help">{product?.source.kind === 'apf2' ? 'Producto APF2' : 'Mock académico o producto fuera del catálogo'}</p>
             <dl className="cart-configuration">
               {item.configuration.variantId && <div><dt>{product?.variantLabel ?? 'Variante'}</dt><dd>{product?.variants.find((entry) => entry.id === item.configuration.variantId)?.label ?? `Variante anterior: ${item.configuration.variantId}`}</dd></div>}
               {Object.entries(item.configuration.selections).map(([groupId, ids]) => {
@@ -60,7 +58,7 @@ export function CartPage() {
               <AccessibleButton className="button--secondary" aria-label={`Más: cantidad de ${itemLabel(item)}, ítem ${index + 1}`}
                 disabled={item.quantity >= MAX_QUANTITY || issues.length > 0} onClick={() => changeQuantity(item.itemId, item.quantity + 1)}>Más</AccessibleButton>
             </div>
-            <p className="control-help">De 1 a {MAX_QUANTITY} unidades. Corrige las restricciones mediante Editar antes de ajustar la cantidad.</p>
+            <p className="control-help">De 1 a {MAX_QUANTITY} unidades.{issues.length > 0 && ' Corrige las restricciones mediante Editar antes de ajustar la cantidad.'}</p>
             <p>{unitPriceCents === null ? 'Importe pendiente de actualización.' : <>Por unidad: {formatPrice(unitPriceCents)} · Importe: <strong>{formatPrice(totalCents!)}</strong>{issues.length > 0 && ' (informativo; no disponible para continuar)'}</>}</p>
             <div className="cart-actions">
               {product && <Link className="button button--secondary" to={`/pedido/${encodeURIComponent(item.itemId)}/editar`} aria-label={`Editar ${itemLabel(item)}, ítem ${index + 1}`}>Editar</Link>}
@@ -73,8 +71,8 @@ export function CartPage() {
       <aside className="summary-shell" aria-labelledby="summary-heading">
         <h2 id="summary-heading">Resumen del pedido</h2>
         <p>{summary.items.length} {summary.items.length === 1 ? 'ítem' : 'ítems'} · {state.order.items.reduce((sum, item) => sum + item.quantity, 0)} unidades</p>
-        <p>Subtotal informativo: <strong>{summary.totalCents === null ? 'Requiere actualización' : formatPrice(summary.totalCents)}</strong></p>
-        <p>No incluye entrega. No se realizan pedidos ni pagos reales.</p>
+        <p className="cart-subtotal">Subtotal{!summary.canContinue && ' informativo'}<strong>{summary.totalCents === null ? 'Requiere actualización' : formatPrice(summary.totalCents)}</strong></p>
+        <p>No incluye el costo de entrega.</p>
         {summary.canContinue ? <Link className="button" to="/pagar" aria-describedby="checkout-help">Continuar al pago</Link>
           : <AccessibleButton disabled aria-describedby="checkout-help">Continuar al pago</AccessibleButton>}
         <p id="checkout-help">{!summary.items.length ? 'Agrega al menos un producto.' : !summary.canContinue ? 'Actualiza o elimina todos los ítems incompatibles para continuar.' : 'Elige cómo recibir tu pedido y revisa el total antes del pago simulado.'}</p>

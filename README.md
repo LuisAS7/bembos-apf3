@@ -2,6 +2,8 @@
 
 Prototipo académico del curso Interacción Hombre Máquina. El alcance y el trabajo por fases se rigen por [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md).
 
+La evolución visual autorizada sobre `da30ab7` incorpora recursos oficiales locales, selector de local en el header, categorías visuales, progreso real de personalización y Sonner. Las decisiones visuales anteriores se sustituyen según la nueva solicitud; reglas de precios, disponibilidad, privacidad, persistencia y pagos se conservan. [Cambios, fuentes y pendientes](docs/trazabilidad/evolucion-visual.md). La aceptación visual y de interacción sigue pendiente; no se ejecutó la Fase 8 completa.
+
 La Fase 1 contiene la fundación y la Fase 2 incorpora catálogo, búsqueda y locales. La Fase 3 permite personalizar los 12 productos; la Fase 4 conecta el carrito multiproducto. La Fase 5 añade entrega y resumen; la Fase 6 incorpora pagos simulados y la Fase 7 confirma el pedido de demostración y guarda su último comprobante reducido. Auditoría y pulido posteriores requieren su aprobación.
 
 ## Entorno y comandos
@@ -47,11 +49,11 @@ Los enlaces «Ver producto» abren su configurador. «Agregar al pedido» crea u
 
 Cuatro hamburguesas, cuatro combos y cuatro promociones. Cheese y Royal conservan nombre, descripción y precio del APF2; los otros diez registros se identifican como mock académico. Los precios y el stock simulado no representan información comercial vigente.
 
-La búsqueda combina texto y categoría sin distinguir mayúsculas o acentos. «Aplicar local» cambia explícitamente la disponibilidad simulada y el Header. Si afecta al carrito o al borrador, muestra los productos y motivos y pide confirmación. Conserva las selecciones incompatibles con «Requiere actualización» y bloquea continuar al pago hasta corregirlas o eliminarlas. Antes de confirmar vuelve a leer el pedido guardado y evita sobrescribir uno diferente.
+Hamburguesas es la categoría inicial; no hay opción Todas. La búsqueda ignora mayúsculas/acentos y cruza siempre las tres categorías; elegir una categoría vuelve a la exploración y limpia la búsqueda. El botón del local en el header abre un selector con confirmación explícita. Si afecta al carrito o borrador, explica el impacto antes de cambiar. Conserva ítems incompatibles con «Requiere actualización» y protege pedidos guardados diferentes. Los IDs siguen siendo `san-miguel`, `demo-centro` y `demo-norte`; sus nombres visibles son San Miguel, Real Plaza y Mall del Sur, ubicaciones simuladas.
 
 ## Personalización
 
-Los grupos y variantes se definen por producto: hamburguesas, combos y promociones tienen etapas distintas. Precios en céntimos, adicionales contabilizados una vez y cantidad entre 1 y 99. Las restricciones se muestran antes de seleccionar. Las configuraciones inválidas conservan sus datos y explican cómo corregirlos. No se calcula un total utilizable hasta corregirlas.
+Los grupos y variantes se definen por producto: hamburguesas, combos y promociones tienen etapas distintas, más una revisión final de cantidad/resumen. Cada etapa requiere Continuar explícito y válido, incluso si usa opciones predeterminadas o es opcional sin extras. Volver conserva selecciones; cambiar local revalida el progreso. Precios en céntimos, adicionales una vez y cantidad 1–99. Las restricciones se muestran antes de seleccionar y los datos inválidos se conservan para corregirlos.
 
 Se usan fieldsets, radios, checkboxes y botones nativos. Los diálogos se implementan con `<dialog>`, título, foco inicial, contención de Tab, Escape y retorno al disparador. La comprobación real de esos comportamientos sigue pendiente de acceso al navegador.
 
@@ -59,7 +61,7 @@ Se usan fieldsets, radios, checkboxes y botones nativos. Los diálogos se implem
 
 Cada alta usa un `itemId` independiente, incluso para el mismo producto. Editar carga la configuración y cantidad guardadas; cancelar no modifica el ítem. Los límites de cantidad siguen siendo 1–99 y los precios se recalculan desde el catálogo en céntimos.
 
-Eliminar ofrece Deshacer sin caducidad automática, con botón nativo. Se conservan identidad, configuración, cantidad y vecinos para recuperar la posición lógica. Los avisos no reciben foco al aparecer. Después de eliminar se prepara el foco al ítem siguiente, anterior o estado vacío; al accionar Deshacer o cerrar un aviso se mantiene una posición de foco disponible. Estos movimientos están implementados y pendientes de prueba real.
+Sonner presenta centralmente los avisos del estado existente. Eliminar ofrece Deshacer sin caducidad automática, con botón nativo; conserva identidad, configuración, cantidad y posición lógica. No hay foco automático al aparecer. Se preparan destinos de foco tras eliminar, Deshacer y cerrar avisos, con espacio reservado para notificaciones y navegación. La integración real y sus anuncios siguen pendientes de prueba en navegador.
 
 Se recupera el pedido completo al abrir, revalidando catálogo, selecciones y disponibilidad. Los precios guardados no autorizan importes. Ítems obsoletos o agotados se conservan para revisión; precios imposibles de recalcular se muestran pendientes. Datos dañados/versiones incompatibles no se sobrescriben al montar; el aviso explica cómo iniciar un pedido nuevo. El almacenamiento bloqueado permite trabajar en memoria y muestra la limitación. La recuperación se anuncia mediante una región de estado, sin mover el foco.
 

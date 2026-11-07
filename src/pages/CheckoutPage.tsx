@@ -59,7 +59,6 @@ function CheckoutForm() {
   return <>
     <div className="page-heading"><p className="eyebrow">Entrega del pedido</p><h1>¿Cómo recibirás tu pedido?</h1>
       <p className="page-description">Completa los datos de entrega y revisa el total antes de continuar.</p></div>
-    <p className="catalog-notice">Direcciones de locales, tarifas, tiempos y horarios: <strong>mocks académicos</strong>. Usa datos ficticios para probar. Tus datos de entrega se mantienen solo mientras esta página siga abierta y se conservan al editar el pedido.</p>
     <div className="checkout-layout">
       <form className="checkout-form" onSubmit={continueCheckout} noValidate>
         <h2>Datos de entrega</h2>
@@ -85,9 +84,9 @@ function CheckoutForm() {
             value={draft.reference} onChange={(value) => update('reference', value)} error={error('reference')} autoComplete="off" maxLength={200} required={false} />
         </> : <section className="pickup-details" aria-labelledby="pickup-heading">
           <h2 id="pickup-heading">Recojo en {location.name}</h2><p>{location.mockAddress}</p>
-          <p>Preparación estimada: {location.estimatedMinutes} minutos. No se reserva un horario real.</p>
+          <p>Preparación estimada: {location.estimatedMinutes} minutos.</p>
           <div className="form-field"><label htmlFor="checkout-pickupSlot">Horario de recojo (obligatorio)</label>
-            <p id="checkout-pickupSlot-help" className="control-help">Horarios relativos de demostración, contados desde la revisión de la entrega. Sin costo de entrega.</p>
+            <p id="checkout-pickupSlot-help" className="control-help">Horarios estimados desde la revisión de entrega. El recojo no tiene costo de entrega.</p>
             <select id="checkout-pickupSlot" name="pickupSlot" value={draft.pickupSlot} required aria-required="true"
               aria-invalid={Boolean(error('pickupSlot'))} aria-describedby={`checkout-pickupSlot-help${error('pickupSlot') ? ' checkout-pickupSlot-error' : ''}`}
               onChange={(event) => update('pickupSlot', event.target.value)}>
@@ -98,7 +97,7 @@ function CheckoutForm() {
         </section>}
         <p role="alert">{issues.length > 0 ? `Revisa los ${issues.length} campos indicados. Conservamos tus datos.` : ''}</p>
         <AccessibleButton type="submit" disabled={!totals.canContinue} aria-describedby="continue-help">Continuar</AccessibleButton>
-        <p id="continue-help" className="control-help">Revisaremos la entrega antes de habilitar el pago simulado. No se realizan pagos reales.</p>
+        <p id="continue-help" className="control-help">Revisa los datos de entrega antes de continuar.</p>
         <p role="status" aria-atomic="true">{state.payment.status === 'invalidated' ? 'La simulación anterior quedó invalidada. Revisa nuevamente la entrega y el pago.' : validReview ? 'Datos de entrega válidos. Revisa el pago simulado a continuación.' : ''}</p>
       </form>
       <OrderSummary order={state.order} method={draft.deliveryMethod} />

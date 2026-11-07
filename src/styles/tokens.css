@@ -4,12 +4,12 @@
   --color-brand-hover: #0c0099;
   --color-action: #ffb500;
   --color-action-hover: #e8a400;
-  --color-background: #fff7e6;
+  --color-background: #f5f6f8;
   --color-surface: #ffffff;
   --color-text: #1c1917;
   --color-text-muted: #57534d;
   --color-border: #79716b;
-  --color-decoration: #e8dfcc;
+  --color-decoration: #e2e5ed;
   --color-error: #b91c1c;
   --color-success: #1f7a3d;
   --font-body: Arial, 'Segoe UI', sans-serif;
@@ -27,8 +27,8 @@
   --space-7: 3rem;
   --space-8: 4rem;
   --radius-sm: 0.5rem;
-  --radius-md: 0.875rem;
+  --radius-md: 1rem;
   --target-size: max(44px, 2.75rem);
-  --content-width: 72rem;
+  --content-width: 76rem;
   --bottom-nav-space: 5.5rem;
 }

@@ -81,7 +81,7 @@ export function PaymentPanel() {
 
   return <section className="payment-panel" aria-labelledby="payment-heading">
     <h2 id="payment-heading" tabIndex={-1}>Pago simulado</h2>
-    <p className="catalog-notice"><strong>Simulación académica. No se realizará ningún pago real.</strong> Usa exclusivamente datos ficticios. No se procesarán datos reales.</p>
+    <p className="catalog-notice"><strong>Simulación académica. No se realizará ningún pago real.</strong> Usa solo datos ficticios.</p>
     <p>Importe de demostración: <strong>{total === null ? 'Revisa tu pedido' : formatPrice(total)}</strong></p>
     <form onSubmit={submit} noValidate autoComplete="off" aria-busy={processing}>
       <fieldset className="payment-controls" disabled={processing}>
@@ -98,21 +98,21 @@ export function PaymentPanel() {
         </fieldset>
         {!approved && <>
           {draft.method === 'cash' && <div className="payment-fields">
-            <p><strong>Pagarás al recibir tu pedido.</strong> Aquí solo validamos tu selección de efectivo.</p>
+            <p><strong>Pagarás al recibir tu pedido.</strong></p>
             <label className="delivery-choice"><input type="checkbox" checked={draft.needsChange}
               onChange={(event) => { update('needsChange', event.target.checked); if (!event.target.checked) update('tendered', '') }} /><span>¿Necesitas vuelto?</span></label>
             {draft.needsChange && <FormField id="payment-tendered" label="¿De cuánto pagarás?" help="Monto mayor al total, en soles. Usa coma o punto y hasta dos decimales, sin separadores de miles."
               value={draft.tendered} onChange={(value) => update('tendered', value)} error={error('tendered')} autoComplete="off" inputMode="decimal" maxLength={15} />}
           </div>}
           {draft.method === 'card' && <div className="payment-fields">
-            <FormField id="payment-holder" label="Nombre del titular" help="Titular ficticio, hasta 100 caracteres. No uses datos reales."
+            <FormField id="payment-holder" label="Nombre del titular" help="Hasta 100 caracteres."
               value={draft.holder} onChange={(value) => update('holder', value)} error={error('holder')} autoComplete="off" maxLength={100} />
             <FormField id="payment-number" label="Número de tarjeta simulada" help="Visa: 13, 16 o 19 dígitos. Mastercard: 16 dígitos. Se admiten espacios o guiones. Usa solo números de prueba."
               value={draft.number} onChange={(value) => update('number', value)} error={error('number')} autoComplete="off" inputMode="numeric" maxLength={25} />
             <p role="status" aria-atomic="true">{draft.number ? `Tipo de tarjeta detectado: ${brand ?? 'no reconocido'}. La detección no acredita un número válido.` : 'Ingresa un número de prueba para detectar Visa o Mastercard.'}</p>
             <FormField id="payment-expiry" label="Vencimiento (MM/AA)" help="Mes y año ficticios. Se acepta el mes actual completo o uno posterior."
               value={draft.expiry} onChange={(value) => update('expiry', value)} error={error('expiry')} autoComplete="off" maxLength={5} />
-            <FormField id="payment-cvv" label="CVV simulado" help="Código ficticio de 3 dígitos. No uses un CVV real."
+            <FormField id="payment-cvv" label="CVV simulado" help="3 dígitos."
               value={draft.cvv} onChange={(value) => update('cvv', value)} error={error('cvv')} autoComplete="off" type="password" inputMode="numeric" maxLength={3} />
           </div>}
           {draft.method === 'yape' && <div className="payment-fields">

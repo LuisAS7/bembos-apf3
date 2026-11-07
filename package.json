@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "test": "node --test --test-concurrency=1 tests/foundation.test.mjs tests/catalog.test.mjs tests/menu-markup.test.mjs tests/customization.test.mjs tests/customization-markup.test.mjs tests/cart.test.mjs tests/cart-markup.test.mjs tests/checkout.test.mjs tests/checkout-markup.test.mjs tests/payment.test.mjs tests/payment-markup.test.mjs tests/confirmation.test.mjs tests/confirmation-markup.test.mjs",
+    "test": "node --test --test-concurrency=1 tests/foundation.test.mjs tests/catalog.test.mjs tests/menu-markup.test.mjs tests/customization.test.mjs tests/customization-markup.test.mjs tests/cart.test.mjs tests/cart-markup.test.mjs tests/checkout.test.mjs tests/checkout-markup.test.mjs tests/payment.test.mjs tests/payment-markup.test.mjs tests/confirmation.test.mjs tests/confirmation-markup.test.mjs tests/visual-interactions.test.mjs tests/visual-markup.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -15,7 +15,8 @@
     "qrcode.react": "^4.2.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-router-dom": "^7.18.5"
+    "react-router-dom": "^7.18.5",
+    "sonner": "^2.0.8"
   },
   "devDependencies": {
     "@axe-core/react": "^4.14.0",

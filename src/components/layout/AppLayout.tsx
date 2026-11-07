@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom'
 import { RouteEffects } from '../accessibility/RouteEffects.tsx'
 import { useAppState } from '../../hooks/useAppState.ts'
 import { Header } from './Header.tsx'
-import { LiveAnnouncement } from '../accessibility/LiveAnnouncement.tsx'
 import { Toaster } from '../ui/Toaster.tsx'
 
 export function AppLayout() {
@@ -12,17 +11,12 @@ export function AppLayout() {
     <RouteEffects />
     <Header />
     <main id="contenido-principal" className="container main-content" tabIndex={-1}>
-      <div role="status" aria-atomic="true">
+      <div>
         {state.storageNotice && <p className="storage-notice">{state.storageNotice}</p>}
       </div>
       {state.recoveryNotice && <p className="storage-notice">{state.recoveryNotice}</p>}
-      <LiveAnnouncement message={state.recoveryNotice} />
       <Outlet />
     </main>
     <Toaster />
-    <footer className="site-footer container">
-      <p><strong>Prototipo académico APF3</strong><span>Interacción Hombre Máquina · Grupo 6</span></p>
-      <p>No se realizan pedidos ni pagos reales.</p>
-    </footer>
   </div>
 }

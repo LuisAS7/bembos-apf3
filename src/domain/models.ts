@@ -37,7 +37,7 @@ export interface Product {
   name: string
   description: string
   category: Category
-  image: { src: string; alt: string; crop?: 'apf2-cheese' | 'apf2-royal' }
+  image: { src: string; alt: string; crop?: 'apf2-cheese' | 'apf2-royal'; duo?: boolean }
   basePriceCents: Cents
   variants: ProductVariant[]
   variantLabel?: string

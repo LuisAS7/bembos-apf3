@@ -9,7 +9,7 @@ export function ConfirmOrderButton({ attemptId }: { attemptId: string }) {
   const submitting = useRef(false)
   const [error, setError] = useState('')
   return <div className="confirm-order-action">
-    <p>Revisa el resumen y confirma el pedido de demostración. No se realiza ningún pedido ni pago real.</p>
+    <p>Revisa el resumen antes de confirmar.</p>
     <AccessibleButton onClick={() => {
       if (submitting.current) return
       submitting.current = true

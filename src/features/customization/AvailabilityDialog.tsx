@@ -8,7 +8,7 @@ export type AvailabilityTarget = { kind: 'product'; label: string } | { kind: 'v
 
 export function AvailabilityDialog({ product, target, onClose }: { product: Product; target: AvailabilityTarget | null; onClose: () => void }) {
   return <AccessibleModal open={target !== null} title={`Disponibilidad${target ? `: ${target.label}` : ''}`} onClose={onClose}>
-    <p>Disponibilidad simulada. Para aplicar un cambio, cierra este aviso y utiliza «Local del pedido».</p>
+    <p>Para cambiar de local, cierra este aviso y usa el botón del local en el encabezado.</p>
     {target && <ul className="availability-list">{locations.map((location) => {
       const status = target.kind === 'product' ? productAvailability(product, location.id)
         : target.kind === 'variant' ? variantAvailability(product, target.id, location.id)

@@ -1,0 +1,9 @@
+{
+  "command": "npm.cmd install sonner",
+  "addedPackage": "sonner",
+  "version": "2.0.8",
+  "additionalPackagesInstalled": 1,
+  "installationReportedModerateVulnerabilities": 10,
+  "auditFixExecuted": false,
+  "source": "https://sonner.emilkowal.ski/"
+}

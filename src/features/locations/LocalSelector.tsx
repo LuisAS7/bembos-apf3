@@ -1,78 +1,63 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import type { FormEvent } from 'react'
+import { ChevronDown, MapPin, Check } from 'lucide-react'
 import { AccessibleButton } from '../../components/ui/AccessibleButton.tsx'
 import { AccessibleModal } from '../../components/ui/AccessibleModal.tsx'
-import type { OrderDraft, Product, ProductConfiguration } from '../../domain/models.ts'
-import { evaluateConfiguration } from '../customization/configuration.ts'
 import { getLocation, locations } from '../../data/locations.ts'
+import { getConfigurableProduct } from '../../data/customizations.ts'
 import { useAppState } from '../../hooks/useAppState.ts'
 import { readOrder } from '../../storage/browserStorage.ts'
-import { prepareLocationChange } from './prepareLocationChange.ts'
-import { inspectOrder } from '../cart/cart.ts'
+import { planLocationChange } from './prepareLocationChange.ts'
+import type { LocationPlan } from './prepareLocationChange.ts'
 
-interface ConfigurationContext { product: Product; configuration: ProductConfiguration; quantity: number }
-interface ChangeDialog { locationId: string; issues: string[]; blocked: boolean; order?: OrderDraft }
-
-export function LocalSelector({ configurationContext }: { configurationContext?: ConfigurationContext } = {}) {
+export function LocalSelector() {
   const { state, dispatch } = useAppState()
   const [selectedId, setSelectedId] = useState(state.order.locationId)
-  const [message, setMessage] = useState('')
-  const [dialog, setDialog] = useState<ChangeDialog | null>(null)
-
-  function planChange(locationId: string): ChangeDialog {
-    const result = prepareLocationChange(locationId, state.order, readOrder(), true)
-    if (!result.ok) return { locationId, issues: [result.message], blocked: true }
-    const issues = inspectOrder(result.order).items.flatMap((entry, index) => entry.issues.length
-      ? [`Ítem ${index + 1}: ${entry.product?.name ?? entry.item.productId}. ${entry.issues.join(' ')}`] : [])
-    if (configurationContext) {
-      const draftIssues = evaluateConfiguration(configurationContext.product, configurationContext.configuration, configurationContext.quantity, locationId).issues
-        .filter((issue) => issue.availability).map((issue) => issue.message)
-      if (draftIssues.length) issues.push(`Borrador de ${configurationContext.product.name}: ${[...new Set(draftIssues)].join(' ')}`)
-    }
-    return { locationId, issues, blocked: false, order: result.order }
+  const [open, setOpen] = useState(false)
+  const [plan, setPlan] = useState<LocationPlan | null>(null)
+  const modalId = useId()
+  function makePlan(id: string) {
+    const preview = state.configurationPreview
+    const product = preview ? getConfigurableProduct(preview.productId) : undefined
+    return planLocationChange(id, state.order, readOrder(), preview && product ? { ...preview, product } : undefined)
   }
-
-  function commitLocation(plan: ChangeDialog) {
-    // Re-read before applying: another tab may have saved an order meanwhile.
-    const fresh = planChange(plan.locationId)
-    if (fresh.blocked || JSON.stringify(fresh) !== JSON.stringify(plan)) { setDialog(fresh); return }
-    setDialog(null)
+  function close() { setOpen(false); setPlan(null) }
+  function commit(candidate: LocationPlan) {
+    const fresh = makePlan(candidate.locationId)
+    if (fresh.blocked || JSON.stringify(fresh) !== JSON.stringify(candidate)) { setPlan(fresh); return }
     dispatch({ type: 'order/replace', value: fresh.order! })
-    setMessage(`Local seleccionado: ${getLocation(plan.locationId)?.name}. Disponibilidad actualizada; revisa las restricciones de tu selección.`)
+    dispatch({ type: 'toast/notify', message: `Local actualizado: ${getLocation(fresh.locationId)?.name}. Revisa la disponibilidad de tu selección.` })
+    close()
   }
-
-  function applyLocation(event: FormEvent<HTMLFormElement>) {
+  function select(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (selectedId === state.order.locationId) { setMessage(`El local actual es ${getLocation(selectedId)?.name}.`); return }
-    const plan = planChange(selectedId)
-    if (plan.blocked || plan.issues.length) { setDialog(plan); return }
-    commitLocation(plan)
+    if (!getLocation(selectedId)) return
+    if (selectedId === state.order.locationId) { close(); return }
+    const candidate = makePlan(selectedId)
+    if (candidate.blocked || candidate.issues.length) setPlan(candidate)
+    else commit(candidate)
   }
-
-  return <><form className="local-selector" onSubmit={applyLocation}>
-    <label htmlFor="order-location">Local del pedido</label>
-    <div className="catalog-control-row">
-      <select id="order-location" value={selectedId} onChange={(event) => { setSelectedId(event.target.value); setMessage('') }}
-        aria-describedby="location-help">
-        {!getLocation(selectedId) && <option value={selectedId} disabled>Local guardado no reconocido</option>}
-        {locations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
-      </select>
-      <AccessibleButton type="submit">Aplicar local</AccessibleButton>
-    </div>
-    <p id="location-help" className="control-help">Elige un local y pulsa Aplicar local. La disponibilidad es simulada.</p>
-    <p role="status" aria-atomic="true" className="local-feedback">{message}</p>
-  </form>
-    <AccessibleModal key={dialog ? `${dialog.locationId}:${dialog.issues.join('|')}` : 'closed'} open={dialog !== null} title="Cambiar de local" onClose={() => setDialog(null)}>
-      {dialog && <>
-        <p>{dialog.blocked ? 'Conservamos el local actual para proteger tu pedido.' : `En ${getLocation(dialog.locationId)?.name}, tu selección se verá afectada:`}</p>
-        {!dialog.blocked && configurationContext && <p><strong>Producto: {configurationContext.product.name}</strong></p>}
-        <ul>{dialog.issues.map((issue) => <li key={issue}>{issue}</li>)}</ul>
-        {!dialog.blocked && <p>Conservaremos los productos y sus configuraciones. Los ítems incompatibles mostrarán «Requiere actualización» e impedirán continuar al pago hasta editarlos o eliminarlos.</p>}
-        <div className="modal-actions">
-          <AccessibleButton className="button--secondary" onClick={() => setDialog(null)}>Mantener local actual</AccessibleButton>
-          {!dialog.blocked && <AccessibleButton onClick={() => commitLocation(dialog)}>Cambiar de local</AccessibleButton>}
-        </div>
-      </>}
+  return <>
+    <button className="header-location" type="button" aria-haspopup="dialog" aria-expanded={open} aria-controls={modalId}
+      onClick={() => { setSelectedId(state.order.locationId); setPlan(null); setOpen(true) }}>
+      <MapPin size={22} aria-hidden="true" /><span><small>Tu local</small>{getLocation(state.order.locationId)?.name ?? 'Seleccionar local'}</span><ChevronDown size={18} aria-hidden="true" />
+    </button>
+    <AccessibleModal id={modalId} key={plan ? `${plan.locationId}:${plan.issues.join('|')}` : 'locations'} open={open} title={plan ? 'Cambiar de local' : 'Elige tu local'} onClose={close}>
+      {plan ? <>
+        <p>{plan.blocked ? 'Conservamos tu local actual para proteger el pedido.' : `En ${getLocation(plan.locationId)?.name}, estas selecciones requieren revisión:`}</p>
+        <ul className="location-impact">{plan.issues.map((issue) => <li key={issue}>{issue}</li>)}</ul>
+        {!plan.blocked && <p>Conservaremos todos los productos y sus opciones. Los ítems incompatibles mostrarán «Requiere actualización» hasta editarlos o eliminarlos.</p>}
+        <div className="modal-actions"><AccessibleButton className="button--secondary" onClick={close}>Mantener local actual</AccessibleButton>
+          {!plan.blocked && <AccessibleButton onClick={() => commit(plan)}>Cambiar de local</AccessibleButton>}</div>
+      </> : <form onSubmit={select} className="location-form">
+        <fieldset className="location-choices"><legend>Local (obligatorio)</legend>
+          {locations.map((location) => <label key={location.id} className={`location-choice${selectedId === location.id ? ' location-choice--selected' : ''}`}>
+            <input type="radio" name="location" value={location.id} checked={selectedId === location.id} required aria-required="true" onChange={() => setSelectedId(location.id)} />
+            <MapPin size={20} aria-hidden="true" /><span>{location.name}{state.order.locationId === location.id && <small>Local actual</small>}</span>{selectedId === location.id && <Check size={20} aria-hidden="true" />}
+          </label>)}
+        </fieldset>
+        <div className="modal-actions"><AccessibleButton className="button--secondary" onClick={close}>Cancelar</AccessibleButton><AccessibleButton type="submit" disabled={!getLocation(selectedId)}>Usar este local</AccessibleButton></div>
+      </form>}
     </AccessibleModal>
   </>
 }

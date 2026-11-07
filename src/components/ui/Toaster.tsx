@@ -1,32 +1,50 @@
+import { useEffect, useRef } from 'react'
+import { Toaster as SonnerToaster, toast } from 'sonner'
 import { useAppState } from '../../hooks/useAppState.ts'
-import { LiveAnnouncement } from '../accessibility/LiveAnnouncement.tsx'
-import { AccessibleButton } from './AccessibleButton.tsx'
+import { notificationDuration, notificationEntries, notificationPlan } from './notificationPlan.ts'
+import { ToastNotice } from './ToastNotice.tsx'
 import './Toaster.css'
 
 export function Toaster() {
   const { state, dispatch } = useAppState()
-  function dismiss(id: string) {
-    const index = state.toasts.findIndex((toast) => toast.id === id)
-    const next = state.toasts[index + 1] ?? state.toasts[index - 1]
-    dispatch({ type: 'toast/dismiss', toastId: id })
-    requestAnimationFrame(() => (document.getElementById(next ? `dismiss-${next.id}` : 'contenido-principal'))?.focus({ preventScroll: true }))
-  }
-  return <>
-    <LiveAnnouncement message={state.cartAnnouncement} sequence={state.notificationSequence} />
-    {state.toasts.length > 0 && <section className="toaster container" aria-label="Avisos del pedido">
-      <ul>{state.toasts.map((toast) => <li key={toast.id} className="toast">
-        <p>{toast.message}</p>
-        <div className="toast-actions">
-          {toast.removed && <AccessibleButton className="button--secondary" aria-label={`Deshacer: ${toast.message}`}
-            onClick={() => {
-              dispatch({ type: 'cart/undo', toastId: toast.id })
-              // The activated Undo control disappears; keep focus within this notice.
-              requestAnimationFrame(() => document.getElementById(`dismiss-${toast.id}`)?.focus({ preventScroll: true }))
-            }}>Deshacer</AccessibleButton>}
-          <AccessibleButton id={`dismiss-${toast.id}`} className="button--secondary" aria-label={`Cerrar aviso: ${toast.message}`}
-            onClick={() => dismiss(toast.id)}>Cerrar aviso</AccessibleButton>
-        </div>
-      </li>)}</ul>
-    </section>}
-  </>
+  const { toasts, storageNotice, recoveryNotice } = state
+  const known = useRef(new Map<string, string>())
+  const dock = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const entries = notificationEntries({ toasts, storageNotice, recoveryNotice })
+    const plan = notificationPlan(known.current, entries)
+    known.current.clear()
+    plan.next.forEach((value, id) => known.current.set(id, value))
+    function dismiss(id: string, moveFocus: boolean) {
+      if (moveFocus) {
+        const buttons = [...document.querySelectorAll<HTMLElement>('[data-toast-dismiss]')]
+        const index = buttons.findIndex((button) => button.id === `dismiss-${id}`)
+        const next = buttons[index + 1] ?? buttons[index - 1]
+        requestAnimationFrame(() => (next?.isConnected ? next : document.getElementById('contenido-principal'))?.focus({ preventScroll: true }))
+      }
+      toast.dismiss(id)
+      if (!id.startsWith('app-')) dispatch({ type: 'toast/dismiss', toastId: id })
+    }
+    plan.remove.forEach((id) => toast.dismiss(id))
+    plan.upsert.forEach((notice) => toast.custom(() => <ToastNotice notice={notice} onDismiss={() => dismiss(notice.id, true)} onUndo={() => {
+      dispatch({ type: 'cart/undo', toastId: notice.id })
+      requestAnimationFrame(() => document.getElementById(`dismiss-${notice.id}`)?.focus({ preventScroll: true }))
+    }} />, { id: notice.id, duration: notificationDuration(notice), dismissible: false,
+      onAutoClose: () => dismiss(notice.id, Boolean(document.getElementById(`dismiss-${notice.id}`)?.closest('[data-sonner-toast]')?.contains(document.activeElement))) }))
+  }, [toasts, storageNotice, recoveryNotice, dispatch])
+  useEffect(() => {
+    const element = dock.current
+    if (!element || typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(() => document.documentElement.style.setProperty('--toast-space', `${element.getBoundingClientRect().height}px`))
+    observer.observe(element)
+    return () => { observer.disconnect(); document.documentElement.style.removeProperty('--toast-space') }
+  }, [])
+  useEffect(() => {
+    const active = known.current
+    return () => { active.forEach((_, id) => toast.dismiss(id)); active.clear() }
+  }, [])
+  return <div className="notification-dock" ref={dock}>
+    <SonnerToaster theme="light" position="bottom-right" expand visibleToasts={Math.max(state.toasts.length + 2, 3)}
+      customAriaLabel="Avisos del pedido. Alt+T para ir a los avisos." hotkey={['altKey', 'KeyT']} />
+  </div>
 }

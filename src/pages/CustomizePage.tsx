@@ -15,6 +15,6 @@ export function CustomizePage() {
     return <ProductConfigurator key={item.itemId} product={product} item={item} />
   }
   const product = getConfigurableProduct(productId ?? '')
-  if (!product) return <><h1>Producto no encontrado</h1><p>Este producto no existe en el catálogo académico. Elige otro desde el menú.</p><Link className="button" to="/menu">Volver al menú</Link></>
+  if (!product) return <><h1>Producto no encontrado</h1><p>Este producto no está en el menú. Elige otro para continuar.</p><Link className="button" to="/menu">Volver al menú</Link></>
   return <ProductConfigurator key={product.id} product={product} />
 }

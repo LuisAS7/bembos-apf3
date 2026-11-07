@@ -35,7 +35,8 @@ test('APF2 photograph bytes match the embedded original; no remote image request
   const object = pdf.match(/\b87\s+0\s+obj\b([\s\S]*?)endobj/)[1]
   const stream = object.match(/stream\r?\n([\s\S]*?)\r?\nendstream/)[1]
   assert.deepEqual(readFileSync(new URL('../public/images/products/apf2-menu.jpg', import.meta.url)), Buffer.from(stream, 'latin1'))
-  assert.ok(products.every((product) => product.image.src.startsWith('/images/products/')))
+  assert.ok(products.every((product) => product.image.src.startsWith('/images/official/')))
+  assert.ok(new Set(products.map((product) => product.image.src)).size >= 10)
 })
 
 test('search ignores case, accents and outer spaces and crosses the three categories', () => {

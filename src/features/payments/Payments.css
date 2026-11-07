@@ -6,3 +6,7 @@
 .payment-panel [aria-disabled='true'] { cursor: default; }
 .yape-demo { display: grid; gap: var(--space-3); overflow-wrap: anywhere; }
 .yape-demo svg { max-width: 100%; height: auto; }
+
+.payment-panel { border: 1px solid var(--color-decoration); }
+.payment-panel > h2 { font-size: 1.75rem; }
+.payment-fields { max-width: 36rem; }
