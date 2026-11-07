@@ -4,7 +4,7 @@ import { resolve, relative, join } from 'node:path'
 import { execFileSync } from 'node:child_process'
 
 const base = new URL(process.argv[2])
-if (base.protocol !== 'https:' || !base.hostname.endsWith('.vercel.app') || base.username || base.password) throw new Error('Indica la URL HTTPS pública de Vercel, sin credenciales.')
+if (base.protocol !== 'https:' || !base.hostname.endsWith('.netlify.app') || base.username || base.password) throw new Error('Indica la URL HTTPS pública de Netlify, sin credenciales.')
 const dist = resolve('dist')
 const index = await readFile(join(dist, 'index.html'), 'utf8')
 const assets = [...index.matchAll(/(?:src|href)="(\/[^"?#]+)"/g)].map((match) => match[1])
@@ -36,7 +36,7 @@ for (let offset = 0; offset < checks.length; offset += 4) {
 const report = { url: base.origin, commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), checkedAt: new Date().toISOString(),
   scope: 'HTTP: rutas SPA y bytes del build/recursos. No verifica renderizado, interacción, foco, consola, axe ni NVDA.',
   ok: results.every((result) => result.ok), results }
-const destination = resolve('docs/evidencias/publicacion/remoto')
+const destination = resolve('docs/evidencias/netlify/remoto')
 await mkdir(destination, { recursive: true })
 await writeFile(join(destination, 'verificacion.json'), `${JSON.stringify(report, null, 2)}\n`)
 console.log(JSON.stringify({ url: report.url, commit: report.commit, checks: results.length, passed: results.filter((result) => result.ok).length, ok: report.ok, failures: results.filter((result) => !result.ok) }, null, 2))

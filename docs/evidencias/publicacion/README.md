@@ -1,5 +1,8 @@
 # Ajuste final y preparación de publicación
 
+> Informe histórico de la preparación de Vercel. El usuario sustituyó la plataforma por [Netlify](../netlify/README.md); estas instrucciones ya no son las vigentes.
+
+
 Base `ac78928`; 2026-11-07, America/Lima. Publicación autorizada por el usuario para auditoría, sin otra aprobación de alcance.
 
 **Cambios visuales limitados al carrusel:** retirados el texto de ayuda y los dos botones. Márgenes automáticos en primer/último elemento centran la fila solo si sobra espacio; con overflow quedan en cero, permitiendo alcanzar la primera categoría. Se oculta únicamente el scrollbar móvil, conservando scroll nativo táctil/trackpad, barra de escritorio/Shift+rueda y radios nativos de teclado. El foco visible y `scrollIntoView` permanecen. No hay otros cambios de diseño ni búsqueda de fotografías.

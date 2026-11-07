@@ -13,15 +13,13 @@ import { productAvailability } from '../src/data/availability.ts'
 import { locations } from '../src/data/locations.ts'
 import { createInitialState } from '../src/state/appState.ts'
 
-test('Vercel declares a SPA fallback for direct React routes without changing the Vite build', () => {
-  const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'))
-  assert.equal(config.framework, 'vite')
-  assert.equal(config.buildCommand, 'npm run build')
-  assert.equal(config.outputDirectory, 'dist')
-  const fallback = config.rewrites.find((rule) => rule.destination === '/index.html')
-  assert.ok(fallback)
-  const pattern = new RegExp(`^${fallback.source}$`)
-  for (const path of ['/menu', '/pedido', '/pagar', '/productos/cheese/personalizar', '/pedido/a/editar', '/confirmacion/BEM-example']) assert.ok(pattern.test(path))
+test('Netlify declares the Vite build output and a non-forced SPA fallback', () => {
+  const config = readFileSync(new URL('../netlify.toml', import.meta.url), 'utf8')
+  assert.match(config, /\[build\]/)
+  assert.match(config, /command\s*=\s*"npm run build"/)
+  assert.match(config, /publish\s*=\s*"dist"/)
+  const fallback = readFileSync(new URL('../public/_redirects', import.meta.url), 'utf8').trim().split(/\s+/)
+  assert.deepEqual(fallback, ['/*', '/index.html', '200'])
   // Configuration contract only; deployed HTTP responses are checked after authentication.
 })
 

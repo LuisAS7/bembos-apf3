@@ -38,3 +38,7 @@ dist-ssr
 .vercel/
 !docs/evidencias/publicacion/*.log
 docs/evidencias/publicacion/remoto/
+
+.netlify/
+!docs/evidencias/netlify/*.log
+docs/evidencias/netlify/remoto/
