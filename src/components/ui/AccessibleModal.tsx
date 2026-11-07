@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef } from 'react'
 import type { KeyboardEvent, ReactNode } from 'react'
+import { X } from 'lucide-react'
 import './AccessibleModal.css'
 
 interface AccessibleModalProps { id?: string; open: boolean; title: string; children: ReactNode; onClose: () => void }
@@ -41,7 +42,12 @@ export function AccessibleModal({ id, open, title, children, onClose }: Accessib
 
   return <dialog id={id} ref={dialogRef} className="accessible-modal" role="dialog" aria-modal="true" aria-labelledby={titleId}
     onCancel={(event) => { event.preventDefault(); onClose() }} onKeyDown={containFocus}>
-    <h2 id={titleId} ref={titleRef} tabIndex={-1}>{title}</h2>
+    <div className="accessible-modal-header">
+      <h2 id={titleId} ref={titleRef} tabIndex={-1}>{title}</h2>
+      <button type="button" className="accessible-modal-close" aria-label={`Cerrar ${title}`} onClick={onClose}>
+        <X size={22} aria-hidden="true" />
+      </button>
+    </div>
     {children}
   </dialog>
 }
