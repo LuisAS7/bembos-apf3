@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { CircleAlert } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AccessibleButton } from '../../components/ui/AccessibleButton.tsx'
 import { ProductImage } from '../../components/ui/ProductImage.tsx'
 import { optionAvailability, productAvailability, variantAvailability } from '../../data/availability.ts'
-import type { OptionGroup as GroupDefinition, Product } from '../../domain/models.ts'
+import type { CartItem, OptionGroup as GroupDefinition, Product } from '../../domain/models.ts'
 import { useAppState } from '../../hooks/useAppState.ts'
 import { formatPrice } from '../catalog/filterProducts.ts'
 import { LocalSelector } from '../locations/LocalSelector.tsx'
@@ -15,14 +15,16 @@ import { defaultConfiguration, evaluateConfiguration } from './configuration.ts'
 import { OptionGroup } from './OptionGroup.tsx'
 import { QuantitySelector } from './QuantitySelector.tsx'
 import { StepIndicator } from './StepIndicator.tsx'
+import { cloneConfiguration } from '../cart/cart.ts'
 import '../catalog/Catalog.css'
 import './Customization.css'
 
-export function ProductConfigurator({ product }: { product: Product }) {
-  const { state } = useAppState()
-  const [configuration, setConfiguration] = useState(() => defaultConfiguration(product))
-  const [quantity, setQuantity] = useState('1')
-  const [review, setReview] = useState<{ kind: 'success' | 'error'; message: string; locationId: string } | null>(null)
+export function ProductConfigurator({ product, item }: { product: Product; item?: CartItem }) {
+  const { state, dispatch } = useAppState()
+  const navigate = useNavigate()
+  const [configuration, setConfiguration] = useState(() => item ? cloneConfiguration(item.configuration) : defaultConfiguration(product))
+  const [quantity, setQuantity] = useState(() => String(item?.quantity ?? 1))
+  const [review, setReview] = useState<{ message: string; locationId: string } | null>(null)
   const [availabilityTarget, setAvailabilityTarget] = useState<AvailabilityTarget | null>(null)
   const locationId = state.order.locationId
   const visibleReview = review?.locationId === locationId ? review : null
@@ -44,7 +46,7 @@ export function ProductConfigurator({ product }: { product: Product }) {
   function reviewConfiguration(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (result.issues.length) {
-      setReview({ kind: 'error', locationId, message: 'Revisa las restricciones y corrige los campos indicados. La selección se conserva.' })
+      setReview({ locationId, message: 'Revisa las restricciones y corrige los campos indicados. La selección se conserva.' })
       const invalidIds = new Set(result.issues.map((issue) => issue.field === 'quantity' ? quantityId : issue.field === 'variant' ? variantFieldId
         : issue.groupId ? groupFieldId(issue.groupId) : 'configuration-errors'))
       const fieldId = [...stages.map((stage) => stage.id), quantityId].find((id) => invalidIds.has(id)) ?? 'configuration-errors'
@@ -52,13 +54,16 @@ export function ProductConfigurator({ product }: { product: Product }) {
       const control = field?.querySelector<HTMLElement>('input:not([disabled])') ?? field
       control?.focus()
     } else {
-      setReview({ kind: 'success', locationId, message: `Configuración válida. Total: ${formatPrice(result.totalCents!)}. No se ha agregado ningún producto al pedido.` })
+      if (item) dispatch({ type: 'cart/edit', itemId: item.itemId, configuration, quantity: Number(quantity) })
+      else dispatch({ type: 'cart/add', item: { itemId: crypto.randomUUID(), productId: product.id,
+        configuration, quantity: Number(quantity), unitPriceCents: result.unitPriceCents! } })
+      navigate('/pedido')
     }
   }
 
   return <>
     <div className="page-heading">
-      <p className="eyebrow">Personaliza tu selección</p><h1>{product.name}</h1>
+      <p className="eyebrow">{item ? 'Actualiza tu pedido' : 'Personaliza tu selección'}</p><h1>{item ? `Editar ${product.name}` : product.name}</h1>
       <p className="page-description">Revisa las opciones y su disponibilidad antes de continuar.</p>
     </div>
     <p className="catalog-notice"><strong>{product.source.kind === 'apf2' ? 'Producto y precio base del APF2.' : 'Producto mock académico.'}</strong> Las opciones identifican sus datos APF2 o mock. Disponibilidad simulada; no son ofertas comerciales vigentes.</p>
@@ -74,7 +79,7 @@ export function ProductConfigurator({ product }: { product: Product }) {
             {result.totalCents !== null ? <><p>Por unidad: <strong>{formatPrice(result.unitPriceCents!)}</strong></p><p>Total para {quantity}: <strong>{formatPrice(result.totalCents)}</strong></p></>
               : <p>Corrige las restricciones para obtener un total válido.</p>}
           </div>
-          <p className="control-help">La cantidad se aplica al precio completo de una unidad de producto o promoción. Esta pantalla no agrega productos al pedido.</p>
+          <p className="control-help">La cantidad se aplica al precio completo de una unidad de producto o promoción. {item ? 'Los cambios se guardan al pulsar Guardar cambios.' : 'Tu selección se agrega al pulsar Agregar al pedido.'}</p>
         </div>
       </aside>
       <div className="customization-options">
@@ -103,14 +108,16 @@ export function ProductConfigurator({ product }: { product: Product }) {
               <h2 id="configuration-errors-heading"><CircleAlert size={20} aria-hidden="true" /> Revisa tu selección</h2>
               <ul>{result.issues.map((issue, index) => <li key={`${index}-${issue.message}`}>{issue.message}</li>)}</ul>
             </section>}
-            <AccessibleButton type="submit">Revisar configuración</AccessibleButton>
-            <p role="status" aria-atomic="true">{visibleReview?.kind === 'success' ? visibleReview.message : ''}</p>
-            <p role="alert">{visibleReview?.kind === 'error' ? visibleReview.message : ''}</p>
+            <div className="modal-actions">
+              <AccessibleButton type="submit">{item ? 'Guardar cambios' : 'Agregar al pedido'}</AccessibleButton>
+              <AccessibleButton className="button--secondary" onClick={() => { setConfiguration(defaultConfiguration(product)); setReview(null) }}>Restablecer opciones del producto</AccessibleButton>
+            </div>
+            <p role="alert">{visibleReview?.message ?? ''}</p>
           </form>
         </>}
       </div>
     </div>
-    <Link className="text-link" to="/menu">Volver al menú</Link>
+    <Link className="text-link" to={item ? '/pedido' : '/menu'}>{item ? 'Cancelar edición y volver al pedido' : 'Volver al menú'}</Link>
     <AvailabilityDialog product={product} target={availabilityTarget} onClose={() => setAvailabilityTarget(null)} />
   </>
 }

@@ -23,11 +23,11 @@ export function defaultConfiguration(product: Product): ProductConfiguration {
 
 const safePrice = (value: number) => Number.isSafeInteger(value) && value >= 0
 
-export function evaluateConfiguration(product: Product, configuration: ProductConfiguration, quantity: number, locationId: string): ConfigurationResult {
+function evaluate(product: Product, configuration: ProductConfiguration, quantity: number, locationId: string, checkAvailability: boolean): ConfigurationResult {
   const issues: ConfigurationIssue[] = []
   const lines: PriceLine[] = [{ label: 'Precio base', cents: product.basePriceCents }]
   const stock = productAvailability(product, locationId)
-  if (!stock.available) issues.push({ field: 'product', message: stock.reason!, availability: true })
+  if (checkAvailability && !stock.available) issues.push({ field: 'product', message: stock.reason!, availability: true })
   if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > MAX_QUANTITY) issues.push({ field: 'quantity', message: `La cantidad debe ser un número entero entre 1 y ${MAX_QUANTITY}.` })
   if (!safePrice(product.basePriceCents)) issues.push({ field: 'configuration', message: 'El precio base no es válido.' })
   if (!configuration || !configuration.selections || typeof configuration.selections !== 'object' || Array.isArray(configuration.selections)) {
@@ -38,7 +38,7 @@ export function evaluateConfiguration(product: Product, configuration: ProductCo
     if (!variant) issues.push({ field: 'variant', message: 'Elige una variante válida del producto.' })
     else {
       const availability = variantAvailability(product, variant.id, locationId)
-      if (!availability.available) issues.push({ field: 'variant', message: availability.reason!, availability: true })
+      if (checkAvailability && !availability.available) issues.push({ field: 'variant', message: availability.reason!, availability: true })
       if (!safePrice(variant.additionalPriceCents)) issues.push({ field: 'variant', message: 'El precio de la variante no es válido.' })
       lines.push({ label: variant.label, cents: variant.additionalPriceCents })
     }
@@ -60,7 +60,7 @@ export function evaluateConfiguration(product: Product, configuration: ProductCo
       const option = group.options.find((entry) => entry.id === id)
       if (!option) { issues.push({ field: 'group', groupId: group.id, message: `Una opción de ${group.label} no pertenece a este producto.` }); continue }
       const availability = optionAvailability(product, group.id, id, locationId)
-      if (!availability.available) issues.push({ field: 'group', groupId: group.id, message: availability.reason!, availability: true })
+      if (checkAvailability && !availability.available) issues.push({ field: 'group', groupId: group.id, message: availability.reason!, availability: true })
       if (!safePrice(option.additionalPriceCents)) issues.push({ field: 'group', groupId: group.id, message: `El precio de ${option.label} no es válido.` })
       lines.push({ label: option.label, cents: option.additionalPriceCents })
     }
@@ -70,4 +70,13 @@ export function evaluateConfiguration(product: Product, configuration: ProductCo
   if (!safePrice(unitPriceCents) || !safePrice(totalCents)) issues.push({ field: 'configuration', message: 'El importe calculado supera el rango válido.' })
   return issues.length ? { issues, unitPriceCents: null, totalCents: null, lines: [] }
     : { issues, unitPriceCents, totalCents, lines }
+}
+
+export function evaluateConfiguration(product: Product, configuration: ProductConfiguration, quantity: number, locationId: string): ConfigurationResult {
+  return evaluate(product, configuration, quantity, locationId, true)
+}
+
+// For displaying retained, unavailable items only. Never authorizes adding or checkout.
+export function quoteConfiguration(product: Product, configuration: ProductConfiguration, quantity: number): ConfigurationResult {
+  return evaluate(product, configuration, quantity, '', false)
 }

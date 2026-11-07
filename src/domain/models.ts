@@ -1,4 +1,4 @@
-// Contracts only. Product data and business rules belong to later phases.
+// Shared contracts; data and validation live in data/ and the corresponding features.
 export type Cents = number
 export type Category = 'hamburguesas' | 'combos' | 'promociones'
 export type DeliveryMethod = 'delivery' | 'pickup'

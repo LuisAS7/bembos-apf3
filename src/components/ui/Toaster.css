@@ -1,0 +1,5 @@
+.toaster { margin-block: var(--space-5); }
+.toaster ul { display: grid; gap: var(--space-3); padding: 0; margin: 0; list-style: none; }
+.toast { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); padding: var(--space-4); background: var(--color-surface); border: 2px solid var(--color-brand); border-radius: var(--radius-sm); overflow-wrap: anywhere; }
+.toast p { flex: 1 1 20rem; }
+.toast-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }

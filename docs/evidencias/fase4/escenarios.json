@@ -1,0 +1,629 @@
+{
+  "recordedAtUTC": "2026-11-07T07:06:59.942Z",
+  "scope": "Executed Node functions and in-memory storage fixture. No browser interactions.",
+  "independentItems": [
+    {
+      "itemId": "evidence-a",
+      "productId": "cheese",
+      "configuration": {
+        "variantId": "mediana",
+        "selections": {
+          "papas": [
+            "medianas"
+          ],
+          "salsas": [
+            "mayonesa",
+            "ketchup"
+          ],
+          "ingredientes": [],
+          "extras": []
+        }
+      },
+      "quantity": 1,
+      "unitPriceCents": 1690
+    },
+    {
+      "itemId": "evidence-b",
+      "productId": "cheese",
+      "configuration": {
+        "variantId": "mediana",
+        "selections": {
+          "papas": [
+            "medianas"
+          ],
+          "salsas": [
+            "mayonesa",
+            "ketchup"
+          ],
+          "ingredientes": [],
+          "extras": []
+        }
+      },
+      "quantity": 1,
+      "unitPriceCents": 1690
+    }
+  ],
+  "edit": {
+    "itemIds": [
+      "evidence-a",
+      "evidence-b"
+    ],
+    "item": {
+      "itemId": "evidence-a",
+      "productId": "cheese",
+      "configuration": {
+        "variantId": "grande",
+        "selections": {
+          "papas": [
+            "grandes"
+          ],
+          "salsas": [
+            "mayonesa",
+            "ketchup"
+          ],
+          "ingredientes": [],
+          "extras": [
+            "queso"
+          ]
+        }
+      },
+      "quantity": 2,
+      "unitPriceCents": 2640
+    },
+    "totalCents": 6970
+  },
+  "undo": {
+    "removed": {
+      "item": {
+        "itemId": "evidence-a",
+        "productId": "cheese",
+        "configuration": {
+          "variantId": "grande",
+          "selections": {
+            "papas": [
+              "grandes"
+            ],
+            "salsas": [
+              "mayonesa",
+              "ketchup"
+            ],
+            "ingredientes": [],
+            "extras": [
+              "queso"
+            ]
+          }
+        },
+        "quantity": 2,
+        "unitPriceCents": 2640
+      },
+      "index": 0,
+      "beforeIds": [],
+      "afterIds": [
+        "evidence-b"
+      ]
+    },
+    "restored": [
+      {
+        "itemId": "evidence-a",
+        "productId": "cheese",
+        "configuration": {
+          "variantId": "grande",
+          "selections": {
+            "papas": [
+              "grandes"
+            ],
+            "salsas": [
+              "mayonesa",
+              "ketchup"
+            ],
+            "ingredientes": [],
+            "extras": [
+              "queso"
+            ]
+          }
+        },
+        "quantity": 2,
+        "unitPriceCents": 2640
+      },
+      {
+        "itemId": "evidence-b",
+        "productId": "cheese",
+        "configuration": {
+          "variantId": "mediana",
+          "selections": {
+            "papas": [
+              "medianas"
+            ],
+            "salsas": [
+              "mayonesa",
+              "ketchup"
+            ],
+            "ingredientes": [],
+            "extras": []
+          }
+        },
+        "quantity": 1,
+        "unitPriceCents": 1690
+      }
+    ],
+    "exactRestoration": true
+  },
+  "recovery": {
+    "message": "Restauramos tu pedido anterior.",
+    "recalculatedItems": [
+      {
+        "itemId": "evidence-a",
+        "productId": "cheese",
+        "quantity": 2,
+        "unitPriceCents": 2640,
+        "configuration": {
+          "variantId": "grande",
+          "selections": {
+            "papas": [
+              "grandes"
+            ],
+            "salsas": [
+              "mayonesa",
+              "ketchup"
+            ],
+            "ingredientes": [],
+            "extras": [
+              "queso"
+            ]
+          }
+        }
+      },
+      {
+        "itemId": "evidence-b",
+        "productId": "cheese",
+        "quantity": 1,
+        "unitPriceCents": 1690,
+        "configuration": {
+          "variantId": "mediana",
+          "selections": {
+            "papas": [
+              "medianas"
+            ],
+            "salsas": [
+              "mayonesa",
+              "ketchup"
+            ],
+            "ingredientes": [],
+            "extras": []
+          }
+        }
+      }
+    ],
+    "totalCents": 6970
+  },
+  "localChange": {
+    "ok": true,
+    "locationId": "demo-centro",
+    "retainedIds": [
+      "evidence-a",
+      "evidence-b"
+    ],
+    "items": [
+      {
+        "item": {
+          "itemId": "evidence-a",
+          "productId": "cheese",
+          "quantity": 2,
+          "unitPriceCents": 2640,
+          "configuration": {
+            "variantId": "grande",
+            "selections": {
+              "papas": [
+                "grandes"
+              ],
+              "salsas": [
+                "mayonesa",
+                "ketchup"
+              ],
+              "ingredientes": [],
+              "extras": [
+                "queso"
+              ]
+            }
+          }
+        },
+        "product": {
+          "id": "cheese",
+          "slug": "cheese",
+          "name": "Cheese",
+          "category": "hamburguesas",
+          "basePriceCents": 1690,
+          "description": "Carne a la parrilla, queso fundido, lechuga y tomate.",
+          "image": {
+            "src": "/images/products/apf2-menu.jpg",
+            "alt": "Hamburguesa Cheese, fotografía de referencia del APF2.",
+            "crop": "apf2-cheese"
+          },
+          "source": {
+            "kind": "apf2",
+            "reference": "APF2_Grupo6_Bembos.pdf, figura B1: nombre, descripción y precio S/16.90."
+          },
+          "variants": [
+            {
+              "id": "mediana",
+              "label": "Cheese mediana",
+              "additionalPriceCents": 0,
+              "source": {
+                "kind": "apf2",
+                "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+              }
+            },
+            {
+              "id": "grande",
+              "label": "Cheese grande",
+              "additionalPriceCents": 300,
+              "source": {
+                "kind": "apf2",
+                "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+              }
+            }
+          ],
+          "variantLabel": "Tamaño",
+          "defaultVariantId": "mediana",
+          "optionGroups": [
+            {
+              "id": "papas",
+              "label": "Papas",
+              "selection": "single",
+              "options": [
+                {
+                  "id": "medianas",
+                  "label": "Papas medianas",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "apf2",
+                    "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+                  }
+                },
+                {
+                  "id": "grandes",
+                  "label": "Papas grandes",
+                  "additionalPriceCents": 400,
+                  "source": {
+                    "kind": "apf2",
+                    "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+                  }
+                },
+                {
+                  "id": "rusticas",
+                  "label": "Papas rústicas",
+                  "additionalPriceCents": 400,
+                  "source": {
+                    "kind": "apf2",
+                    "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+                  }
+                }
+              ],
+              "defaultOptionIds": [
+                "medianas"
+              ],
+              "min": 1,
+              "max": 1
+            },
+            {
+              "id": "salsas",
+              "label": "Salsas",
+              "selection": "multiple",
+              "options": [
+                {
+                  "id": "mayonesa",
+                  "label": "Mayonesa",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "ketchup",
+                  "label": "Ketchup",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "aji",
+                  "label": "Ají",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                }
+              ],
+              "defaultOptionIds": [
+                "mayonesa",
+                "ketchup"
+              ],
+              "min": 0,
+              "max": 2,
+              "instructions": "Puedes elegir hasta dos salsas, sin costo adicional."
+            },
+            {
+              "id": "ingredientes",
+              "label": "Ingredientes",
+              "selection": "multiple",
+              "options": [
+                {
+                  "id": "sin-lechuga",
+                  "label": "Sin lechuga",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "sin-tomate",
+                  "label": "Sin tomate",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                }
+              ],
+              "defaultOptionIds": [],
+              "min": 0,
+              "max": 2,
+              "instructions": "Marca únicamente los ingredientes que deseas retirar."
+            },
+            {
+              "id": "extras",
+              "label": "Extras",
+              "selection": "multiple",
+              "options": [
+                {
+                  "id": "queso",
+                  "label": "Extra queso",
+                  "additionalPriceCents": 250,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "tocino",
+                  "label": "Extra tocino",
+                  "additionalPriceCents": 350,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                }
+              ],
+              "defaultOptionIds": [],
+              "min": 0,
+              "max": 2,
+              "instructions": "Precios adicionales mock por unidad de producto."
+            }
+          ]
+        },
+        "issues": [
+          "Cheese grande agotada en este local Demo.",
+          "Papas grandes agotadas en este local Demo."
+        ],
+        "unitPriceCents": 2640,
+        "totalCents": 5280
+      },
+      {
+        "item": {
+          "itemId": "evidence-b",
+          "productId": "cheese",
+          "quantity": 1,
+          "unitPriceCents": 1690,
+          "configuration": {
+            "variantId": "mediana",
+            "selections": {
+              "papas": [
+                "medianas"
+              ],
+              "salsas": [
+                "mayonesa",
+                "ketchup"
+              ],
+              "ingredientes": [],
+              "extras": []
+            }
+          }
+        },
+        "product": {
+          "id": "cheese",
+          "slug": "cheese",
+          "name": "Cheese",
+          "category": "hamburguesas",
+          "basePriceCents": 1690,
+          "description": "Carne a la parrilla, queso fundido, lechuga y tomate.",
+          "image": {
+            "src": "/images/products/apf2-menu.jpg",
+            "alt": "Hamburguesa Cheese, fotografía de referencia del APF2.",
+            "crop": "apf2-cheese"
+          },
+          "source": {
+            "kind": "apf2",
+            "reference": "APF2_Grupo6_Bembos.pdf, figura B1: nombre, descripción y precio S/16.90."
+          },
+          "variants": [
+            {
+              "id": "mediana",
+              "label": "Cheese mediana",
+              "additionalPriceCents": 0,
+              "source": {
+                "kind": "apf2",
+                "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+              }
+            },
+            {
+              "id": "grande",
+              "label": "Cheese grande",
+              "additionalPriceCents": 300,
+              "source": {
+                "kind": "apf2",
+                "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+              }
+            }
+          ],
+          "variantLabel": "Tamaño",
+          "defaultVariantId": "mediana",
+          "optionGroups": [
+            {
+              "id": "papas",
+              "label": "Papas",
+              "selection": "single",
+              "options": [
+                {
+                  "id": "medianas",
+                  "label": "Papas medianas",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "apf2",
+                    "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+                  }
+                },
+                {
+                  "id": "grandes",
+                  "label": "Papas grandes",
+                  "additionalPriceCents": 400,
+                  "source": {
+                    "kind": "apf2",
+                    "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+                  }
+                },
+                {
+                  "id": "rusticas",
+                  "label": "Papas rústicas",
+                  "additionalPriceCents": 400,
+                  "source": {
+                    "kind": "apf2",
+                    "reference": "APF2, figuras B2/B5: mediana incluida, grande +S/3.00, papas medianas incluidas, grandes/rústicas +S/4.00."
+                  }
+                }
+              ],
+              "defaultOptionIds": [
+                "medianas"
+              ],
+              "min": 1,
+              "max": 1
+            },
+            {
+              "id": "salsas",
+              "label": "Salsas",
+              "selection": "multiple",
+              "options": [
+                {
+                  "id": "mayonesa",
+                  "label": "Mayonesa",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "ketchup",
+                  "label": "Ketchup",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "aji",
+                  "label": "Ají",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                }
+              ],
+              "defaultOptionIds": [
+                "mayonesa",
+                "ketchup"
+              ],
+              "min": 0,
+              "max": 2,
+              "instructions": "Puedes elegir hasta dos salsas, sin costo adicional."
+            },
+            {
+              "id": "ingredientes",
+              "label": "Ingredientes",
+              "selection": "multiple",
+              "options": [
+                {
+                  "id": "sin-lechuga",
+                  "label": "Sin lechuga",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "sin-tomate",
+                  "label": "Sin tomate",
+                  "additionalPriceCents": 0,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                }
+              ],
+              "defaultOptionIds": [],
+              "min": 0,
+              "max": 2,
+              "instructions": "Marca únicamente los ingredientes que deseas retirar."
+            },
+            {
+              "id": "extras",
+              "label": "Extras",
+              "selection": "multiple",
+              "options": [
+                {
+                  "id": "queso",
+                  "label": "Extra queso",
+                  "additionalPriceCents": 250,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                },
+                {
+                  "id": "tocino",
+                  "label": "Extra tocino",
+                  "additionalPriceCents": 350,
+                  "source": {
+                    "kind": "academic-mock",
+                    "reference": "Configuración de demostración APF3; no es una oferta comercial vigente."
+                  }
+                }
+              ],
+              "defaultOptionIds": [],
+              "min": 0,
+              "max": 2,
+              "instructions": "Precios adicionales mock por unidad de producto."
+            }
+          ]
+        },
+        "issues": [],
+        "unitPriceCents": 1690,
+        "totalCents": 1690
+      }
+    ],
+    "totalCents": 6970,
+    "canContinue": false
+  },
+  "clearReducer": {
+    "catalogVersion": 1,
+    "locationId": "san-miguel",
+    "items": []
+  }
+}

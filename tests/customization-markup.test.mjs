@@ -9,7 +9,7 @@ import { productAvailability } from '../src/data/availability.ts'
 import { locations } from '../src/data/locations.ts'
 import { createInitialState } from '../src/state/appState.ts'
 
-test('configuration markup varies by product, explains disabled choices and exposes review-only action', async () => {
+test('configuration markup varies by product, explains disabled choices and exposes native add action', async () => {
   const server = await createServer({ server: { middlewareMode: true, hmr: false, watch: null } })
   try {
     const { ProductConfigurator } = await server.ssrLoadModule('/src/features/customization/ProductConfigurator.tsx')
@@ -22,8 +22,8 @@ test('configuration markup varies by product, explains disabled choices and expo
       assert.equal((html.match(/class="config-group"/g) ?? []).length, expectedGroups, product.id)
       assert.equal((html.match(/<legend>/g) ?? []).length, expectedGroups, product.id)
       assert.ok(html.includes(`id="quantity-${product.id}"`))
-      assert.ok(html.includes('Revisar configuración'))
-      assert.ok(!html.includes('>Agregar al pedido<'))
+      assert.ok(html.includes('>Agregar al pedido<'))
+      assert.ok(!html.includes('Guardar cambios'))
       assert.ok(html.indexOf('</form>') < html.indexOf('class="configuration-form"'))
       if (product.id === 'cheese') {
         assert.ok(html.includes('Papas rústicas agotadas en Bembos San Miguel'))
@@ -34,18 +34,19 @@ test('configuration markup varies by product, explains disabled choices and expo
   } finally { await server.close() }
 })
 
-test('unknown product, sold-out product and edit route have explicit non-cart states', async () => {
+test('unknown product, sold-out product and missing cart item have explicit states', async () => {
   const server = await createServer({ server: { middlewareMode: true, hmr: false, watch: null } })
   try {
     const { CustomizePage } = await server.ssrLoadModule('/src/pages/CustomizePage.tsx')
     const { ProductConfigurator } = await server.ssrLoadModule('/src/features/customization/ProductConfigurator.tsx')
     const { AppContext } = await server.ssrLoadModule('/src/state/AppContext.ts')
-    const unknown = renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: ['/productos/unknown/personalizar'] }, createElement(Routes, null,
-      createElement(Route, { path: '/productos/:productId/personalizar', element: createElement(CustomizePage) }))))
+    const context = { state: createInitialState(), dispatch() {} }
+    const unknown = renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: ['/productos/unknown/personalizar'] }, createElement(AppContext.Provider, { value: context }, createElement(Routes, null,
+      createElement(Route, { path: '/productos/:productId/personalizar', element: createElement(CustomizePage) })))))
     assert.ok(unknown.includes('Producto no encontrado'))
-    const edit = renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: ['/pedido/demo/editar'] }, createElement(Routes, null,
-      createElement(Route, { path: '/pedido/:itemId/editar', element: createElement(CustomizePage) }))))
-    assert.ok(edit.includes('No se ha modificado ningún producto.'))
+    const edit = renderToStaticMarkup(createElement(MemoryRouter, { initialEntries: ['/pedido/demo/editar'] }, createElement(AppContext.Provider, { value: context }, createElement(Routes, null,
+      createElement(Route, { path: '/pedido/:itemId/editar', element: createElement(CustomizePage) })))))
+    assert.ok(edit.includes('Ítem no encontrado'))
     assert.ok(!edit.includes('Guardar cambios'))
     const state = createInitialState()
     state.order.locationId = 'demo-norte'

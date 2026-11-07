@@ -1,0 +1,64 @@
+{
+  "recordedAtUTC": "2026-11-07T07:10:15.201983+00:00",
+  "htmlLangEs": true,
+  "title": "Bembos | Prototipo académico de pedidos",
+  "hasAutomaticDarkModeCSS": false,
+  "hasFocusVisibleCSS": true,
+  "hasReducedMotionCSS": true,
+  "distIgnoredByGit": true,
+  "files": [
+    {
+      "path": "dist/bembos-mark.svg",
+      "bytes": 248
+    },
+    {
+      "path": "dist/favicon.svg",
+      "bytes": 9522
+    },
+    {
+      "path": "dist/icons.svg",
+      "bytes": 5031
+    },
+    {
+      "path": "dist/index.html",
+      "bytes": 680
+    },
+    {
+      "path": "dist/assets/index-Dlv4WXbz.js",
+      "bytes": 319962
+    },
+    {
+      "path": "dist/assets/index-DM-x3jjZ.css",
+      "bytes": 18472
+    },
+    {
+      "path": "dist/images/brand/.gitkeep",
+      "bytes": 0
+    },
+    {
+      "path": "dist/images/products/.gitkeep",
+      "bytes": 0
+    },
+    {
+      "path": "dist/images/products/apf2-menu.jpg",
+      "bytes": 43760
+    },
+    {
+      "path": "dist/images/products/bbq-demo.svg",
+      "bytes": 894
+    },
+    {
+      "path": "dist/images/products/clasica-demo.svg",
+      "bytes": 987
+    },
+    {
+      "path": "dist/images/products/combo-demo.svg",
+      "bytes": 1485
+    },
+    {
+      "path": "dist/images/products/promocion-demo.svg",
+      "bytes": 937
+    }
+  ],
+  "scope": "Static build inspection, not browser execution"
+}

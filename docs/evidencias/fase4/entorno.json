@@ -1,0 +1,20 @@
+{
+  "recordedAtUTC": "2026-11-07T07:05:40.710457+00:00",
+  "timezone": "America/Lima",
+  "baseCommit": "e8cb02425ce2a5a992a72725e229731b5c6a22b0",
+  "node": "v22.19.0",
+  "npm": "10.9.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packageLockBaseBlob": "706f8f7d39deec4f2d0284ed00a7f4005cc44e2a",
+  "packageLockWorkingBlob": "706f8f7d39deec4f2d0284ed00a7f4005cc44e2a",
+  "dependenciesUnchanged": true,
+  "browserAttempt": {
+    "url": "http://127.0.0.1:5173/pedido",
+    "tool": "cua.createBrowserTab(iab)",
+    "result": "The browser access host is unavailable",
+    "screenshots": [],
+    "interactionExecuted": false
+  },
+  "axe": "Deferred by user; not executed",
+  "manualZoomPriorVersion": "User reported no issues at 200% before phase 2; does not validate new screens"
+}

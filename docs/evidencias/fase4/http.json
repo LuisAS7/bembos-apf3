@@ -1,0 +1,37 @@
+{
+  "recordedAtUTC": "2026-11-07T07:06:59.945Z",
+  "origin": "http://127.0.0.1:5173",
+  "scope": "HTTP responses from existing development server only; SPA HTML responses do not prove route interaction or console state.",
+  "responses": [
+    {
+      "route": "/menu",
+      "status": 200,
+      "langEs": true,
+      "title": "Bembos | Prototipo académico de pedidos"
+    },
+    {
+      "route": "/productos/cheese/personalizar",
+      "status": 200,
+      "langEs": true,
+      "title": "Bembos | Prototipo académico de pedidos"
+    },
+    {
+      "route": "/pedido",
+      "status": 200,
+      "langEs": true,
+      "title": "Bembos | Prototipo académico de pedidos"
+    },
+    {
+      "route": "/pedido/evidence-a/editar",
+      "status": 200,
+      "langEs": true,
+      "title": "Bembos | Prototipo académico de pedidos"
+    },
+    {
+      "route": "/pagar",
+      "status": 200,
+      "langEs": true,
+      "title": "Bembos | Prototipo académico de pedidos"
+    }
+  ]
+}

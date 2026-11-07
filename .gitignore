@@ -4,6 +4,7 @@ logs
 !docs/evidencias/fase1/*.log
 !docs/evidencias/fase2/*.log
 !docs/evidencias/fase3/*.log
+!docs/evidencias/fase4/*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

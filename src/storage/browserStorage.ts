@@ -113,6 +113,10 @@ export function readLastConfirmation(): StorageRead<ConfirmationReceipt> {
 export function saveOrder(value: OrderDraft): StorageWrite {
   return isOrder(value) ? write('localStorage', STORAGE_KEYS.order, safeOrder(value)) : { ok: false }
 }
+export function clearStoredOrder(): StorageWrite {
+  try { window.localStorage.removeItem(STORAGE_KEYS.order); return { ok: true } }
+  catch { return { ok: false } }
+}
 export function savePreferences(value: DisplayPreferences): StorageWrite {
   return isPreferences(value) ? write('localStorage', STORAGE_KEYS.preferences, safePreferences(value)) : { ok: false }
 }
